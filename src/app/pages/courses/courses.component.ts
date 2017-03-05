@@ -8,7 +8,7 @@ import { TodoItem } from '../../core/entities';
 	selector: 'courses',
 	encapsulation: ViewEncapsulation.None,
 	providers: [],
-	styles: ['./courses.styles.scss'],
+	styles: [require('./courses.styles.scss')],
 	template: './courses.template.html'
 })
 export class CoursesComponent implements OnInit, OnDestroy {
