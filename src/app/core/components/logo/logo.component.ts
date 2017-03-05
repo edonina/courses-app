@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
 	selector: 'logo',
 	templateUrl: 'logo.component.html',
-	styles: ['./logo.component.scss'],
+	styles: ['./logo.styles.scss'],
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })

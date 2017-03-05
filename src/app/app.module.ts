@@ -24,11 +24,12 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
 
 // Components
-import { HeaderModule, FooterModule } from './core/components';
+import { HeaderModule, FooterModule, LogoModule } from './core/components';
 
 // Pages
 import { HomeModule } from './pages/home';
 import { CoursesModule } from './pages/courses';
+import { LoginModule } from  './pages/login';
 import { PageOneModule } from  './pages/page-one';
 import { PageTwoModule } from  './pages/page-two';
 
@@ -56,10 +57,12 @@ const APP_PROVIDERS = [
 		HttpModule,
 		RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
 		HeaderModule,
+		LogoModule,
 		CoursesModule,
 		FooterModule,
 		HomeModule,
 		PageOneModule,
+		LoginModule,
 		PageTwoModule
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection

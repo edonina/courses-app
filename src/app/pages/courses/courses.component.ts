@@ -9,7 +9,7 @@ import { TodoItem } from '../../core/entities';
 	encapsulation: ViewEncapsulation.None,
 	providers: [],
 	styles: [require('./courses.styles.scss')],
-	template: './courses.template.html'
+	template: require('./courses.template.html')
 })
 export class CoursesComponent implements OnInit, OnDestroy {
 	private todoServiceSubscription: Subscription;
