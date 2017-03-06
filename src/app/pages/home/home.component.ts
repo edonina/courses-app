@@ -23,13 +23,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-		console.log('Home page init');
+		/*console.log('Home page init');
 
 		this.isLoading = true;
 		this.todoServiceSubscription = this.todoService.getTodoItems().subscribe((res: TodoItem[]) => {
 			this.todoList = res;
 			this.isLoading = false;
-		});
+		});*/
 	}
 
 	public ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, Input } from '@angular/core';
-import { TodoItem } from '../../../core/entities';
+import { Course } from '../../../core/entities';
 import { todoStatusClasses } from '../../../core/enums';
 
 @Component({
@@ -10,7 +10,7 @@ import { todoStatusClasses } from '../../../core/enums';
 	encapsulation: ViewEncapsulation.None
 })
 export class CourseComponent {
-	@Input() public todo: TodoItem;
+	@Input() public course: Course;
 
 	constructor() {
 	}

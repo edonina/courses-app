@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
 
-import { TodoItem } from '../../entities';
+import { Course } from '../../entities';
 
 @Injectable()
 export class TodoService {
@@ -14,12 +14,12 @@ export class TodoService {
 	constructor(private http: Http) {
 	}
 
-	public getTodoItems (): Observable<TodoItem[]> {
+	public getTodoItems (): Observable<Course[]> {
 		return this.http.get(this.todoListUrl)
 			.map((response: Response) => response.json())
-			.map((todoItems: TodoItem[]) => {
+			.map((courseItems: Course[]) => {
 				// change return value structure here if you want
-				return todoItems;
+				return courseItems;
 			});
 	}
 
