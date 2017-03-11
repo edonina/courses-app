@@ -1,8 +1,7 @@
 <div class="home-page">
 	<h4>Courses list:</h4>
 	<div class="todo-list">
-		Course Item
-		<!--<course *ngFor="let todo of todoList" [todo]="todo"></course>-->
+		<course *ngFor="let course of courseList" [course]="course"></course>
 	</div>
 	<div *ngIf="isLoading">Is loading...</div>
 </div>

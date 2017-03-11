@@ -3,16 +3,16 @@ interface ICourse {
 	title: string;
 	description: string;
 	creationDate: Date;
-	duration: Date;
+	duration: number;
 }
 
-export class Course{
+export class Course implements ICourse{
 	constructor(
 		public id: number,
 		public title: string,
 		public description: string,
 		public creationDate: Date,
-		public duration: Date
+		public duration: number
 	) {}
 }
 

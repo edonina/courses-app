@@ -8,6 +8,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	encapsulation: ViewEncapsulation.None
 })
 export class FooterComponent {
+	width: number = 30;
 	constructor() {
 
 	}

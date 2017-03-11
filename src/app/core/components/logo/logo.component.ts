@@ -1,14 +1,15 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
-	selector: 'logo',
+	selector: '.component-logo',
 	templateUrl: 'logo.component.html',
-	styles: ['./logo.styles.scss'],
+	styles: [require('./logo.styles.scss')],
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
 export class LogoComponent {
-	constructor() {
+	@Input() public width: number;
+	constructor(
 
-	}
+	) {}
 }
