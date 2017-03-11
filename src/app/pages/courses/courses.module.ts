@@ -10,6 +10,8 @@ import { routes } from './courses.routes';
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 
+import { ToolboxModule } from './toolbox/toolbox.module';
+
 @NgModule({
 	declarations: [
 		CoursesComponent,
@@ -18,6 +20,7 @@ import { CourseComponent } from './course/course.component';
 	imports: [
 		routes,
 		FormsModule,
+		ToolboxModule,
 		ReactiveFormsModule,
 		CommonModule
 	],
