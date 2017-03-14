@@ -32,11 +32,11 @@ import { LoginModule } from  './pages/login';
 
 // Services
 
-import { TodoService } from './core/services';
+import { CoursesService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
-	TodoService
+	CoursesService
 ];
 
 /**

@@ -1,11 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'toolbox',
 	templateUrl: 'toolbox.component.html',
-	styles: [require('./toolbox.styles.scss')],
-	providers: [],
-	encapsulation: ViewEncapsulation.None
+	styles: [require('./toolbox.styles.scss')]
 })
 
 export class ToolboxComponent {

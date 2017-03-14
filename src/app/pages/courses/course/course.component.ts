@@ -1,13 +1,11 @@
-import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { todoStatusClasses } from '../../../core/enums';
 
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styles: ['./course.component.scss'],
-	providers: [],
-	encapsulation: ViewEncapsulation.None
+	styles: ['./course.component.scss']
 })
 export class CourseComponent {
 	@Input() public course: Course;
