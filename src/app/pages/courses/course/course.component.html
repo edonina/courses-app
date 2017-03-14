@@ -6,10 +6,11 @@
 
 	<div class="col-sm-2">
 		{{course.duration}} mins
+		<br />
 		{{course.creationDate | date : 'MM/dd/yyyy'}}
 	</div>
 	<div class="col-sm-3">
-		<button>Edit course</button>
-		<button (click)="deleteCourse(course.id)">Delete</button>
+		<button class="btn btn-info">Edit course</button>
+		<button (click)="deleteCourse(course.id)" class="btn btn-warning">Delete</button>
 	</div>
 </div>
