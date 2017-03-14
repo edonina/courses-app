@@ -58,4 +58,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnDestroy() {
 		this.todoServiceSubscription.unsubscribe();
 	}
+
+	public deleteCourseFromCoursesList(id:any){
+		console.log(id);
+	}
 }

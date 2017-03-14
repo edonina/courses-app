@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { todoStatusClasses } from '../../../core/enums';
 
@@ -11,8 +11,14 @@ import { todoStatusClasses } from '../../../core/enums';
 })
 export class CourseComponent {
 	@Input() public course: Course;
+	@Output() change: EventEmitter<number> = new EventEmitter<number>();
 
-	constructor() {
+	constructor(
+
+	) {}
+
+	public deleteCourse(id:number){
+		this.change.emit(id);
 	}
 
 	public calculateStatusClass(status): string {

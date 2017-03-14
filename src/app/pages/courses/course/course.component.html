@@ -1,4 +1,4 @@
-<div class="todo-item row"[ngClass]="calculateStatusClass(course.status)" id="course-{{course.id}}">
+<div class="todo-item row" [ngClass]="calculateStatusClass(course.status)" id="course-{{course.id}}">
 	<div class="col-sm-7">
 		<h3>{{course.title}}</h3>
 		<p>{{course.description}}</p>
@@ -10,6 +10,6 @@
 	</div>
 	<div class="col-sm-3">
 		<button>Edit course</button>
-		<button>Delete</button>
+		<button (click)="deleteCourse(course.id)">Delete</button>
 	</div>
 </div>

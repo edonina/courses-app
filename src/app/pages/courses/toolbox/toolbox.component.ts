@@ -8,8 +8,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	encapsulation: ViewEncapsulation.None
 })
 export class ToolboxComponent {
-	width: number = 60;
+	private couseName: string;
 	constructor() {
+		this.couseName = '';
 
+	}
+	findCourse(){
+		console.log(this.couseName);
 	}
 }

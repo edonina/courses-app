@@ -2,8 +2,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="logo col-xs-6 col-md-8">
-				<input type="text" />
-				<button>Find course</button>
+				<input type="text" [(ngModel)]='couseName' />
+				<button (click)="findCourse()">Find course</button>
 			</div>
 			<div class="col-xs-6 col-md-4">
 				<button>Add course</button>

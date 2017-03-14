@@ -2,7 +2,7 @@
 	<toolbox></toolbox>
 	<h4>Courses list:</h4>
 	<div class="todo-list">
-		<course *ngFor="let course of courseList" [course]="course"></course>
+		<course *ngFor="let course of courseList" [course]="course" (change)="deleteCourseFromCoursesList($event)"></course>
 	</div>
 	<div *ngIf="isLoading">Is loading...</div>
 </div>
