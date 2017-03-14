@@ -7,13 +7,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	providers: [],
 	encapsulation: ViewEncapsulation.None
 })
-export class ToolboxComponent {
-	private couseName: string;
-	constructor() {
-		this.couseName = '';
 
+export class ToolboxComponent {
+	public textToFind: string;
+	constructor() {
+		this.textToFind = '';
 	}
-	findCourse(){
-		console.log(this.couseName);
+
+	public findCourse() {
+		console.log(this.textToFind);
 	}
 }

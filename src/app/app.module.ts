@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
 
 // Components
-import { HeaderModule, FooterModule} from './core/components';
+import { HeaderModule, FooterModule } from './core/components';
 
 // Pages
 import { CoursesModule } from './pages/courses';

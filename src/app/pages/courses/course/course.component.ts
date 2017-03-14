@@ -11,14 +11,12 @@ import { todoStatusClasses } from '../../../core/enums';
 })
 export class CourseComponent {
 	@Input() public course: Course;
-	@Output() change: EventEmitter<number> = new EventEmitter<number>();
+	@Output() public deleteCourseEvent: EventEmitter<number> = new EventEmitter<number>();
 
-	constructor(
+	constructor() {}
 
-	) {}
-
-	public deleteCourse(id:number){
-		this.change.emit(id);
+	public deleteCourse(id: number) {
+		this.deleteCourseEvent.emit(id);
 	}
 
 	public calculateStatusClass(status): string {

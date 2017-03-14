@@ -6,7 +6,7 @@ interface ICourse {
 	duration: number;
 }
 
-export class Course implements ICourse{
+export class Course implements ICourse {
 	constructor(
 		public id: number,
 		public title: string,
@@ -15,4 +15,3 @@ export class Course implements ICourse{
 		public duration: number
 	) {}
 }
-
