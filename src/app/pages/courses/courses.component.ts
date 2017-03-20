@@ -22,18 +22,24 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		console.log('Home page init');
 
-		this.isLoading = true;
+		/*this.isLoading = true;
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res: Course[]) => {
 			this.courseList = res;
 			this.isLoading = false;
-		});
+		});*/
+		this.courseList = this.coursesService.getCourseItems();
 	}
 
 	public ngOnDestroy() {
-		this.coursesServiceSubscription.unsubscribe();
+		//this.coursesServiceSubscription.unsubscribe();
+	}
+
+	public createCourse(id: number) {
+		console.log(id);
 	}
 
 	public deleteCourseFromCoursesList(id: number) {
+		this.courseList = this.coursesService.removeCourseItemById(id);
 		console.log(id);
 	}
 }
