@@ -40,19 +40,16 @@ export class CoursesService {
 
 	public createCourse(course):Course | boolean {
 		if (course.title) {
-			course.id = this.setUserId();
+			course.id = this.getUserId();
 			this.courseList.push(course);
 			return course;
 		}
 		return false;
 	}
 
-	public setUserId() {
+	public getUserId() {
 		let i = this.courseList.length;
-		let courseId = this.courseList[i].id++;
-		while (this.getCourseItemById(courseId)) {
-			courseId = this.courseList[i].id++;
-		}
+		let courseId = this.courseList[i].id + 1;
 		return courseId;
 	}
 
