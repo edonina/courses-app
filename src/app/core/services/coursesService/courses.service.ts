@@ -6,7 +6,7 @@ import { Course } from '../../entities';
 
 @Injectable()
 export class CoursesService {
-	private courseList: Course[];
+	private courseList:Course[];
 
 	constructor() {
 		this.courseList = [
@@ -34,12 +34,12 @@ export class CoursesService {
 		];
 	}
 
-	public getCourseItems (): Course[] {
+	public getCourseItems():Course[] {
 		return this.courseList;
 	}
 
-	public createCourse (course): Course | boolean {
-		if(course.title ){
+	public createCourse(course):Course | boolean {
+		if (course.title) {
 			course.id = this.setUserId();
 			this.courseList.push(course);
 			return course;
@@ -56,39 +56,22 @@ export class CoursesService {
 		return courseId;
 	}
 
-	public getCourseItemById (id): any {
-		let courseArrayIndex = this.getArrayIndexOfCourse(id);
-		if(courseArrayIndex != -1){
-			return this.courseList[courseArrayIndex];
-		}
-		return false;
+	public getCourseItemById(id):any {
+		return this.courseList.find(course => course.id === id);
 	}
 
-	public updateCourseItemById (courseObj:Course, id) {
-
-		return ;
-	}
-	public getArrayIndexOfCourse(id){
-		let i = this.courseList.length;
-		while (i--) {
-			if (this.courseList[i].id === id) {
-				return i;
-			}
-		}
-		return -1;
+	public updateCourseItemById(courseObj:Course, id) {
+		return;
 	}
 
-	public removeCourseItemById (id) {
-		let courseArrayIndex = this.getArrayIndexOfCourse(id);
+	public removeCourseItemById(id) {
+		let courseArrayIndex = this.courseList.findIndex(course => course.id === id);
 
-		if(courseArrayIndex != -1){
+		if (courseArrayIndex != -1) {
 			this.courseList.splice(courseArrayIndex, 1);
 		}
 		return this.courseList;
 	}
-
-
-
 
 
 }
