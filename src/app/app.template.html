@@ -1,7 +1,14 @@
-<main-header (loginUserEvent)="checkAuthentification()"></main-header>
+<main-header [isAuth] ='isAuth' (logoutUserEvent)="logoutUser()"></main-header>
 
 <main class="container">
-  <router-outlet></router-outlet>
+  <!--<router-outlet></router-outlet>-->
+
+	<div *ngIf="isAuth" >
+		<courses></courses>
+	</div>
+	<div *ngIf="!isAuth" >
+		<login (loginUserEvent)="loginUser()"></login>
+	</div>
 </main>
 
 <main-footer></main-footer>

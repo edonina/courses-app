@@ -19,7 +19,7 @@ import { LoginComponent } from './login.component';
 		ReactiveFormsModule,
 		CommonModule
 	],
-	providers: []
+	exports: [LoginComponent]
 })
 export class LoginModule {
 	constructor() {

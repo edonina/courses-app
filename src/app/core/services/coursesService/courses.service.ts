@@ -38,11 +38,11 @@ export class CoursesService {
 		return this.courseList;
 	}
 
-	public createCourse (course): Course {
+	public createCourse (course): Course | boolean {
 		if(course.title ){
 			course.id = this.setUserId();
 			this.courseList.push(course);
-			console.log(this.courseList);
+			return course;
 		}
 		return false;
 	}

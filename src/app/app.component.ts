@@ -7,6 +7,7 @@ import {
 	ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
+import { AuthorizationService } from './core/services';
 
 /*
  * App Component
@@ -23,11 +24,33 @@ import { AppState } from './app.service';
 	template: require('./app.template.html')
 })
 export class AppComponent implements OnInit {
+	public isAuth:boolean;
 
-	constructor() {
+	constructor(private authorizationService:AuthorizationService) {
+		this.isAuth = authorizationService.isAuthentificated();
 	}
 
-	public ngOnInit() {
+
+	ngOnInit() {
 	}
+
+	checkAuthorization(): boolean {
+		return this.isAuth = this.authorizationService.isAuthentificated();
+	}
+
+	updateAuthorization(): void {
+		this.isAuth = this.authorizationService.isAuthentificated();
+	}
+
+	loginUser(login: string) {
+		this.authorizationService.loginUser();
+		this.isAuth = this.authorizationService.isAuthentificated();
+	}
+
+	logoutUser(login: string) {
+		this.authorizationService.logoutUser();
+		this.isAuth = this.authorizationService.isAuthentificated();
+	}
+
 
 }

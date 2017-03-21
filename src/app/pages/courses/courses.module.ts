@@ -24,7 +24,7 @@ import { ToolboxModule } from './toolbox/toolbox.module';
 		ReactiveFormsModule,
 		CommonModule
 	],
-	providers: []
+	exports: [CoursesComponent]
 })
 export class CoursesModule {
 	constructor() {

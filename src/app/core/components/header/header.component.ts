@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { AuthorizationService } from '../../services';
 
@@ -9,24 +9,17 @@ import { AuthorizationService } from '../../services';
 
 })
 export class HeaderComponent {
+	@Input() public isAuth:boolean;
+	@Output() public logoutUserEvent:EventEmitter<number> = new EventEmitter<number>();
+
 	public isAutentificatedState:boolean;
 	public user:string;
 
-
 	constructor(private authorizationService:AuthorizationService) {
-		this.isAutentificatedState = authorizationService.isAuthentificated();
 		this.user = authorizationService.getUserInfo();
 	}
 
 	public logoutUser(login:string) {
-		console.log('ffkfkfkf');
-		console.log(this.isAutentificatedState);
-		this.authorizationService.logoutUser();
-		this.checkAuthentification();
-	}
-	public checkAuthentification(){
-		console.log('checkAuthentification');
-		this.isAutentificatedState = this.authorizationService.isAuthentificated();
-		this.user = this.authorizationService.getUserInfo();
+		this.logoutUserEvent.emit();
 	}
 }
