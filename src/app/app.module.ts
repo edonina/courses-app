@@ -32,11 +32,12 @@ import { LoginModule } from  './pages/login';
 
 // Services
 
-import { CoursesService } from './core/services';
+import { CoursesService, AuthorizationService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
-	CoursesService
+	CoursesService,
+	AuthorizationService
 ];
 
 /**

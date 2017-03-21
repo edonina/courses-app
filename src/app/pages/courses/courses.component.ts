@@ -39,7 +39,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public deleteCourseFromCoursesList(id: number) {
-		this.courseList = this.coursesService.removeCourseItemById(id);
-		console.log(id);
+		let deleteConfirmation = confirm("Do you really want to delete this course?");
+		if(deleteConfirmation){
+			this.courseList = this.coursesService.removeCourseItemById(id);
+			console.log(id);
+		}
 	}
 }

@@ -1,3 +1,4 @@
+/*
 import { Injectable } from '@angular/core';
 import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 import { Observable } from 'rxjs';
@@ -70,3 +71,4 @@ export class CoursesService {
 		return body.data || { };
 	}
 }
+*/

@@ -1,14 +1,17 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Output } from '@angular/core';
+
+import { AuthorizationService } from '../../core/services';
 
 @Component({
 	selector: 'login',
-	encapsulation: ViewEncapsulation.None,
+
 	providers: [],
 	styles: [require('./login.styles.scss')],
 	template: require('./login.template.html')
 })
 export class LoginComponent implements OnInit, OnDestroy {
-	constructor() {
+
+	constructor(private authorizationService: AuthorizationService) {
 		console.log('login constructor');
 	}
 
@@ -16,6 +19,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 		console.log('login init');
 	}
 
+
+
+
+	public loginUser(login: string) {
+		console.log('dsfsdfsdfsd');
+		this.authorizationService.loginUser();
+	}
 	public ngOnDestroy() {
 		// unsubscribe here
 	}
