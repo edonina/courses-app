@@ -12,6 +12,7 @@ export class HeaderComponent {
 	public isAutentificatedState:boolean;
 	public user:string;
 
+
 	constructor(private authorizationService:AuthorizationService) {
 		this.isAutentificatedState = authorizationService.isAuthentificated();
 		this.user = authorizationService.getUserInfo();
@@ -21,5 +22,11 @@ export class HeaderComponent {
 		console.log('ffkfkfkf');
 		console.log(this.isAutentificatedState);
 		this.authorizationService.logoutUser();
+		this.checkAuthentification();
+	}
+	public checkAuthentification(){
+		console.log('checkAuthentification');
+		this.isAutentificatedState = this.authorizationService.isAuthentificated();
+		this.user = this.authorizationService.getUserInfo();
 	}
 }

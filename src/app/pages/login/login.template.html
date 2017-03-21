@@ -1,11 +1,15 @@
-<div class="login">
-	<form>
-		<label for="login">Login:</label>
-		<input type="text" id="login">
-		<label for="password">Password:</label>
-		<input type="text" id="password">
-		<button type="submit" (click)="loginUser()">Sign in</button>
+<div class="login container">
+<div >
+	<form class="row">
+		<div class="form-group col-xs-12 col-md-6">
+			<label for="login">Login:</label>
+			<input type="text" id="login" class="form-control">
+			<label for="password">Password:</label>
+			<input type="text" id="password" class="form-control">
+			<button type="submit" (click)="loginUser()" class="btn btn-primary">Sign in</button>
+		</div>
 	</form>
+</div>
 </div>
 
 

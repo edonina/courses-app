@@ -1,7 +1,7 @@
-<nav class="main-navbar" >
+<nav class="main-navbar"  >
 	<div class="container">
-		<div class="row">
-			<div class="logo col-xs-6 col-md-6">
+		<div class="row justify-content-between">
+			<div class="logo col-xs-6 col-md-4">
 				<div class="component-logo logo-image" [width]="60"></div>
 				<div class="logo-title">Courses
 					<p class="logo-sub-title">Learn as if you'll live forever</p>
@@ -10,10 +10,10 @@
 			<div class="menu col-xs-3">
 				<div class="menu-item" [routerLink]="'courses'" routerLinkActive="active">Home</div>
 			</div>
-			<div class="menu col-xs-3">
-				<div *ngIf="isAutentificatedState">
-					<div class="menu-item" >Hi, {{user}}!</div>
-					<div class="menu-item" (click)="logoutUser()">Log off</div>
+			<div class="menu col-xs-3" >
+				<div *ngIf="isAutentificatedState" >
+					<div class="" >Hi, {{user}}!</div>
+					<div class="menu-item" (click)="logoutUser()">Logout</div>
 				</div>
 				<div class="menu-item" *ngIf="!isAutentificatedState" [routerLink]="'login'" routerLinkActive="active">Sign in</div>
 			</div>

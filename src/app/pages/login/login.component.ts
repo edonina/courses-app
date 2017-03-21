@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Output } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 import { AuthorizationService } from '../../core/services';
 
@@ -10,6 +10,8 @@ import { AuthorizationService } from '../../core/services';
 	template: require('./login.template.html')
 })
 export class LoginComponent implements OnInit, OnDestroy {
+	@Output() public loginUserEvent: EventEmitter<number> = new EventEmitter<number>();
+
 
 	constructor(private authorizationService: AuthorizationService) {
 		console.log('login constructor');
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	public loginUser(login: string) {
 		console.log('dsfsdfsdfsd');
 		this.authorizationService.loginUser();
+		this.loginUserEvent.emit();
 	}
 	public ngOnDestroy() {
 		// unsubscribe here
