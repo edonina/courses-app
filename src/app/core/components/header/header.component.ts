@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { AuthorizationService } from '../../services';
 
 @Component({
 	selector: 'main-header',
 	templateUrl: 'header.component.html',
-	styles: [require('./header.styles.scss')]
-
+	styles: [require('./header.styles.scss')],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class HeaderComponent {
 	@Input() public isAuth:boolean;
 	@Output() public logoutUserEvent:EventEmitter<number> = new EventEmitter<number>();

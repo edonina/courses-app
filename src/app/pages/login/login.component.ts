@@ -1,11 +1,18 @@
-import { Component, ViewEncapsulation, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {
+	Component,
+	ViewEncapsulation,
+	OnInit,
+	OnDestroy,
+	Output,
+	EventEmitter,
+	ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
 	selector: 'login',
-
-	providers: [],
 	styles: [require('./login.styles.scss')],
-	template: require('./login.template.html')
+	template: require('./login.template.html'),
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit, OnDestroy {
 	@Output() public loginUserEvent:EventEmitter<number> = new EventEmitter<number>();

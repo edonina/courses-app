@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { todoStatusClasses } from '../../../core/enums';
 
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styles: ['./course.component.scss']
+	styles: ['./course.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseComponent {
 	@Input() public course: Course;

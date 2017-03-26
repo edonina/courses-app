@@ -1,10 +1,10 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
 	selector: '.component-logo',
 	templateUrl: 'logo.component.html',
 	styles: [require('./logo.styles.scss')],
-	providers: [],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None
 })
 export class LogoComponent {
