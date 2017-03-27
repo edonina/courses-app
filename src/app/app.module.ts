@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './pages/no-content';
 
 // Components
-import { HeaderModule, FooterModule } from './core/components';
+import { HeaderModule, FooterModule, LoaderBlockModule } from './core/components';
 
 // Pages
 import { CoursesModule } from './pages/courses';
@@ -32,12 +32,13 @@ import { LoginModule } from  './pages/login';
 
 // Services
 
-import { CoursesService, AuthorizationService } from './core/services';
+import { CoursesService, AuthorizationService, LoaderBlockService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
 	CoursesService,
-	AuthorizationService
+	AuthorizationService,
+	LoaderBlockService
 ];
 
 /**
@@ -57,7 +58,8 @@ const APP_PROVIDERS = [
 		HeaderModule,
 		CoursesModule,
 		FooterModule,
-		LoginModule
+		LoginModule,
+		LoaderBlockModule
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,

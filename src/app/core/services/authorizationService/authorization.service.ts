@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
 
-import { Course } from '../../entities';
 
 @Injectable()
 export class AuthorizationService {

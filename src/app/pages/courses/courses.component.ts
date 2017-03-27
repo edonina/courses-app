@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { CoursesService } from '../../core/services';
+import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
 
 @Component({
@@ -16,13 +16,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private courseList: Course[];
 	private isLoading: boolean = false;
 
-	constructor(private coursesService: CoursesService) {
+	constructor(private coursesService: CoursesService, private loaderBlockService:LoaderBlockService) {
 		console.log('Home page constructor');
 		this.courseList = [];
 	}
 
 	public ngOnInit() {
 		console.log('Home page init');
+		this.loaderBlockService.hide();
 
 		/*this.isLoading = true;
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res: Course[]) => {
@@ -43,7 +44,18 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public deleteCourseFromCoursesList(id: number) {
 		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if(deleteConfirmation){
-			this.courseList = this.coursesService.removeCourseItemById(id);
+			this.loaderBlockService.show();
+			let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res)=> {
+				console.log('res');
+				console.log(res);
+				if (res){
+					this.courseList = this.coursesService.removeCourseItemById(id);
+					this.loaderBlockService.hide();
+				}
+
+			});
+
+
 			console.log(id);
 		}
 	}
