@@ -12,15 +12,16 @@ export class LoaderBlockService {
 
 	constructor( private http: Http) {
 		//this.showLoader = true;
-		this.showLoaderChange = new Subject<boolean>(false);
-		this.showLoader$ = this.showLoaderChange.asObservable();
+		this.showLoaderChange = new Subject<boolean>();
+		this.showLoader$ = this.showLoaderChange.asObservable().startWith(false);
 		//this.showLoader$ = this.showLoaderChange.next(false);
 	}
 
 	show() {
+		//setTimeout(()=>{this.showLoaderChange.next(true);}, 500);
 		this.showLoaderChange.next(true);
-		return this.showLoader$;
-		console.log('showed');
+		// return this.showLoader$;
+		console.log('from service: showed');
 		//this.showLoader$ = true;
 		/*return this.http.get(this.loaderUrl)
 			.map((response: Response) => response.json())
@@ -35,7 +36,7 @@ export class LoaderBlockService {
 
 	hide() {
 		this.showLoaderChange.next(false);
-		console.log('hided');
+		console.log('from service: hided');
 	}
 
 

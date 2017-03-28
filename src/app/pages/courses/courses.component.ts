@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
@@ -18,23 +18,23 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 	constructor(private coursesService: CoursesService, private loaderBlockService:LoaderBlockService) {
 		console.log('Home page constructor');
-		this.courseList = [];
+		// this.courseList = [];
 	}
 
 	public ngOnInit() {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
 
-		/*this.isLoading = true;
+		/*this.isLoading = true;*/
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res: Course[]) => {
 			this.courseList = res;
 			this.isLoading = false;
-		});*/
-		this.courseList = this.coursesService.getCourseItems();
+		});
+		// this.courseList = this.coursesService.getCourseItems();
 	}
 
 	public ngOnDestroy() {
-		//this.coursesServiceSubscription.unsubscribe();
+		// this.coursesServiceSubscription.unsubscribe();
 	}
 
 	public createCourse(id: number) {
@@ -42,18 +42,21 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public deleteCourseFromCoursesList(id: number) {
-		let deleteConfirmation = confirm("Do you really want to delete this course?");
-		if(deleteConfirmation){
-			this.loaderBlockService.show();
-			let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res)=> {
-				console.log('res');
-				console.log(res);
-				if (res){
-					this.courseList = this.coursesService.removeCourseItemById(id);
+		// let deleteConfirmation = confirm("Do you really want to delete this course?");
+		let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res) => {
+			console.log('result in courses comp: ', res);
+			// this.isLoading = res;
+			if (res) {
+				 this.courseList = this.coursesService.removeCourseItemById(id);
+				 setTimeout(() => {
 					this.loaderBlockService.hide();
-				}
+				 }, 400);
+			}
 
-			});
+		});
+		let deleteConfirmation = true;
+		if (deleteConfirmation) {
+			this.loaderBlockService.show();
 
 
 			console.log(id);

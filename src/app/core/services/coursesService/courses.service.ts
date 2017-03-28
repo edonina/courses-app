@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
 import { Course } from '../../entities';
+import { Observable } from 'rxjs';
+
 
 @Injectable()
 export class CoursesService {
@@ -34,8 +36,8 @@ export class CoursesService {
 		];
 	}
 
-	public getCourseItems():Course[] {
-		return this.courseList;
+	public getCourseItems(): Observable<Course[]> {
+		return Observable.of(this.courseList);
 	}
 
 	public createCourse(course):Course | boolean {
