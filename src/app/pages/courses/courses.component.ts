@@ -12,11 +12,11 @@ import { Course } from '../../core/entities';
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
-	private coursesServiceSubscription: Subscription;
-	private courseList: Course[];
-	private isLoading: boolean = false;
+	private coursesServiceSubscription:Subscription;
+	private courseList:Course[];
+	private isLoading:boolean = false;
 
-	constructor(private coursesService: CoursesService, private loaderBlockService:LoaderBlockService) {
+	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
 		console.log('Home page constructor');
 		// this.courseList = [];
 	}
@@ -26,7 +26,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.loaderBlockService.hide();
 
 		/*this.isLoading = true;*/
-		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res: Course[]) => {
+		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
 			this.courseList = res;
 			this.isLoading = false;
 		});
@@ -37,25 +37,21 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		// this.coursesServiceSubscription.unsubscribe();
 	}
 
-	public createCourse(id: number) {
+	public createCourse(id:number) {
 		console.log(id);
 	}
 
-	public deleteCourseFromCoursesList(id: number) {
+	public deleteCourseFromCoursesList(id:number) {
 		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if (deleteConfirmation) {
+			this.courseList = this.coursesService.removeCourseItemById(id);
+			setTimeout(() => {
+				this.loaderBlockService.hide();
+			}, 400);
+		}
 
-			//let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res) => {
-				//console.log('result in courses comp: ', res);
-				//if (res) {
-					this.courseList = this.coursesService.removeCourseItemById(id);
-					setTimeout(() => {
-						this.loaderBlockService.hide();
-					}, 400);
-				}
-			//});
-			this.loaderBlockService.show();
-			console.log(id);
-		//}
+		this.loaderBlockService.show();
+		console.log(id);
+
 	}
 }

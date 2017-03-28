@@ -7,6 +7,8 @@ import {
 	EventEmitter,
 	ChangeDetectionStrategy
 } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
+import { LoaderBlockService } from '../../core/services';
 
 @Component({
 	selector: 'login',
@@ -17,7 +19,7 @@ import {
 export class LoginComponent implements OnInit, OnDestroy {
 	@Output() public loginUserEvent:EventEmitter<number> = new EventEmitter<number>();
 
-	constructor() {
+	constructor(private loaderBlockService:LoaderBlockService) {
 		console.log('login constructor');
 	}
 
@@ -26,7 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	public loginUser(login:string) {
-		this.loginUserEvent.emit();
+		this.loaderBlockService.show();
+		setTimeout(() => {
+			this.loginUserEvent.emit();
+		}, 400);
 	}
 
 	public ngOnDestroy() {
