@@ -10,28 +10,14 @@ export class LoaderBlockService {
 	public showLoader$: Observable<boolean>;
 	private showLoaderChange: Subject<boolean>;
 
-	constructor( private http: Http) {
-		//this.showLoader = true;
+	constructor() {
 		this.showLoaderChange = new Subject<boolean>();
 		this.showLoader$ = this.showLoaderChange.asObservable().startWith(false);
-		//this.showLoader$ = this.showLoaderChange.next(false);
 	}
 
 	show() {
-		//setTimeout(()=>{this.showLoaderChange.next(true);}, 500);
 		this.showLoaderChange.next(true);
-		// return this.showLoader$;
 		console.log('from service: showed');
-		//this.showLoader$ = true;
-		/*return this.http.get(this.loaderUrl)
-			.map((response: Response) => response.json())
-			.map((showLoader: boolean) => {
-				// change return value structure here if you want
-				return true;
-			});*/
-
-
-
 	}
 
 	hide() {

@@ -42,24 +42,20 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public deleteCourseFromCoursesList(id: number) {
-		// let deleteConfirmation = confirm("Do you really want to delete this course?");
-		let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res) => {
-			console.log('result in courses comp: ', res);
-			// this.isLoading = res;
-			if (res) {
-				 this.courseList = this.coursesService.removeCourseItemById(id);
-				 setTimeout(() => {
-					this.loaderBlockService.hide();
-				 }, 400);
-			}
-
-		});
-		let deleteConfirmation = true;
+		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if (deleteConfirmation) {
+
+			//let loaderSubscription = this.loaderBlockService.showLoader$.subscribe((res) => {
+				//console.log('result in courses comp: ', res);
+				//if (res) {
+					this.courseList = this.coursesService.removeCourseItemById(id);
+					setTimeout(() => {
+						this.loaderBlockService.hide();
+					}, 400);
+				}
+			//});
 			this.loaderBlockService.show();
-
-
 			console.log(id);
-		}
+		//}
 	}
 }

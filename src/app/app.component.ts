@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { AppState } from './app.service';
 import { AuthorizationService } from './core/services';
+import { NgZone } from '@angular/core';
 
 /*
  * App Component
@@ -28,12 +29,15 @@ import { AuthorizationService } from './core/services';
 export class AppComponent implements OnInit {
 	public isAuth:boolean;
 
-	constructor(private authorizationService:AuthorizationService) {
+	constructor(private authorizationService:AuthorizationService, private ngZone:NgZone) {
 		this.isAuth = authorizationService.isAuthentificated();
 	}
 
 
 	ngOnInit() {
+		this.ngZone.onUnstable.subscribe((data) => console.log('unstable', data));
+		this.ngZone.onStable.subscribe((data) => console.log('stable', data));
+
 	}
 
 	checkAuthorization(): boolean {

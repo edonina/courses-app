@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import 'rxjs/add/operator/map';
+
+const GUEST_NAME = 'Guest';
 
 
 @Injectable()
 export class AuthorizationService {
 	private userInfo:{};
 	private autificated: boolean;
+	public userLogin$: Observable<string>;
+	private userLoginChange: Subject<string>;
 
 
 	constructor() {
@@ -17,17 +21,19 @@ export class AuthorizationService {
 			admin: true,
 			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'
 		};
+		this.userLoginChange = new Subject<string>();
+		this.userLogin$ = this.userLoginChange.asObservable().startWith(this.userInfo['login']);
 		this.autificated = true;
 	}
 
 	public loginUser() {
-		console.log('login');
 		this.autificated = true;
+		this.userLoginChange.next(this.userInfo['login']);
 		localStorage.setItem(this.userInfo['login'], this.userInfo['token']);
 	}
 
 	public logoutUser() {
-		console.log('logout');
+		this.userLoginChange.next(GUEST_NAME);
 		localStorage.removeItem(this.userInfo['login']);
 		this.autificated = false;
 	}
@@ -36,10 +42,7 @@ export class AuthorizationService {
 		return this.autificated;
 	}
 
-	public getUserInfo(): any {
-		if(this.isAuthentificated()){
-			return this.userInfo['login'];
-		}
-		return false;
+	public getUserInfo(): Observable<string> {
+		return Observable.of(this.userInfo['login']);
 	}
 }

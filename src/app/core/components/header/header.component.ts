@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { AuthorizationService } from '../../services';
 
@@ -14,10 +15,18 @@ export class HeaderComponent {
 	@Output() public logoutUserEvent:EventEmitter<number> = new EventEmitter<number>();
 
 	public isAutentificatedState:boolean;
-	public user:string;
+	public user:Observable<string>;
+
 
 	constructor(private authorizationService:AuthorizationService) {
-		this.user = authorizationService.getUserInfo();
+		//this.user = authorizationService.getUserInfo();
+	}
+
+	public ngOnInit(){
+		this.authorizationService.userLogin$.subscribe((res)=>{
+			this.user = res;
+		})
+
 	}
 
 	public logoutUser(login:string) {
