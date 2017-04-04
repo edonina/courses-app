@@ -1,4 +1,4 @@
-<div class="todo-item row" [ngClass]="calculateStatusClass(course.status)" id="course-{{course.id}}">
+<div class="todo-item row" [ngClass]="calculateStatusClass(course.creationDate)" id="course-{{course.id}}">
 	<div class="col-sm-7">
 		<h3>{{course.title}}</h3>
 		<p>{{course.description}}</p>

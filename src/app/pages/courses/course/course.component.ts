@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Course } from '../../../core/entities';
-import { todoStatusClasses } from '../../../core/enums';
+import { courseStatusClasses } from '../../../core/enums';
 
 @Component({
 	selector: 'course',
@@ -18,7 +18,22 @@ export class CourseComponent {
 		this.deleteCourseEvent.emit(id);
 	}
 
-	public calculateStatusClass(status): string {
-		return todoStatusClasses[status];
+	public calculateStatusClass(date): string {
+		let currentDate = Date.now();
+		let currentDateCopy = new Date(currentDate);
+		let createdDate = date;
+		currentDateCopy.setDate(date.getDate() - 14);
+		let twoWeeksAgoDate  =  currentDateCopy.getDate();
+
+		console.log(currentDate);
+		console.log(currentDateCopy);
+		console.log(createdDate);
+		console.log(twoWeeksAgoDate);
+
+		if(createdDate < currentDate && createdDate >= twoWeeksAgoDate){
+			return courseStatusClasses['fresh'];
+		}else if(createdDate > currentDate){
+			return courseStatusClasses['upcoming'];
+		}
 	}
 }

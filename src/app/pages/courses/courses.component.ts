@@ -52,6 +52,5 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.loaderBlockService.show();
 		console.log(id);
-
 	}
 }
