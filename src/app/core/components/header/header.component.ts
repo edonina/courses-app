@@ -15,7 +15,7 @@ export class HeaderComponent {
 	@Output() public logoutUserEvent:EventEmitter<number> = new EventEmitter<number>();
 
 	public isAutentificatedState:boolean;
-	public user:Observable<string>;
+	public user:string;
 
 
 	constructor(private authorizationService:AuthorizationService) {

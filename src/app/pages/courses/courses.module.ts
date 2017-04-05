@@ -11,11 +11,13 @@ import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 
 import { ToolboxModule } from './toolbox/toolbox.module';
+import { DurationPipe } from '../../core/pipes/duration.pipe';
 
 @NgModule({
 	declarations: [
 		CoursesComponent,
-		CourseComponent
+		CourseComponent,
+		DurationPipe
 	],
 	imports: [
 		routes,

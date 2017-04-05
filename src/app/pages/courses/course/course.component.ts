@@ -5,7 +5,7 @@ import { courseStatusClasses } from '../../../core/enums';
 @Component({
 	selector: 'course',
 	templateUrl: 'course.component.html',
-	styles: ['./course.component.scss'],
+	styles: [require('./course.styles.scss')],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseComponent {
@@ -14,11 +14,11 @@ export class CourseComponent {
 
 	constructor() {}
 
-	public deleteCourse(id: number) {
+	deleteCourse(id: number) {
 		this.deleteCourseEvent.emit(id);
 	}
 
-	public calculateStatusClass(date): string {
+	calculateCourseFreshness(date) : string{
 		let currentDate = Date.now();
 		let currentDateCopy = new Date(currentDate);
 		let createdDate = date;
@@ -35,5 +35,25 @@ export class CourseComponent {
 		}else if(createdDate > currentDate){
 			return courseStatusClasses['upcoming'];
 		}
+	}
+
+	isTopRated(){
+		return this.course.topRated;
+	}
+
+	calculateStatusClass(date): string[] {
+		let coursesClasses = [];
+		let freshnessClass = this.calculateCourseFreshness(date);
+
+		if (freshnessClass){
+			coursesClasses.push(freshnessClass);
+		}
+
+		if (this.isTopRated()){
+			coursesClasses.push(courseStatusClasses['toprated']);
+		}
+		console.log(coursesClasses);
+		return coursesClasses;
+
 	}
 }

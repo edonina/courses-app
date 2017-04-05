@@ -30,9 +30,11 @@ import { HeaderModule, FooterModule, LoaderBlockModule } from './core/components
 import { CoursesModule } from './pages/courses';
 import { LoginModule } from  './pages/login';
 
-// Services
+import { PipeModule } from './core/pipes';
 
+// Services
 import { CoursesService, AuthorizationService, LoaderBlockService } from './core/services';
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -60,6 +62,7 @@ const APP_PROVIDERS = [
 		FooterModule,
 		LoginModule,
 		LoaderBlockModule
+		
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection
 		ENV_PROVIDERS,
