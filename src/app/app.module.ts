@@ -26,6 +26,8 @@ import { NoContentComponent } from './pages/no-content';
 // Components
 import { HeaderModule, FooterModule, LoaderBlockModule } from './core/components';
 
+
+
 // Pages
 import { CoursesModule } from './pages/courses';
 import { LoginModule } from  './pages/login';

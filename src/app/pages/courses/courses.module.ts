@@ -11,21 +11,20 @@ import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 
 import { ToolboxModule } from './toolbox/toolbox.module';
-import { DurationPipe, OrderByPipe } from '../../core/pipes/index';
+import { SharedModule } from '../../core/shared';
 
 @NgModule({
 	declarations: [
 		CoursesComponent,
-		CourseComponent,
-		DurationPipe,
-		OrderByPipe
+		CourseComponent
 	],
 	imports: [
 		routes,
 		FormsModule,
 		ToolboxModule,
 		ReactiveFormsModule,
-		CommonModule
+		CommonModule,
+		SharedModule
 	],
 	exports: [CoursesComponent]
 })

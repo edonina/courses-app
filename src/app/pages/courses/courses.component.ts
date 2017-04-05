@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
@@ -13,7 +13,7 @@ import { Course } from '../../core/entities';
 
 export class CoursesComponent implements OnInit, OnDestroy {
 	private coursesServiceSubscription:Subscription;
-	private courseList:Course[];
+	public courseList:Course[];
 	private isLoading:boolean = false;
 
 	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
