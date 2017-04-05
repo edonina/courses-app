@@ -16,7 +16,7 @@ export class CoursesService {
 				id: 0,
 				title: 'How to learn Angular 2 in few hours',
 				description: 'We all wanna get something without any effort, so forget about few hours, it will take you for ages.',
-				creationDate: new Date(2017, 2, 15),
+				creationDate: new Date(2017, 1, 15),
 				duration: 167,
 				topRated: true
 			},
@@ -32,7 +32,7 @@ export class CoursesService {
 				id: 2,
 				title: 'The truth',
 				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones.',
-				creationDate: new Date(2017, 3, 2),
+				creationDate: new Date(2017, 5, 2),
 				duration: 126,
 				topRated: true
 			}

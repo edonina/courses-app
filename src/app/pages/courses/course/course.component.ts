@@ -20,19 +20,16 @@ export class CourseComponent {
 
 	calculateCourseFreshness(date) : string{
 		let currentDate = Date.now();
-		let currentDateCopy = new Date(currentDate);
-		let createdDate = date;
-		currentDateCopy.setDate(date.getDate() - 14);
-		let twoWeeksAgoDate  =  currentDateCopy.getDate();
+		let currentDateMs = new Date(currentDate).getTime();
+		let createdDateMS = date.getTime();
 
-		console.log(currentDate);
-		console.log(currentDateCopy);
-		console.log(createdDate);
-		console.log(twoWeeksAgoDate);
+		//86400 * 1000 * 14  Each day is 86400 seconds
+		let twoWeeksPeriod  =   1209600000;
 
-		if(createdDate < currentDate && createdDate >= twoWeeksAgoDate){
+
+		if( createdDateMS < currentDateMs && createdDateMS >= currentDateMs - twoWeeksPeriod){
 			return courseStatusClasses['fresh'];
-		}else if(createdDate > currentDate){
+		}else if(createdDateMS > currentDateMs){
 			return courseStatusClasses['upcoming'];
 		}
 	}
