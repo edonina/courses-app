@@ -29,8 +29,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
+
 		this.courseListData.subscribe(r => {
-			console.info('>>>', r)
 			this.courseListView = r;
 		});
 
