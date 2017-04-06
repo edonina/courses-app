@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
@@ -16,7 +16,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public courseList:Course[];
 	private isLoading:boolean = false;
 
-	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
+	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService,  private cd: ChangeDetectorRef) {
 		console.log('Home page constructor');
 		// this.courseList = [];
 	}
@@ -28,6 +28,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		/*this.isLoading = true;*/
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
 			this.courseList = res;
+			this.cd.markForCheck();
 			this.isLoading = false;
 		});
 		// this.courseList = this.coursesService.getCourseItems();

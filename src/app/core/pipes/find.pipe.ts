@@ -6,11 +6,10 @@ export class FindPipe implements PipeTransform {
 		//new first
 		if (!value) return value;
 
-
 		var res = value.filter(function (el) {
-			return el['title'].indexOf(arg) >= 0;
+			return el['title'].toLowerCase().indexOf(arg) >= 0;
 		});
 
-		return value;
+		return res;
 	}
 }

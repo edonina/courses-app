@@ -12,10 +12,16 @@ import { DurationPipe, OrderByPipe, FindPipe } from '../pipes';
 		OrderByPipe,
 		FindPipe
 	],
-	imports: [
-
+	providers: [
+		DurationPipe,
+		OrderByPipe,
+		FindPipe
 	],
-	exports: []
+	exports: [
+		DurationPipe,
+		OrderByPipe,
+		FindPipe
+	]
 })
 export class SharedModule {
 	constructor() {

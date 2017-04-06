@@ -24,8 +24,4 @@ export class LoaderBlockService {
 		this.showLoaderChange.next(false);
 		console.log('from service: hided');
 	}
-
-
-
-
 }

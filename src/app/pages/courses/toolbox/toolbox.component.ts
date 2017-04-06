@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy,Input } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	ChangeDetectorRef
+} from '@angular/core';
 import { CoursesService } from '../../../core/services';
 import { Subscription, Observable } from 'rxjs';
 import { Course } from '../../../core/entities';
@@ -17,24 +22,17 @@ export class ToolboxComponent {
 	private coursesServiceSubscription:Subscription;
 
 
-	constructor(private coursesService:CoursesService, private findPipe: FindPipe) {
+	constructor(private coursesService:CoursesService, private findPipe: FindPipe, private cd: ChangeDetectorRef) {
 		this.textToFind = '';
 	}
 
 	public findCourse() {
 
-		console.log(this.textToFind);
-		let text = this.textToFind;
-
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
-
-			this.courseList = this.findPipe.transform(res, text);
-
+			this.courseList = this.findPipe.transform(res, this.textToFind);
+			this.cd.markForCheck();
+			console.log('sorted list:');
 			console.log(this.courseList);
 		});
-
-
-
-
 	}
 }
