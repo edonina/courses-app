@@ -7,10 +7,11 @@ export class OrderByPipe implements PipeTransform {
 		if (!value) return value;
 
 		function compare(a,b) {
-			if (a.creationDate > b.creationDate)
+			if (a.creationDate > b.creationDate){
 				return -1;
-			if (a.creationDate < b.creationDate)
+			}else if (a.creationDate < b.creationDate){
 				return 1;
+			}
 			return 0;
 		}
 

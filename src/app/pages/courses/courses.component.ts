@@ -39,7 +39,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			this.courseListInitial = res;
 			this.courseListData.next(res);
 			this.isLoading = false;
-
 		});
 
 	}
