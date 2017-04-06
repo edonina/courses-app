@@ -1,11 +1,10 @@
 import {
 	Component,
 	ChangeDetectionStrategy,
-	Input,
-	ChangeDetectorRef
+	Input
 } from '@angular/core';
 import { CoursesService } from '../../../core/services';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable,BehaviorSubject } from 'rxjs';
 import { Course } from '../../../core/entities';
 import { FindPipe } from '../../../core/pipes';
 
@@ -17,22 +16,17 @@ import { FindPipe } from '../../../core/pipes';
 })
 
 export class ToolboxComponent {
-	@Input() public courseList:any;
+	@Input() public courseListData: BehaviorSubject<any>;
+	@Input() public courseListInitial:Course[];
+
 	public textToFind: string;
-	private coursesServiceSubscription:Subscription;
 
-
-	constructor(private coursesService:CoursesService, private findPipe: FindPipe, private cd: ChangeDetectorRef) {
+	constructor(private findPipe: FindPipe) {
 		this.textToFind = '';
 	}
 
 	public findCourse() {
-
-		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
-			this.courseList = this.findPipe.transform(res, this.textToFind);
-			this.cd.markForCheck();
-			console.log('sorted list:');
-			console.log(this.courseList);
-		});
+		let filtRes  = this.findPipe.transform(this.courseListInitial, this.textToFind);
+		this.courseListData.next(filtRes);
 	}
 }
