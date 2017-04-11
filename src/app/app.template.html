@@ -1,11 +1,12 @@
 <loader-block></loader-block>
 <main-header [isAuth] ='isAuth' (logoutUserEvent)="logoutUser()"></main-header>
 
-<main class="container">
+<main class="container container-footer-padding">
   <!--<router-outlet></router-outlet>-->
 
 	<div *ngIf="isAuth" >
 		<courses></courses>
+		<add-course></add-course>
 	</div>
 	<div *ngIf="!isAuth" >
 		<login (loginUserEvent)="loginUser()"></login>

@@ -13,6 +13,7 @@ import { Course } from '../../core/entities';
 
 export class CoursesComponent implements OnInit, OnDestroy {
 	private coursesServiceSubscription:Subscription;
+	private courseListDataSubscription:Subscription;
 	public courseListInitial:Course[];
 	public courseListView:Course[];
 
@@ -30,7 +31,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
 
-		this.courseListData.subscribe(r => {
+		this.courseListDataSubscription = this.courseListData.subscribe(r => {
 			this.courseListView = r;
 		});
 
@@ -44,7 +45,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy() {
-		// this.coursesServiceSubscription.unsubscribe();
+		 this.coursesServiceSubscription.unsubscribe();
+		 this.courseListDataSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {

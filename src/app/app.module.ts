@@ -30,6 +30,7 @@ import { HeaderModule, FooterModule, LoaderBlockModule } from './core/components
 
 // Pages
 import { CoursesModule } from './pages/courses';
+import { AddCourseModule } from './pages/addCourse';
 import { LoginModule } from  './pages/login';
 
 // Services
@@ -59,6 +60,7 @@ const APP_PROVIDERS = [
 		RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
 		HeaderModule,
 		CoursesModule,
+		AddCourseModule,
 		FooterModule,
 		LoginModule,
 		LoaderBlockModule
