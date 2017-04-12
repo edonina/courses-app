@@ -4,13 +4,15 @@ import 'rxjs/add/operator/map';
 
 import { Course } from '../../entities';
 import { Observable } from 'rxjs';
+import {LimitByDatePipe} from "../../pipes/limit-by-date.pipe";
 
 
 @Injectable()
 export class CoursesService {
 	private courseList:Course[];
+	private courseListLimited:Course[];
 
-	constructor() {
+	constructor(private limitByDatePipe: LimitByDatePipe) {
 		this.courseList = [
 			{
 				id: 0,
@@ -41,6 +43,7 @@ export class CoursesService {
 	}
 
 	public getCourseItems(): Observable<Course[]> {
+		this.courseListLimited = this.limitByDatePipe.transform(this.courseList);
 		return Observable.of(this.courseList);
 	}
 

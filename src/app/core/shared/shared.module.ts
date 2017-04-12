@@ -4,23 +4,26 @@ import { CommonModule } from '@angular/common';
 
 
 //Pipes
-import { DurationPipe, OrderByPipe, FindPipe } from '../pipes';
+import { DurationPipe, FindPipe, LimitByDatePipe, OrderByPipe} from '../pipes';
 
 @NgModule({
 	declarations: [
 		DurationPipe,
-		OrderByPipe,
-		FindPipe
+		FindPipe,
+		LimitByDatePipe,
+		OrderByPipe
 	],
 	providers: [
 		DurationPipe,
-		OrderByPipe,
-		FindPipe
+		FindPipe,
+		LimitByDatePipe,
+		OrderByPipe
 	],
 	exports: [
 		DurationPipe,
-		OrderByPipe,
-		FindPipe
+		FindPipe,
+		LimitByDatePipe,
+		OrderByPipe
 	]
 })
 export class SharedModule {
