@@ -9,7 +9,7 @@ import {LimitByDatePipe} from "../../pipes/limit-by-date.pipe";
 
 @Injectable()
 export class CoursesService {
-	private courseList:Course[];
+	private courseList: Array;
 	private courseListLimited:Course[];
 
 	constructor(private limitByDatePipe: LimitByDatePipe) {
