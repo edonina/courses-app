@@ -51,8 +51,8 @@ export class CoursesService {
 	}
 
 	public getCourseItems(): Observable<Course[]> {
-		this.courseListLimited = this.limitByDatePipe.transform(this.courseList);
-		return Observable.of(this.courseListLimited);
+		this.courseList = this.limitByDatePipe.transform(this.courseList);
+		return Observable.of(this.courseList);
 	}
 
 	public createCourse(course):Course | boolean {

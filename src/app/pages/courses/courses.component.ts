@@ -56,7 +56,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public deleteCourseFromCoursesList(id:number) {
 		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if (deleteConfirmation) {
-			this.courseListInitial = this.coursesService.removeCourseItemById(id);
+			this.courseListView = this.coursesService.removeCourseItemById(id);
 			setTimeout(() => {
 				this.loaderBlockService.hide();
 			}, 400);
