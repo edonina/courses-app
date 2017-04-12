@@ -33,8 +33,16 @@ export class CoursesService {
 			{
 				id: 2,
 				title: 'The truth',
-				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones.',
+				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 2 June',
 				creationDate: new Date(2017, 5, 2),
+				duration: 126,
+				topRated: true
+			},
+			{
+				id: 3,
+				title: 'The truth',
+				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
+				creationDate: new Date(2017, 3, 3),
 				duration: 126,
 				topRated: true
 			}
@@ -44,7 +52,7 @@ export class CoursesService {
 
 	public getCourseItems(): Observable<Course[]> {
 		this.courseListLimited = this.limitByDatePipe.transform(this.courseList);
-		return Observable.of(this.courseList);
+		return Observable.of(this.courseListLimited);
 	}
 
 	public createCourse(course):Course | boolean {
