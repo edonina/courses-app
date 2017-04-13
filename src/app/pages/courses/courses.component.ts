@@ -36,17 +36,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		});
 
 		/*this.isLoading = true;*/
-		this.coursesServiceSubscription = this.coursesService.getCourseItems()
-			//.map(response => response.json())
-			.map(item => ({
-				id: item.id,
-				title: item.title,
-				description: item.description,
-				date: item.creationDate,
-				duration: item.duration,
-				topRated: item.topRated
-			}))
-			.subscribe((res:Course[]) => {
+		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
 				this.courseListInitial = res;
 				this.courseListData.next(res);
 				this.isLoading = false;

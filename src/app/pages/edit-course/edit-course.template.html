@@ -1,0 +1,24 @@
+<div class="edit-course">
+	<div >
+		<form class="row">
+			<div class="form-group col-xs-12 col-md-6">
+				<label for="title">Title:</label>
+				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}">
+
+				<label for="description">Description:</label>
+				<textarea type="text" id="description" class="form-control">{{editedCourse.description}}</textarea>
+
+
+
+				<input-date [courseDate] = "editedCourse.date"></input-date>
+				<input-duration [duration] = "editedCourse.duration"></input-duration>
+
+
+				<button type="submit" (click)="saveCourse()" class="btn btn-primary">Save</button>
+				<button type="submit" (click)="cancelCourse()" class="btn">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+

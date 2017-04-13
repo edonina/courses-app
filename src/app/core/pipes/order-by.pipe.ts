@@ -7,9 +7,9 @@ export class OrderByPipe implements PipeTransform {
 		if (!value) return value;
 
 		function compare(a,b) {
-			if (a.creationDate > b.creationDate){
+			if (a.date > b.date){
 				return -1;
-			}else if (a.creationDate < b.creationDate){
+			}else if (a.date < b.date){
 				return 1;
 			}
 			return 0;

@@ -4,10 +4,14 @@
 <main class="container container-footer-padding">
   <!--<router-outlet></router-outlet>-->
 
-	<div *ngIf="isAuth" >
+	<div *ngIf="isAuth && !editedCourse" >
 		<courses></courses>
-		<add-course></add-course>
 	</div>
+
+	<div *ngIf="isAuth && editedCourse" >
+		<edit-course [editedCourse] =''></edit-course>
+	</div>
+
 	<div *ngIf="!isAuth" >
 		<login (loginUserEvent)="loginUser()"></login>
 	</div>

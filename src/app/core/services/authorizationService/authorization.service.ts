@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, ReplaySubject } from 'rxjs';
 
 import 'rxjs/add/operator/map';
 
@@ -11,7 +11,7 @@ export class AuthorizationService {
 	private userInfo:{};
 	private autificated: boolean;
 	public userLogin$: Observable<string>;
-	private userLoginChange: Subject<string>;
+	private userLoginChange: ReplaySubject<string>;
 
 
 	constructor() {
@@ -21,7 +21,7 @@ export class AuthorizationService {
 			admin: true,
 			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'
 		};
-		this.userLoginChange = new Subject<string>();
+		this.userLoginChange = new ReplaySubject<string>();
 		this.userLogin$ = this.userLoginChange.asObservable().startWith(this.userInfo['login']);
 		this.autificated = true;
 	}

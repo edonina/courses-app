@@ -4,16 +4,19 @@ import 'rxjs/add/operator/map';
 
 import { Course } from '../../entities';
 import { Observable } from 'rxjs';
-import {LimitByDatePipe} from "../../pipes/limit-by-date.pipe";
+import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
+import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
 
 
 @Injectable()
 export class CoursesService {
-	private courseList: Array;
+	private courseListData: any;
+	private courseList: Course[];
 	private courseListLimited:Course[];
 
-	constructor(private limitByDatePipe: LimitByDatePipe) {
-		this.courseList = [
+	constructor(private limitByDatePipe: LimitByDatePipe, private http: Http) {
+
+		this.courseListData = [
 			{
 				id: 0,
 				title: 'How to learn Angular 2 in few hours',
@@ -47,11 +50,25 @@ export class CoursesService {
 				topRated: true
 			}
 		];
-		//this.courseList = [];
+		this.courseList = [];
 	}
 
+
 	public getCourseItems(): Observable<Course[]> {
-		this.courseList = this.limitByDatePipe.transform(this.courseList);
+		this.courseListData = this.courseListData.map(item => {
+			console.log(item);
+			return {
+				id: item['id'],
+				title : item['title'],
+				description: item['description'],
+				date: item['creationDate'],
+				duration: item['duration'],
+				topRated: item['topRated']
+			}
+		});
+		console.log('vfxvd');
+		console.log(this.courseListData);
+		this.courseList = this.limitByDatePipe.transform(this.courseListData);
 		return Observable.of(this.courseList);
 	}
 
