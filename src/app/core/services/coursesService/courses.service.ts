@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 import { Course } from '../../entities';
-import { Observable } from 'rxjs';
+
 import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable()
 export class CoursesService {
-	private courseListData: any;
-	private courseList: Course[];
+	private courseListData: Course[];
+	private courseList: BehaviorSubject<Course[]>;
 	private courseListLimited:Course[];
 
 	constructor(private limitByDatePipe: LimitByDatePipe, private http: Http) {
-
 		this.courseListData = [
 			{
 				id: 0,
@@ -50,11 +51,10 @@ export class CoursesService {
 				topRated: true
 			}
 		];
-		this.courseList = [];
 	}
 
 
-	public getCourseItems(): Observable<Course[]> {
+	public getCourseItems(): BehaviorSubject<Course[]> {
 		this.courseListData = this.courseListData.map(item => {
 			console.log(item);
 			return {
@@ -66,29 +66,31 @@ export class CoursesService {
 				topRated: item['topRated']
 			}
 		});
-		console.log('vfxvd');
-		console.log(this.courseListData);
-		this.courseList = this.limitByDatePipe.transform(this.courseListData);
-		return Observable.of(this.courseList);
+
+		this.courseListLimited = this.limitByDatePipe.transform(this.courseListData);
+
+		this.courseList = new BehaviorSubject(this.courseListLimited);
+
+		return this.courseList;
 	}
 
 	public createCourse(course):Course | boolean {
 		if (course.title) {
 			course.id = this.getUserId();
-			this.courseList.push(course);
+			this.courseList.getValue().push(course);
 			return course;
 		}
 		return false;
 	}
 
 	public getUserId() {
-		let i = this.courseList.length;
+		let i = this.courseList.getValue().length;
 		let courseId = this.courseList[i].id + 1;
 		return courseId;
 	}
 
 	public getCourseItemById(id):any {
-		return this.courseList.find(course => course.id === id);
+		return this.courseList.getValue().find(course => course.id === id);
 	}
 
 	public updateCourseItemById(courseObj:Course, id) {
@@ -96,10 +98,10 @@ export class CoursesService {
 	}
 
 	public removeCourseItemById(id) {
-		let courseArrayIndex = this.courseList.findIndex(course => course.id === id);
+		let courseArrayIndex = this.courseList.getValue().findIndex(course => course.id === id);
 
 		if (courseArrayIndex != -1) {
-			this.courseList.splice(courseArrayIndex, 1);
+			this.courseList.getValue().splice(courseArrayIndex, 1);
 		}
 		return this.courseList;
 	}

@@ -4,6 +4,8 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
 
+
+
 @Component({
 	selector: 'courses',
 	styles: [require('./courses.styles.scss')],
@@ -32,13 +34,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.loaderBlockService.hide();
 
 		this.courseListDataSubscription = this.courseListData.subscribe(r => {
-			this.courseListView = r;
+			//this.courseListView = r;
 		});
 
 		/*this.isLoading = true;*/
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
 				this.courseListInitial = res;
-				this.courseListData.next(res);
+/*				this.courseListData.next(res);*/
+				this.courseListView = res;
 				this.isLoading = false;
 		});
 
