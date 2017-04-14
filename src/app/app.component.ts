@@ -32,16 +32,16 @@ export class AppComponent implements OnInit {
 
 	constructor(private authorizationService:AuthorizationService, private ngZone:NgZone) {
 		this.isAuth = authorizationService.isAuthentificated();
-		//this.editedCourse = false;
+		this.editedCourse = false;
 		//this.editedCourse = {};
-		this.editedCourse = {
+		/*this.editedCourse = {
 			id: 3,
 			title: 'The truth',
 			description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
 			date: new Date(2017, 3, 3),
 			duration: 126,
 			topRated: true
-		}
+		}*/
 	}
 
 
