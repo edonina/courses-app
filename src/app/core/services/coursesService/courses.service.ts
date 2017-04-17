@@ -13,16 +13,19 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class CoursesService {
 	private courseListData: Course[];
-	private courseList: BehaviorSubject<Course[]>;
+	public courseList: BehaviorSubject<Course[]>;
+	public courseListView: BehaviorSubject<Course[]>;
 	private courseListLimited:Course[];
 
 	constructor(private limitByDatePipe: LimitByDatePipe, private http: Http) {
+		this.courseList = new BehaviorSubject([]);
+		this.courseListView = new BehaviorSubject([]);
 		this.courseListData = [
 			{
 				id: 0,
 				title: 'How to learn Angular 2 in few hours',
 				description: 'We all wanna get something without any effort, so forget about few hours, it will take you for ages.',
-				creationDate: new Date(2017, 1, 15),
+				creationDate: new Date(2017, 3, 15),
 				duration: 167,
 				topRated: true
 			},
@@ -30,7 +33,7 @@ export class CoursesService {
 				id: 1,
 				title: 'Yet another motivational video',
 				description: `See videos, read tons of articles, how to do at least anything, but advice is the one: just get your ass off the sofa and start doing.`,
-				creationDate: new Date(2017, 2, 27),
+				creationDate: new Date(2017, 3, 7),
 				duration: 37,
 				topRated: false
 			},
@@ -50,11 +53,20 @@ export class CoursesService {
 				duration: 126,
 				topRated: true
 			}
+			,
+			{
+				id: 4,
+				title: 'The truth',
+				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
+				creationDate: new Date(2017, 3, 4),
+				duration: 126,
+				topRated: true
+			}
 		];
 	}
 
 
-	public getCourseItems(): BehaviorSubject<Course[]> {
+	public getCourseItems(): void {
 		this.courseListData = this.courseListData.map(item => {
 			console.log(item);
 			return {
@@ -69,9 +81,9 @@ export class CoursesService {
 
 		this.courseListLimited = this.limitByDatePipe.transform(this.courseListData);
 
-		this.courseList = new BehaviorSubject(this.courseListLimited);
+		this.courseList.next(this.courseListLimited);
 
-		return this.courseList;
+
 	}
 
 	public createCourse(course):Course | boolean {
@@ -97,14 +109,17 @@ export class CoursesService {
 		return;
 	}
 
-	public removeCourseItemById(id) {
-		let courseArrayIndex = this.courseList.getValue().findIndex(course => course.id === id);
-
+	public removeCourseItemById(id):void {
+		let listVal = this.courseList.getValue();
+		let courseArrayIndex = listVal.findIndex(course => course.id === id);
+		listVal.splice(courseArrayIndex, 1);
 		if (courseArrayIndex != -1) {
-			this.courseList.getValue().splice(courseArrayIndex, 1);
+			this.courseList.next(listVal);
 		}
-		return this.courseList;
 	}
+
+
+
 
 
 }

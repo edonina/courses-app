@@ -32,24 +32,27 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
+		this.coursesService.getCourseItems();
 
-		this.courseListDataSubscription = this.courseListData.subscribe(r => {
-			//this.courseListView = r;
+		this.courseListDataSubscription = this.coursesService.courseListView.subscribe(r => {
+			this.courseListView = r;
 		});
-
+		this.coursesServiceSubscription = this.coursesService.courseList.subscribe(r => {
+			this.coursesService.courseListView.next(r);
+		});
 		/*this.isLoading = true;*/
-		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe((res:Course[]) => {
+		/*this.coursesServiceSubscription = this.coursesService.courseListView.subscribe((res:Course[]) => {
 				this.courseListInitial = res;
-/*				this.courseListData.next(res);*/
+/!*				this.courseListData.next(res);*!/
 				this.courseListView = res;
 				this.isLoading = false;
-		});
+		});*/
 
 	}
 
 	public ngOnDestroy() {
 		 this.coursesServiceSubscription.unsubscribe();
-		 this.courseListDataSubscription.unsubscribe();
+		// this.courseListDataSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {
@@ -59,12 +62,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public deleteCourseFromCoursesList(id:number) {
 		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if (deleteConfirmation) {
-			this.courseListView = this.coursesService.removeCourseItemById(id);
+			this.coursesService.removeCourseItemById(id);
 			setTimeout(() => {
 				this.loaderBlockService.hide();
 			}, 400);
 		}
-
+		console.log('jjj');
+		console.log(id);
+console.log(			this.courseListView
+	);
 		this.loaderBlockService.show();
 		console.log(id);
 	}

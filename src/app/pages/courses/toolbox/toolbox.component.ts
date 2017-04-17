@@ -21,12 +21,15 @@ export class ToolboxComponent {
 
 	public textToFind: string;
 
-	constructor(private findPipe: FindPipe) {
+	constructor(private findPipe: FindPipe, private coursesService:CoursesService) {
 		this.textToFind = '';
 	}
 
 	public findCourse() {
-		let filtRes  = this.findPipe.transform(this.courseListInitial, this.textToFind);
-		this.courseListData.next(filtRes);
+		let filtRes  = this.findPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
+		console.log('filtRes');
+		console.log(this.coursesService.courseList.getValue());
+		console.log(filtRes);
+		this.coursesService.courseListView.next(filtRes);
 	}
 }
