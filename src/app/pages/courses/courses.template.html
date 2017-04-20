@@ -6,7 +6,7 @@
 	</div>
 	<div class="todo-list" *ngIf="courseListView.length">
 		<course
-			*ngFor="let course of courseListView | orderBy"
+			*ngFor="let course of courseListView | myOrderBy"
 			[course]="course"
 			(deleteCourseEvent)="deleteCourseFromCoursesList($event)"
 		></course>

@@ -8,15 +8,16 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
-	private courseListData:any;
-	public courseList:BehaviorSubject<Course[]>;
-	public courseListView:BehaviorSubject<Course[]>;
-	private courseListLimited:Course[];
+	private courseListData: any;
+	public courseList: BehaviorSubject<Course[]>;
+	public courseListView: BehaviorSubject<Course[]>;
+	private courseListLimited: Course[];
+	private courseListUrl: string = 'http://localhost:3004/courses';
 
-	constructor(private limitByDatePipe:LimitByDatePipe, private http:Http) {
+	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
 		this.courseListView = new BehaviorSubject([]);
-		this.courseListData = [
+		/*this.courseListData = [
 			{
 				id: 0,
 				title: 'How to learn Angular 2 in few hours',
@@ -58,10 +59,48 @@ export class CoursesService {
 				duration: 126,
 				topRated: true
 			}
-		];
+		];*/
 	}
 
-	public getCourseItems():void {
+	public getCourseItems():any {
+		console.log('-------');
+
+		this.courseListData = this.http.get(this.courseListUrl)
+			.map((response: Response) => response.json())
+			.map((courseItems: any) => {
+				// change return value structure here if you want
+				//courseItems = [];
+				console.log(courseItems);
+				console.log('00000000000000');
+				return courseItems;
+			});
+
+			/*.map((response: Response) => {
+				console.log(response);
+				console.log(response.json());
+				return response.json()
+			})
+			.map((courseItems:any) => {
+			// change return value structure here if you want
+			console.log('00000000000000');
+			console.log(courseItems);
+			console.log(courseItems.courses);
+			return courseItems;
+		})*/
+			/*.map(item => {
+
+				console.log(item);
+				return {
+					id: item['id'],
+					title: item['name'],
+					description: item['description'],
+					date: item['date'],
+					duration: item['length'],
+					topRated: item['isTopRated']
+				}
+			});*/
+
+/*
 		this.courseListData = this.courseListData.map(item => {
 			console.log(item);
 			return {
@@ -72,14 +111,15 @@ export class CoursesService {
 				duration: item['duration'],
 				topRated: item['topRated']
 			}
-		});
+		});*/
 
-		this.courseListLimited = this.limitByDatePipe.transform(this.courseListData);
+		this.courseListLimited = this.myLimitByDate.transform(this.courseListData);
 
 		this.courseList.next(this.courseListLimited);
+		return this.courseListData;
 	}
 
-	public createCourse(course):Course | boolean {
+	public createCourse(course): Course | boolean {
 		if (course.title) {
 			course.id = this.getUserId();
 			this.courseList.getValue().push(course);
@@ -94,7 +134,7 @@ export class CoursesService {
 		return courseId;
 	}
 
-	public getCourseItemById(id):any {
+	public getCourseItemById(id): any {
 		return this.courseList.getValue().find(course => course.id === id);
 	}
 
@@ -102,7 +142,7 @@ export class CoursesService {
 		return;
 	}
 
-	public removeCourseItemById(id):void {
+	public removeCourseItemById(id): void {
 		let listVal = this.courseList.getValue();
 		let courseArrayIndex = listVal.findIndex(course => course.id === id);
 		listVal.splice(courseArrayIndex, 1);

@@ -44,7 +44,6 @@ export class AppComponent implements OnInit {
 		}*/
 	}
 
-
 	ngOnInit() {
 		this.ngZone.onUnstable.subscribe((data) => console.log('unstable', data));
 		this.ngZone.onStable.subscribe((data) => console.log('stable', data));
@@ -68,6 +67,4 @@ export class AppComponent implements OnInit {
 		this.authorizationService.logoutUser();
 		this.isAuth = this.authorizationService.isAuthentificated();
 	}
-
-
 }

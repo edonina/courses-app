@@ -4,7 +4,7 @@ import {
 	Input
 } from '@angular/core';
 import { CoursesService } from '../../../core/services';
-import { Subscription, Observable,BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { Course } from '../../../core/entities';
 import { FindPipe } from '../../../core/pipes';
 
@@ -16,20 +16,17 @@ import { FindPipe } from '../../../core/pipes';
 })
 
 export class ToolboxComponent {
-	@Input() public courseListData: BehaviorSubject<any>;
-	@Input() public courseListInitial:Course[];
+	@Input() public courseListData: BehaviorSubject <any>;
+	@Input() public courseListInitial: Course [];
 
 	public textToFind: string;
 
-	constructor(private findPipe: FindPipe, private coursesService:CoursesService) {
+	constructor(private myFindPipe: FindPipe, private coursesService: CoursesService) {
 		this.textToFind = '';
 	}
 
 	public findCourse() {
-		let filtRes  = this.findPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
-		console.log('filtRes');
-		console.log(this.coursesService.courseList.getValue());
-		console.log(filtRes);
+		let filtRes  = this.myFindPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
 		this.coursesService.courseListView.next(filtRes);
 	}
 }

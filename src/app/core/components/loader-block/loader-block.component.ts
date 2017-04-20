@@ -20,8 +20,6 @@ export class LoaderBlockComponent implements OnInit {
 	constructor(private loaderBlockServiceService: LoaderBlockService) {
 		// this.showLoader = loaderBlockServiceService.showLoader$;
 		// this.showLoader = false;
-
-
 		/*loaderBlockServiceService.showLoader$.subscribe((newBool: boolean) => {
 			this.showLoader = newBool;
 			console.log('from the loader-blok comp: ', newBool, this.showLoader);
@@ -29,7 +27,7 @@ export class LoaderBlockComponent implements OnInit {
 
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.showLoader = this.loaderBlockServiceService.showLoader$;
 	}
 

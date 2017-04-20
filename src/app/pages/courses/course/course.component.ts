@@ -49,7 +49,7 @@ export class CourseComponent {
 		if (this.isTopRated()){
 			coursesClasses.push(courseStatusClasses['toprated']);
 		}
-		console.log(coursesClasses);
+		/*console.log(coursesClasses);*/
 		return coursesClasses;
 
 	}

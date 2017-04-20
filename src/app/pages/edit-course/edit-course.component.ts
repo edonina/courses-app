@@ -39,8 +39,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		this.courseListData = new BehaviorSubject<any>([]);*/
 	}
 	public ngOnInit() {
-		console.log('this.editedCourse');
-		console.log(this.editedCourse);
+	/*	console.log('this.editedCourse');
+		console.log(this.editedCourse);*/
 
 	}
 	public ngOnDestroy() {
