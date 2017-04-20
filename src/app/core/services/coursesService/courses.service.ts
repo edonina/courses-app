@@ -12,7 +12,7 @@ export class CoursesService {
 	public courseList: BehaviorSubject<Course[]>;
 	public courseListView: BehaviorSubject<Course[]>;
 	private courseListLimited: Course[];
-	private courseListUrl: string = 'http://localhost:3004/courses';
+	private courseListUrl: string = 'http://localhost:3004/courseslist';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
@@ -67,28 +67,7 @@ export class CoursesService {
 
 		this.courseListData = this.http.get(this.courseListUrl)
 			.map((response: Response) => response.json())
-			.map((courseItems: any) => {
-				// change return value structure here if you want
-				//courseItems = [];
-				console.log(courseItems);
-				console.log('00000000000000');
-				return courseItems;
-			});
-
-			/*.map((response: Response) => {
-				console.log(response);
-				console.log(response.json());
-				return response.json()
-			})
-			.map((courseItems:any) => {
-			// change return value structure here if you want
-			console.log('00000000000000');
-			console.log(courseItems);
-			console.log(courseItems.courses);
-			return courseItems;
-		})*/
-			/*.map(item => {
-
+			.map(item => {
 				console.log(item);
 				return {
 					id: item['id'],
@@ -98,7 +77,13 @@ export class CoursesService {
 					duration: item['length'],
 					topRated: item['isTopRated']
 				}
-			});*/
+			})
+				.map(r => {
+						console.log(r);
+						return r
+					});
+
+
 
 /*
 		this.courseListData = this.courseListData.map(item => {
@@ -113,6 +98,7 @@ export class CoursesService {
 			}
 		});*/
 
+		console.log(this.courseListData );
 		this.courseListLimited = this.myLimitByDate.transform(this.courseListData);
 
 		this.courseList.next(this.courseListLimited);
