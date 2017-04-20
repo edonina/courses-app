@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-
 import { Course } from '../../entities';
-
 import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 
-
 @Injectable()
 export class CoursesService {
-	private courseListData: Course[];
-	public courseList: BehaviorSubject<Course[]>;
-	public courseListView: BehaviorSubject<Course[]>;
+	private courseListData:any;
+	public courseList:BehaviorSubject<Course[]>;
+	public courseListView:BehaviorSubject<Course[]>;
 	private courseListLimited:Course[];
 
-	constructor(private limitByDatePipe: LimitByDatePipe, private http: Http) {
+	constructor(private limitByDatePipe:LimitByDatePipe, private http:Http) {
 		this.courseList = new BehaviorSubject([]);
 		this.courseListView = new BehaviorSubject([]);
 		this.courseListData = [
@@ -65,13 +61,12 @@ export class CoursesService {
 		];
 	}
 
-
-	public getCourseItems(): void {
+	public getCourseItems():void {
 		this.courseListData = this.courseListData.map(item => {
 			console.log(item);
 			return {
 				id: item['id'],
-				title : item['title'],
+				title: item['title'],
 				description: item['description'],
 				date: item['creationDate'],
 				duration: item['duration'],
@@ -82,8 +77,6 @@ export class CoursesService {
 		this.courseListLimited = this.limitByDatePipe.transform(this.courseListData);
 
 		this.courseList.next(this.courseListLimited);
-
-
 	}
 
 	public createCourse(course):Course | boolean {
@@ -117,9 +110,4 @@ export class CoursesService {
 			this.courseList.next(listVal);
 		}
 	}
-
-
-
-
-
 }

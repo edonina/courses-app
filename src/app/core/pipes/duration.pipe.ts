@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'duration'})
 export class DurationPipe implements PipeTransform {
-	transform(value: any, args: any[]): any {
-		let valueString: string;
-		let minString: string;
+	transform(value:any, args:any[]):any {
+		let valueString:string;
+		let minString:string;
 
 		if (!value) return value;
 

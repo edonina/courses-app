@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'findPipe'})
 export class FindPipe implements PipeTransform {
-	transform(value: Object[], arg: string): any {
+	transform(value:Object[], arg:string):any {
 		//new first
 		if (!value) return value;
 
