@@ -12,7 +12,7 @@ export class CoursesService {
 	public courseList: BehaviorSubject<Course[]>;
 	public courseListView: BehaviorSubject<Course[]>;
 	private courseListLimited: Course[];
-	private courseListUrl: string = 'http://localhost:3004/courseslist';
+	private courseListUrl: string = 'http://127.0.0.1:3004/courses?start=1&count=10';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
@@ -69,6 +69,7 @@ export class CoursesService {
 			.map((response: Response) => response.json())
 			.map(item => {
 				console.log(item);
+				console.log('2222');
 				return {
 					id: item['id'],
 					title: item['name'],
