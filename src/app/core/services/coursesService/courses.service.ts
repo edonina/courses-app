@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+/*import {Rx} from 'rxjs/Rx';*/
 import { Course } from '../../entities';
 import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
 	private courseListData: any;
-	public courseList: BehaviorSubject<Course[]>;
+	public courseList: Observable<Course[]>;
+	//public courseList: Subject<Course[]>;
 	public courseListView: BehaviorSubject<Course[]>;
 	private courseListLimited: Course[];
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses?start=1&count=10';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
+		//this.courseList = new Subject([]);
 		this.courseListView = new BehaviorSubject([]);
 		/*this.courseListData = [
 			{
@@ -65,45 +68,62 @@ export class CoursesService {
 	public getCourseItems():any {
 		console.log('-------');
 
-		this.courseListData = this.http.get(this.courseListUrl)
-			.map((response: Response) => response.json())
-			.map(item => {
-				console.log(item);
-				console.log('2222');
-				return {
-					id: item['id'],
-					title: item['name'],
-					description: item['description'],
-					date: item['date'],
-					duration: item['length'],
-					topRated: item['isTopRated']
+		this.courseList
+			.switchMap((courseList) => this.http.get(this.courseListUrl))
+			.map((res: Response) => res.json())
+			.map(itemsList => {
+				let i;
+				let courseListData =[];
+				for(i = 0; i < itemsList.length; i++){
+
+					courseListData[i] = {
+						id: itemsList[i]['id'],
+						title: itemsList[i]['name'],
+						description: itemsList[i]['description'],
+						date: itemsList[i]['date'],
+						duration: itemsList[i]['length'],
+						topRated: itemsList[i]['isTopRated']
+					}
 				}
+				console.log('hhh')
+				console.log(courseListData)
+				return courseListData;
 			})
-				.map(r => {
-						console.log(r);
-						return r
-					});
+			/*.subscribe(res => {
+				this.courseList.next(res);
+				this.courseListView.next(res);
+				console.log(res)})*/;
+
+		/*this.courseList = this.http.get(this.courseListUrl)
+			.map((response: Response) => response.json())
+			.map(itemsList => {
 
 
+				let i;
+				let courseListData =[];
+				for(i = 0; i < itemsList.length; i++){
 
-/*
-		this.courseListData = this.courseListData.map(item => {
-			console.log(item);
-			return {
-				id: item['id'],
-				title: item['title'],
-				description: item['description'],
-				date: item['creationDate'],
-				duration: item['duration'],
-				topRated: item['topRated']
-			}
-		});*/
+					courseListData[i] = {
+						id: itemsList[i]['id'],
+						title: itemsList[i]['name'],
+						description: itemsList[i]['description'],
+						date: itemsList[i]['date'],
+						duration: itemsList[i]['length'],
+						topRated: itemsList[i]['isTopRated']
+					}
+				}
 
-		console.log(this.courseListData );
-		this.courseListLimited = this.myLimitByDate.transform(this.courseListData);
+				return courseListData;
+			}).switchMap();
+*/
 
-		this.courseList.next(this.courseListLimited);
-		return this.courseListData;
+
+		console.log(this.courseList);
+		//this.courseListLimited = this.myLimitByDate.transform(this.courseListData);
+		//this.courseListLimited = this.courseListData;
+
+		//this.courseList.next(this.courseListLimited);
+		return this.courseList;
 	}
 
 	public createCourse(course): Course | boolean {

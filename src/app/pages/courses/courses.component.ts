@@ -29,14 +29,21 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.coursesService.getCourseItems();
 
 		this.courseListDataSubscription = this.coursesService.courseListView.subscribe(r => {
+
 			this.courseListView = r;
 		});
 		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe(r => {
+			console.log('ffff----');
+			console.log(r);
+			/*this.coursesService.courseListView.next(r);
+			this.coursesService.courseList.next(r);*/
+		});
+		this.coursesServiceSubscription = this.coursesService.courseList.subscribe(r => {
+			console.log('ffff2');
+			console.log(r);
+			console.log(this.coursesService.courseList);
 			this.coursesService.courseListView.next(r);
 		});
-		/*this.coursesServiceSubscription = this.coursesService.courseList.subscribe(r => {
-			this.coursesService.courseListView.next(r);
-		});*/
 		/*this.isLoading = true;*/
 		/*this.coursesServiceSubscription = this.coursesService.courseListView.subscribe((res:Course[]) => {
 				this.courseListInitial = res;
