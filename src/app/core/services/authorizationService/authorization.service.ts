@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 
@@ -17,7 +17,6 @@ export class AuthorizationService {
 
 	private authLoginUrl: string = 'http://127.0.0.1:3004/auth/login';
 
-
 	constructor( private http: Http) {
 		this.userInfo = {
 			id: 585507,
@@ -31,11 +30,8 @@ export class AuthorizationService {
 	}
 
 	public loginUser(credentials: any) {
-		this.autificated = true;
-		credentials = {
-			login: 'Morales',
-			password: 'id'
-		}
+		/*this.autificated = true;*/
+
 		console.log('>>> ',credentials);
 
 		this.userLoginChange.next(this.userInfo['login']);
@@ -47,10 +43,7 @@ export class AuthorizationService {
 			.map(token => {
 				console.log('>>> ',token);
 				return token;
-			});
-
-
-
+			})
 	}
 
 	public logoutUser() {

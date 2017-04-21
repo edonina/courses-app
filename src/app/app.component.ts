@@ -59,7 +59,11 @@ export class AppComponent implements OnInit {
 	}
 
 	loginUser(login: string) {
-		this.authorizationService.loginUser();
+		let credentials = {
+			login: 'Morales',
+			password: 'id'
+		}
+		this.authorizationService.loginUser(credentials);
 		this.isAuth = this.authorizationService.isAuthentificated();
 	}
 
