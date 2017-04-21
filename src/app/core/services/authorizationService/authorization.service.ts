@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
+import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 const GUEST_NAME = 'Guest';
 
@@ -13,8 +15,10 @@ export class AuthorizationService {
 	public userLogin$: Observable<string>;
 	private userLoginChange: ReplaySubject<string>;
 
+	private authLoginUrl: string = 'http://127.0.0.1:3004/auth/login';
 
-	constructor() {
+
+	constructor( private http: Http) {
 		this.userInfo = {
 			id: 585507,
 			login: 'Smurfik',
@@ -26,10 +30,27 @@ export class AuthorizationService {
 		this.autificated = true;
 	}
 
-	public loginUser() {
+	public loginUser(credentials: any) {
 		this.autificated = true;
+		credentials = {
+			login: 'Morales',
+			password: 'id'
+		}
+		console.log('>>> ',credentials);
+
 		this.userLoginChange.next(this.userInfo['login']);
 		localStorage.setItem(this.userInfo['login'], this.userInfo['token']);
+
+		return this.userLoginChange
+			.switchMap((credentials) => this.http.post( this.authLoginUrl, credentials))
+			.map((res: Response) => res.json())
+			.map(token => {
+				console.log('>>> ',token);
+				return token;
+			});
+
+
+
 	}
 
 	public logoutUser() {
