@@ -29,8 +29,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		this.loaderBlockService.hide();
 
 
-
-
 		this.courseListDataSubscription = this.coursesService.courseListV.subscribe(r => {
 			this.courseListView = r;
 		});

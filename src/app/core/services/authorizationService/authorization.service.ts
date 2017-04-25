@@ -1,9 +1,12 @@
 import { Injectable, ChangeDetectionStrategy } from '@angular/core';
-import { Observable, Subject, ReplaySubject } from 'rxjs';
-import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
+import { Observable, Subject, ReplaySubject, Subscription,BehaviorSubject } from 'rxjs';
+import { Response, Request, RequestOptions, RequestMethod, Http, Headers, URLSearchParams } from '@angular/http';
+import { HttpService } from './../httpService/http.service';
+
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 const GUEST_NAME = 'Guest';
 
@@ -11,52 +14,91 @@ const GUEST_NAME = 'Guest';
 @Injectable()
 export class AuthorizationService {
 	private userInfo:{};
-	private autificated: boolean;
+	private autificated: BehaviorSubject<any>;
+
 	public userLogin$: Observable<string>;
+	public autificated$: Observable<boolean>;
+
 	private userLoginChange: ReplaySubject<string>;
+	private autificatedChange: ReplaySubject<boolean>;
 
 	private authLoginUrl: string = 'http://127.0.0.1:3004/auth/login';
+	private authUserInfoUrl: string = 'http://127.0.0.1:3004/auth/userinfo';
 
-	constructor( private http: Http) {
+
+	constructor( private http: HttpService) {
 		this.userInfo = {
-			id: 585507,
+			/*id: 585507,
 			login: 'Smurfik',
 			admin: true,
-			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'
+			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'*/
 		};
-		this.userLoginChange = new ReplaySubject<string>();
-		this.userLogin$ = this.userLoginChange.asObservable().startWith(this.userInfo['login']);
-		this.autificated = true;
+		this.userLoginChange = new ReplaySubject();
+		this.userLogin$ = this.userLoginChange.asObservable().startWith('');
+		this.autificatedChange	= new ReplaySubject();
+		this.autificated$ = this.autificatedChange.asObservable().startWith(false);
+		this.autificated = new BehaviorSubject(false);
+
+
 	}
 
 	public loginUser(credentials: any) {
-		/*this.autificated = true;*/
+		credentials = {
+			login:'Warner',
+			password:'ea'
+		};
+		this.userInfo ={
+			login:'Warner',
+			password:'ea'
+		}
 
-		console.log('>>> ',credentials);
+		let headers = new Headers({
+			'Accept': 'application/json'
+		});
+		headers.append('Content-Type', 'text/plain')
+		let options = new RequestOptions({ headers: headers });
 
-		this.userLoginChange.next(this.userInfo['login']);
-		localStorage.setItem(this.userInfo['login'], this.userInfo['token']);
+		let body = JSON.stringify(credentials);
 
-		return this.userLoginChange
-			.switchMap((credentials) => this.http.post( this.authLoginUrl, credentials))
+		return this.http.post( this.authLoginUrl, credentials)
+			.catch((error: any) => {
+				console.log(error._body);
+				return Observable.throw(error);
+			})
 			.map((res: Response) => res.json())
-			.map(token => {
-				console.log('>>> ',token);
+			.map((token) => {
+
+				//this.userInfo['token'] = token;
+				this.userInfo['token'] = token.token;
+				localStorage.setItem('userToken', token.token);
 				return token;
+			}).subscribe((r) =>{
+				this.getUserInfo();
 			})
 	}
 
 	public logoutUser() {
 		this.userLoginChange.next(GUEST_NAME);
 		localStorage.removeItem(this.userInfo['login']);
-		this.autificated = false;
+		this.autificated.next(false);
 	}
 
 	public isAuthentificated() {
 		return this.autificated;
 	}
 
-	public getUserInfo(): Observable<string> {
-		return Observable.of(this.userInfo['login']);
+	public getUserInfo(): any {
+		const token = localStorage.getItem('userToken');
+
+		return this.http.post(this.authUserInfoUrl, token)
+			.catch((error: any) => {
+				return Observable.throw(error);
+			})
+			.map((response: Response) => response.json())
+			.subscribe((response) => {
+				this.userLoginChange.next(response.name.first);
+				this.autificated.next(true);
+			});
+
 	}
 }

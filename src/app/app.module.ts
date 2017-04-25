@@ -32,13 +32,14 @@ import { EditCourseModule } from './pages/edit-course';
 import { LoginModule } from  './pages/login';
 
 // Services
-import { CoursesService, AuthorizationService, LoaderBlockService } from './core/services';
+import { CoursesService, AuthorizationService, LoaderBlockService, HttpService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
 	CoursesService,
 	AuthorizationService,
-	LoaderBlockService
+	LoaderBlockService,
+	HttpService
 ];
 
 /**
