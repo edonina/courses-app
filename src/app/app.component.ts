@@ -56,8 +56,6 @@ export class AppComponent implements OnInit {
 			console.log('>>>>>>>', r);
 			this.cd.markForCheck();
 			this.isAuth = r;
-
-			//this.isAuth = r;
 		});
 
 
