@@ -39,10 +39,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
 			console.log('-----------------', this.courseListView.length);
 			this.cd.markForCheck();
 		});
+		this.coursesServiceSubscription = this.coursesService.courseList.subscribe(r => {
+
+		});
 	}
 
 	public ngOnDestroy() {
 		 this.courseListDataSubscription.unsubscribe();
+		 this.coursesServiceSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {

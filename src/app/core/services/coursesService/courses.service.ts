@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 /*import {Rx} from 'rxjs/Rx';*/
 import { Course } from '../../entities';
-import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
+import { Response, Request, RequestOptions, RequestMethod, Http, Headers, URLSearchParams } from '@angular/http';
 import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
 import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 
@@ -13,17 +13,30 @@ export class CoursesService {
 	public courseList: BehaviorSubject<Course[]>;
 	public courseListV: BehaviorSubject<Course[]>;
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses';
+	private courseDeleteUrl: string = 'http://127.0.0.1:3004/courses/delete';
+	private listState: {};
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
 		this.courseListV = new BehaviorSubject([]);
+		this.listState = {
+			itemsNum: 10,
+			search: ''
+		};
+
 	}
 
-	public getCourseItems(num = 0): any {
-		let itemsNum = 10;
-		let count = itemsNum;
-		let start = itemsNum*num;
-		let query = '?start='+start+'&count='+count;
+	public getCourseItems(num = 0, amount = 10, search = ''): any {
+
+		this.listState['amount'] = amount;
+		this.listState['search'] = search;
+
+		let start = amount*num;
+		let query = '?start='+start+'&count='+amount;
+
+		if(this.listState['search']){
+			query = query + '&s='+this.listState['search'];
+		}
 
 		// get courses
 		return this.http.get(this.courseListUrl+query)
@@ -53,20 +66,6 @@ export class CoursesService {
 			});
 	}
 
-	public createCourse(course): Course | boolean {
-		if (course.title) {
-			course.id = this.getUserId();
-			this.getCourseItems().push(course);
-			return course;
-		}
-		return false;
-	}
-
-	public getUserId() {
-		let i = this.getCourseItems().length;
-		let courseId = this.courseList[i].id + 1;
-		return courseId;
-	}
 
 	public getCourseItemById(id): any {
 		return this.getCourseItems().find(course => course.id === id);
@@ -77,21 +76,52 @@ export class CoursesService {
 	}
 
 	public removeCourseItemById(id): void {
-		let listVal = this.getCourseItems();
-		let courseArrayIndex = listVal.findIndex(course => course.id === id);
-		listVal.splice(courseArrayIndex, 1);
-		if (courseArrayIndex != -1) {
-			//this.courseList.next(listVal);
-		}
+
+
+		let headers = new Headers({
+			'Accept': 'application/json'
+		});
+		headers.append('Content-Type', 'text/plain')
+		let options = new RequestOptions({ headers });
+		/*let body = JSON.stringify({id});*/
+
+		return this.http.post( this.courseDeleteUrl, {id})
+			.catch((error: any) => {
+				console.log(error._body);
+				return Observable.throw(error);
+			})
+			.map((res: Response) => res.json())
+			.subscribe((r) =>{
+
+				this.getCourseItems(0, this.listState['num']*this.listState['amount'] + this.listState['amount'], this.listState['search']);
+
+			});
 	}
 
 	public loadMoreCourses(num){
 
 		console.log('num2', num);
+		this.listState['num'] = num;
 
-		this.getCourseItems(num);
+		this.getCourseItems(this.listState['num']*this.listState['amount'], 10, '');
 		/*let courseListUpdated = this.courseListV.getValue().concat(additionalList);
 		console.log('courseListUpdated', courseListUpdated);
 		this.courseListV.next(courseListUpdated);*/
+	}
+
+
+	public createCourse(course): Course | boolean {
+		if (course.title) {
+			course.id = this.getCourseId();
+			this.getCourseItems().push(course);
+			return course;
+		}
+		return false;
+	}
+
+	public getCourseId() {
+		let i = this.getCourseItems().length;
+		let courseId = this.courseList[i].id + 1;
+		return courseId;
 	}
 }
