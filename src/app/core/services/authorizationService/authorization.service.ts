@@ -43,21 +43,12 @@ export class AuthorizationService {
 	}
 
 	public loginUser(credentials: any) {
-		credentials = {
-			login:'Warner',
-			password:'ea'
-		};
-		this.userInfo ={
-			login:'Warner',
-			password:'ea'
-		}
 
 		let headers = new Headers({
 			'Accept': 'application/json'
 		});
 		headers.append('Content-Type', 'text/plain')
 		let options = new RequestOptions({ headers: headers });
-
 		let body = JSON.stringify(credentials);
 
 		return this.http.post( this.authLoginUrl, credentials)
@@ -66,20 +57,15 @@ export class AuthorizationService {
 				return Observable.throw(error);
 			})
 			.map((res: Response) => res.json())
-			.map((token) => {
-
-				//this.userInfo['token'] = token;
-				this.userInfo['token'] = token.token;
-				localStorage.setItem('userToken', token.token);
-				return token;
-			}).subscribe((r) =>{
+			.subscribe((r) =>{
+				localStorage.setItem('userToken', r.token);
 				this.getUserInfo();
 			})
 	}
 
 	public logoutUser() {
 		this.userLoginChange.next(GUEST_NAME);
-		localStorage.removeItem(this.userInfo['login']);
+		localStorage.removeItem('userToken');
 		this.autificated.next(false);
 	}
 
@@ -99,6 +85,5 @@ export class AuthorizationService {
 				this.userLoginChange.next(response.name.first);
 				this.autificated.next(true);
 			});
-
 	}
 }
