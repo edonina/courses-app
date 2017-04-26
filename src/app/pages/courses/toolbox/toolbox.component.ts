@@ -26,7 +26,8 @@ export class ToolboxComponent {
 	}
 
 	public findCourse() {
-		//let filtRes  = this.myFindPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
+		let filtRes  = this.myFindPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
 		//this.coursesService.courseListView.next(filtRes);
+		this.coursesService.findCourses(this.textToFind);
 	}
 }

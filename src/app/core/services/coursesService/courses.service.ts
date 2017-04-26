@@ -14,6 +14,7 @@ export class CoursesService {
 	public courseListV: BehaviorSubject<Course[]>;
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses';
 	private courseDeleteUrl: string = 'http://127.0.0.1:3004/courses/delete';
+
 	private listState: {};
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
@@ -29,14 +30,11 @@ export class CoursesService {
 
 	public getCourseItems(num = 0, amount = 10, search = ''): any {
 
-		this.listState['amount'] = amount;
-		this.listState['search'] = search;
-
 		let start = amount*num;
 		let query = '?start='+start+'&count='+amount;
 
 		if(this.listState['search']){
-			query = query + '&q='+this.listState['search'];
+			query = query + '&query='+this.listState['search'];
 		}
 
 		// get courses
@@ -81,9 +79,12 @@ export class CoursesService {
 		return;
 	}
 
+	public findCourses(search){
+		this.listState['search'] = search;
+		this.getCourseItems(0, this.listState['amount'], this.listState['search']);
+	}
+
 	public removeCourseItemById(id): void {
-
-
 		let headers = new Headers({
 			'Accept': 'application/json'
 		});
