@@ -29,14 +29,18 @@ import { NgZone } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-	public isAuth:boolean;
+	public isAuth: boolean;
 	public editedCourse: any;
 	private authSubscription: Subscription;
 
-	constructor(private authorizationService:AuthorizationService, private ngZone:NgZone, private loaderBlockService: LoaderBlockService , private cd: ChangeDetectorRef) {
-		//this.isAuth = authorizationService.isAuthentificated();
-		this.editedCourse = false;
+	constructor(
+		private authorizationService: AuthorizationService,
+		private ngZone:NgZone,
+		private loaderBlockService: LoaderBlockService,
+		private cd: ChangeDetectorRef
+	) {
 
+		this.editedCourse = false;
 		//this.editedCourse = {};
 		/*this.editedCourse = {
 			id: 3,

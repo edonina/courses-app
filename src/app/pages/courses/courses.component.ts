@@ -18,7 +18,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	private isLoading: boolean = false;
 	public courseListData: BehaviorSubject<any>;
 
-	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private cd: ChangeDetectorRef) {
+	constructor(
+		private coursesService:CoursesService,
+		private loaderBlockService:LoaderBlockService,
+		private cd: ChangeDetectorRef
+	) {
 		console.log('Course List constructor');
 		this.courseListData = new BehaviorSubject<any>([]);
 		this.courseListView = [];

@@ -10,22 +10,22 @@ import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 @Injectable()
 export class CoursesService {
 	private courseListData: any;
-	public courseList: Observable<Course[]>;
-	//public courseList: Subject<Course[]>;
+	public courseList: BehaviorSubject<Course[]>;
+
 	public courseListV: BehaviorSubject<Course[]>;
 	private courseListLimited: Course[];
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses?start=1&count=10';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
-		//this.courseList = new Subject([]);
 		this.courseListV = new BehaviorSubject([]);
 	}
 
-	public getCourseItems():any {
+	public getCourseItems(): any {
 
-		return this.courseList
-			.switchMap((courseList) => this.http.get(this.courseListUrl))
+		// get courses
+		return this.http.get(this.courseListUrl)
+			// make transformations
 			.map((res: Response) => res.json())
 			.map(itemsList => {
 				let i;
@@ -42,10 +42,12 @@ export class CoursesService {
 					}
 				}
 				return courseListData;
+			})
+			// switch to behavior or replay subject to be able to subscribe in many places and get course list.
+			.switchMap(courseList => {
+				this.courseList.next(courseList);
+				return this.courseList;
 			});
-
-
-
 	}
 
 	public createCourse(course): Course | boolean {

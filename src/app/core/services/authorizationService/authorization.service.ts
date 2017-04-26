@@ -22,12 +22,10 @@ export class AuthorizationService {
 	private authUserInfoUrl: string = 'http://127.0.0.1:3004/auth/userinfo';
 
 
-	constructor( private http: HttpService) {
+	constructor(private http: HttpService) {
 		this.userLoginChange = new ReplaySubject();
 		this.userLogin$ = this.userLoginChange.asObservable().startWith('');
 		this.autificated = new BehaviorSubject(false);
-
-
 	}
 
 	public loginUser(credentials: any) {
@@ -36,7 +34,7 @@ export class AuthorizationService {
 			'Accept': 'application/json'
 		});
 		headers.append('Content-Type', 'text/plain')
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers });
 		let body = JSON.stringify(credentials);
 
 		return this.http.post( this.authLoginUrl, credentials)
