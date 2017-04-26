@@ -11,9 +11,7 @@ import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 export class CoursesService {
 	private courseListData: any;
 	public courseList: BehaviorSubject<Course[]>;
-
 	public courseListV: BehaviorSubject<Course[]>;
-	private courseListLimited: Course[];
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses?start=1&count=10';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
@@ -43,9 +41,13 @@ export class CoursesService {
 				}
 				return courseListData;
 			})
+			.map((itemsList) => {
+				console.log('=======', this.myLimitByDate.transform(itemsList));
+				return  this.myLimitByDate.transform(itemsList);
+			})
 			// switch to behavior or replay subject to be able to subscribe in many places and get course list.
-			.switchMap(courseList => {
-				this.courseList.next(courseList);
+			.switchMap(itemsList => {
+				this.courseList.next(itemsList);
 				return this.courseList;
 			});
 	}
