@@ -12,17 +12,21 @@ export class CoursesService {
 	private courseListData: any;
 	public courseList: BehaviorSubject<Course[]>;
 	public courseListV: BehaviorSubject<Course[]>;
-	private courseListUrl: string = 'http://127.0.0.1:3004/courses?start=1&count=10';
+	private courseListUrl: string = 'http://127.0.0.1:3004/courses';
 
 	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
 		this.courseListV = new BehaviorSubject([]);
 	}
 
-	public getCourseItems(): any {
+	public getCourseItems(num = 0): any {
+		let itemsNum = 10;
+		let count = itemsNum;
+		let start = itemsNum*num;
+		let query = '?start='+start+'&count='+count;
 
 		// get courses
-		return this.http.get(this.courseListUrl)
+		return this.http.get(this.courseListUrl+query)
 			// make transformations
 			.map((res: Response) => res.json())
 			.map(itemsList => {
@@ -40,13 +44,12 @@ export class CoursesService {
 				}
 				return courseListData;
 			})
-			.map((itemsList) => {
+			/*.map((itemsList) => {
 				return  this.myLimitByDate.transform(itemsList);
-			})
-			// switch to behavior or replay subject to be able to subscribe in many places and get course list.
-			.switchMap(itemsList => {
-				this.courseList.next(itemsList);
-				return this.courseList;
+			})*/
+			.subscribe(r => {
+				let courseListUpdated = this.courseListV.getValue().concat(r);
+				this.courseListV.next(courseListUpdated);
 			});
 	}
 
@@ -80,5 +83,15 @@ export class CoursesService {
 		if (courseArrayIndex != -1) {
 			//this.courseList.next(listVal);
 		}
+	}
+
+	public loadMoreCourses(num){
+
+		console.log('num2', num);
+
+		this.getCourseItems(num);
+		/*let courseListUpdated = this.courseListV.getValue().concat(additionalList);
+		console.log('courseListUpdated', courseListUpdated);
+		this.courseListV.next(courseListUpdated);*/
 	}
 }

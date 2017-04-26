@@ -4,6 +4,7 @@
 import {
 	Component,
 	OnInit,
+	ngOnDestroy,
 	ViewEncapsulation,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef
@@ -61,8 +62,9 @@ export class AppComponent implements OnInit {
 			this.cd.markForCheck();
 			this.isAuth = r;
 		});
-
-
+	}
+	ngOnDestroy() {
+		this.authSubscription.unsubscribe();
 	}
 
 	checkAuthorization(): boolean {

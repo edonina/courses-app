@@ -16,6 +16,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public courseListInitial: Course [];
 	public courseListView: Course [];
 	private isLoading: boolean = false;
+	private pageNum: number = 0;
 	public courseListData: BehaviorSubject<any>;
 
 	constructor(
@@ -32,26 +33,27 @@ export class CoursesComponent implements OnInit, OnDestroy {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
 
-
+		this.coursesService.getCourseItems();
 		this.courseListDataSubscription = this.coursesService.courseListV.subscribe(r => {
 			this.courseListView = r;
-		});
-
-		this.coursesServiceSubscription = this.coursesService.getCourseItems().subscribe(r => {
-			this.coursesService.courseListV.next(r);
+			console.log('-----------------', this.courseListView.length);
 			this.cd.markForCheck();
 		});
-
-
 	}
 
 	public ngOnDestroy() {
-		 this.coursesServiceSubscription.unsubscribe();
 		 this.courseListDataSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {
 		/*console.log(id);*/
+	}
+
+	public loadMoreCourses(){
+		this.pageNum = this.pageNum + 1;
+		console.log('this.pageNum', this.pageNum)
+		this.coursesService.loadMoreCourses(this.pageNum);
+		this.cd.markForCheck();
 	}
 
 	public deleteCourseFromCoursesList(id: number) {
