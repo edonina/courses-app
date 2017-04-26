@@ -21,7 +21,8 @@ export class CoursesService {
 		this.courseListV = new BehaviorSubject([]);
 		this.listState = {
 			itemsNum: 10,
-			search: ''
+			search: '',
+			num: 0
 		};
 
 	}
@@ -35,7 +36,7 @@ export class CoursesService {
 		let query = '?start='+start+'&count='+amount;
 
 		if(this.listState['search']){
-			query = query + '&s='+this.listState['search'];
+			query = query + '&q='+this.listState['search'];
 		}
 
 		// get courses
@@ -61,8 +62,13 @@ export class CoursesService {
 				return  this.myLimitByDate.transform(itemsList);
 			})*/
 			.subscribe(r => {
-				let courseListUpdated = this.courseListV.getValue().concat(r);
-				this.courseListV.next(courseListUpdated);
+				if (num == 0){
+					this.courseListV.next(r);
+				}else{
+					let courseListUpdated = this.courseListV.getValue().concat(r);
+					this.courseListV.next(courseListUpdated);
+				}
+
 			});
 	}
 
@@ -71,7 +77,7 @@ export class CoursesService {
 		return this.getCourseItems().find(course => course.id === id);
 	}
 
-	public updateCourseItemById(courseObj:Course, id) {
+	public updateCourseItemById(courseObj: Course, id) {
 		return;
 	}
 
@@ -83,7 +89,6 @@ export class CoursesService {
 		});
 		headers.append('Content-Type', 'text/plain')
 		let options = new RequestOptions({ headers });
-		/*let body = JSON.stringify({id});*/
 
 		return this.http.post( this.courseDeleteUrl, {id})
 			.catch((error: any) => {
@@ -92,21 +97,15 @@ export class CoursesService {
 			})
 			.map((res: Response) => res.json())
 			.subscribe((r) =>{
-
-				this.getCourseItems(0, this.listState['num']*this.listState['amount'] + this.listState['amount'], this.listState['search']);
-
+				let amount = this.listState['num']*this.listState['amount'] + this.listState['amount']
+				console.log('amount', amount);
+				this.getCourseItems(0, amount, this.listState['search']);
 			});
 	}
 
-	public loadMoreCourses(num){
-
-		console.log('num2', num);
+	public loadMoreCourses(num) {
 		this.listState['num'] = num;
-
-		this.getCourseItems(this.listState['num']*this.listState['amount'], 10, '');
-		/*let courseListUpdated = this.courseListV.getValue().concat(additionalList);
-		console.log('courseListUpdated', courseListUpdated);
-		this.courseListV.next(courseListUpdated);*/
+		this.getCourseItems(this.listState['num']);
 	}
 
 
