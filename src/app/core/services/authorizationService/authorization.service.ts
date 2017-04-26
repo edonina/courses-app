@@ -13,30 +13,18 @@ const GUEST_NAME = 'Guest';
 
 @Injectable()
 export class AuthorizationService {
-	private userInfo:{};
 	private autificated: BehaviorSubject<any>;
 
 	public userLogin$: Observable<string>;
-	public autificated$: Observable<boolean>;
-
 	private userLoginChange: ReplaySubject<string>;
-	private autificatedChange: ReplaySubject<boolean>;
 
 	private authLoginUrl: string = 'http://127.0.0.1:3004/auth/login';
 	private authUserInfoUrl: string = 'http://127.0.0.1:3004/auth/userinfo';
 
 
 	constructor( private http: HttpService) {
-		this.userInfo = {
-			/*id: 585507,
-			login: 'Smurfik',
-			admin: true,
-			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'*/
-		};
 		this.userLoginChange = new ReplaySubject();
 		this.userLogin$ = this.userLoginChange.asObservable().startWith('');
-		this.autificatedChange	= new ReplaySubject();
-		this.autificated$ = this.autificatedChange.asObservable().startWith(false);
 		this.autificated = new BehaviorSubject(false);
 
 
