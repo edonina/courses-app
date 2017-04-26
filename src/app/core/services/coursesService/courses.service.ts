@@ -29,7 +29,6 @@ export class CoursesService {
 				let i;
 				let courseListData =[];
 				for(i = 0; i < itemsList.length; i++){
-
 					courseListData[i] = {
 						id: itemsList[i]['id'],
 						title: itemsList[i]['name'],
@@ -42,7 +41,6 @@ export class CoursesService {
 				return courseListData;
 			})
 			.map((itemsList) => {
-				console.log('=======', this.myLimitByDate.transform(itemsList));
 				return  this.myLimitByDate.transform(itemsList);
 			})
 			// switch to behavior or replay subject to be able to subscribe in many places and get course list.
