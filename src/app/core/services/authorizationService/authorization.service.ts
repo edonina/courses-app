@@ -1,48 +1,75 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject, ReplaySubject } from 'rxjs';
+import { Injectable, ChangeDetectionStrategy } from '@angular/core';
+import { Observable, Subject, ReplaySubject, Subscription,BehaviorSubject } from 'rxjs';
+import { Response, Request, RequestOptions, RequestMethod, Http, Headers, URLSearchParams } from '@angular/http';
+import { HttpService } from './../httpService/http.service';
+
 
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 const GUEST_NAME = 'Guest';
 
 
 @Injectable()
 export class AuthorizationService {
-	private userInfo:{};
-	private autificated: boolean;
+	private autificated: BehaviorSubject<any>;
+
 	public userLogin$: Observable<string>;
 	private userLoginChange: ReplaySubject<string>;
 
+	private authLoginUrl: string = 'http://127.0.0.1:3004/auth/login';
+	private authUserInfoUrl: string = 'http://127.0.0.1:3004/auth/userinfo';
 
-	constructor() {
-		this.userInfo = {
-			id: 585507,
-			login: 'Smurfik',
-			admin: true,
-			token: 'vm58mv45vm599,y54-v45w9vc9-vryc,o5y'
-		};
-		this.userLoginChange = new ReplaySubject<string>();
-		this.userLogin$ = this.userLoginChange.asObservable().startWith(this.userInfo['login']);
-		this.autificated = true;
+
+	constructor(private http: HttpService) {
+		this.userLoginChange = new ReplaySubject();
+		this.userLogin$ = this.userLoginChange.asObservable().startWith('');
+		this.autificated = new BehaviorSubject(false);
 	}
 
-	public loginUser() {
-		this.autificated = true;
-		this.userLoginChange.next(this.userInfo['login']);
-		localStorage.setItem(this.userInfo['login'], this.userInfo['token']);
+	public loginUser(credentials: any) {
+
+		let headers = new Headers({
+			'Accept': 'application/json'
+		});
+		headers.append('Content-Type', 'text/plain')
+		let options = new RequestOptions({ headers });
+		let body = JSON.stringify(credentials);
+
+		return this.http.post( this.authLoginUrl, credentials)
+			.catch((error: any) => {
+				console.log(error._body);
+				return Observable.throw(error);
+			})
+			.map((res: Response) => res.json())
+			.subscribe((r) =>{
+				localStorage.setItem('userToken', r.token);
+				this.getUserInfo();
+			})
 	}
 
 	public logoutUser() {
 		this.userLoginChange.next(GUEST_NAME);
-		localStorage.removeItem(this.userInfo['login']);
-		this.autificated = false;
+		localStorage.removeItem('userToken');
+		this.autificated.next(false);
 	}
 
 	public isAuthentificated() {
 		return this.autificated;
 	}
 
-	public getUserInfo(): Observable<string> {
-		return Observable.of(this.userInfo['login']);
+	public getUserInfo(): any {
+		const token = localStorage.getItem('userToken');
+
+		return this.http.post(this.authUserInfoUrl, token)
+			.catch((error: any) => {
+				return Observable.throw(error);
+			})
+			.map((response: Response) => response.json())
+			.subscribe((response) => {
+				this.userLoginChange.next(response.name.first);
+				this.autificated.next(true);
+			});
 	}
 }

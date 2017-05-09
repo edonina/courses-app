@@ -21,7 +21,7 @@ export class CourseComponent {
 	calculateCourseFreshness(date) : string{
 		let currentDate = Date.now();
 		let currentDateMs = new Date(currentDate).getTime();
-		let createdDateMS = date.getTime();
+		let createdDateMS = new Date(date).getTime();
 
 		//86400 * 1000 * 14  Each day is 86400 seconds
 		let twoWeeksPeriod  =   1209600000;
@@ -49,7 +49,7 @@ export class CourseComponent {
 		if (this.isTopRated()){
 			coursesClasses.push(courseStatusClasses['toprated']);
 		}
-		console.log(coursesClasses);
+		/*console.log(coursesClasses);*/
 		return coursesClasses;
 
 	}

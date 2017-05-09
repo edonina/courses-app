@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
-
-
 
 @Component({
 	selector: 'courses',
@@ -14,52 +11,56 @@ import { Course } from '../../core/entities';
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
-	private coursesServiceSubscription:Subscription;
-	private courseListDataSubscription:Subscription;
-	public courseListInitial:Course[];
-	public courseListView:Course[];
-
-	private isLoading:boolean = false;
+	private coursesServiceSubscription: Subscription;
+	private courseListDataSubscription: Subscription;
+	public courseListInitial: Course [];
+	public courseListView: Course [];
+	private isLoading: boolean = false;
+	private pageNum: number = 0;
 	public courseListData: BehaviorSubject<any>;
 
-
-
-	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
+	constructor(
+		private coursesService:CoursesService,
+		private loaderBlockService:LoaderBlockService,
+		private cd: ChangeDetectorRef
+	) {
 		console.log('Course List constructor');
 		this.courseListData = new BehaviorSubject<any>([]);
+		this.courseListView = [];
 	}
 
 	public ngOnInit() {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
-		this.coursesService.getCourseItems();
 
-		this.courseListDataSubscription = this.coursesService.courseListView.subscribe(r => {
+		this.coursesService.getCourseItems();
+		this.courseListDataSubscription = this.coursesService.courseListV.subscribe(r => {
 			this.courseListView = r;
+			console.log('-----------------', this.courseListView.length);
+			this.cd.markForCheck();
 		});
 		this.coursesServiceSubscription = this.coursesService.courseList.subscribe(r => {
-			this.coursesService.courseListView.next(r);
-		});
-		/*this.isLoading = true;*/
-		/*this.coursesServiceSubscription = this.coursesService.courseListView.subscribe((res:Course[]) => {
-				this.courseListInitial = res;
-/!*				this.courseListData.next(res);*!/
-				this.courseListView = res;
-				this.isLoading = false;
-		});*/
 
+		});
 	}
 
 	public ngOnDestroy() {
+		 this.courseListDataSubscription.unsubscribe();
 		 this.coursesServiceSubscription.unsubscribe();
-		// this.courseListDataSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {
-		console.log(id);
+		/*console.log(id);*/
 	}
 
-	public deleteCourseFromCoursesList(id:number) {
+	public loadMoreCourses(){
+		this.pageNum = this.pageNum + 1;
+		console.log('this.pageNum', this.pageNum)
+		this.coursesService.loadMoreCourses(this.pageNum);
+		this.cd.markForCheck();
+	}
+
+	public deleteCourseFromCoursesList(id: number) {
 		let deleteConfirmation = confirm("Do you really want to delete this course?");
 		if (deleteConfirmation) {
 			this.coursesService.removeCourseItemById(id);
@@ -67,11 +68,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 				this.loaderBlockService.hide();
 			}, 400);
 		}
-		console.log('jjj');
-		console.log(id);
-console.log(			this.courseListView
-	);
 		this.loaderBlockService.show();
-		console.log(id);
+		/*console.log(id);*/
 	}
 }

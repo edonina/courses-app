@@ -1,15 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'orderBy'})
+@Pipe({name: 'myOrderBy'})
 export class OrderByPipe implements PipeTransform {
-	transform(value: Object[], args: any[]): any {
-		//new first
-		if (!value) return value;
+	public transform(value: Object[], args: any[]): any {
+		// new first
+		if (!value) {
+			return value;
+		}
 
-		function compare(a,b) {
-			if (a.date > b.date){
+		function compare(a, b) {
+			if (a.date > b.date) {
 				return -1;
-			}else if (a.date < b.date){
+			} else if (a.date < b.date) {
 				return 1;
 			}
 			return 0;

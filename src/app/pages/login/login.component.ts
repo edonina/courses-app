@@ -18,6 +18,7 @@ import { LoaderBlockService } from '../../core/services';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 	@Output() public loginUserEvent:EventEmitter<number> = new EventEmitter<number>();
+	public model: {};
 
 	constructor(private loaderBlockService:LoaderBlockService) {
 		console.log('login constructor');
@@ -27,11 +28,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 		console.log('login init');
 	}
 
-	public loginUser(login:string) {
+	public loginUser(model) {
 		this.loaderBlockService.show();
+		console.log('====', model);
 		setTimeout(() => {
-			this.loginUserEvent.emit();
+			this.loginUserEvent.emit(model);
 		}, 400);
+
+
+
 	}
 
 	public ngOnDestroy() {

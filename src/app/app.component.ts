@@ -4,11 +4,14 @@
 import {
 	Component,
 	OnInit,
+	ngOnDestroy,
 	ViewEncapsulation,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	ChangeDetectorRef
 } from '@angular/core';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { AppState } from './app.service';
-import { AuthorizationService } from './core/services';
+import { AuthorizationService, LoaderBlockService } from './core/services';
 import { NgZone } from '@angular/core';
 
 /*
@@ -27,11 +30,17 @@ import { NgZone } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-	public isAuth:boolean;
+	public isAuth: boolean;
 	public editedCourse: any;
+	private authSubscription: Subscription;
 
-	constructor(private authorizationService:AuthorizationService, private ngZone:NgZone) {
-		this.isAuth = authorizationService.isAuthentificated();
+	constructor(
+		private authorizationService: AuthorizationService,
+		private ngZone:NgZone,
+		private loaderBlockService: LoaderBlockService,
+		private cd: ChangeDetectorRef
+	) {
+
 		this.editedCourse = false;
 		//this.editedCourse = {};
 		/*this.editedCourse = {
@@ -44,30 +53,43 @@ export class AppComponent implements OnInit {
 		}*/
 	}
 
-
 	ngOnInit() {
-		this.ngZone.onUnstable.subscribe((data) => console.log('unstable', data));
-		this.ngZone.onStable.subscribe((data) => console.log('stable', data));
+		/*this.ngZone.onUnstable.subscribe((data) => console.log('unstable', data));
+		this.ngZone.onStable.subscribe((data) => console.log('stable', data));*/
 
+		this.authSubscription = this.authorizationService.isAuthentificated().subscribe((r) => {
+			console.log('>>>>>>>', r);
+			this.cd.markForCheck();
+			this.isAuth = r;
+		});
+	}
+	ngOnDestroy() {
+		this.authSubscription.unsubscribe();
 	}
 
 	checkAuthorization(): boolean {
-		return this.isAuth = this.authorizationService.isAuthentificated();
+		return this.isAuth;
 	}
 
 	updateAuthorization(): void {
-		this.isAuth = this.authorizationService.isAuthentificated();
+		this.isAuth = this.authorizationService.isAuthentificated().getValue();
 	}
 
 	loginUser(login: string) {
-		this.authorizationService.loginUser();
-		this.isAuth = this.authorizationService.isAuthentificated();
+		let credentials = {
+			login: 'Morales',
+			password: 'id'
+		}
+		this.authorizationService.loginUser(credentials);
+
+		setTimeout(() => {
+			this.loaderBlockService.hide();
+		}, 400);
+
 	}
 
 	logoutUser(login: string) {
 		this.authorizationService.logoutUser();
-		this.isAuth = this.authorizationService.isAuthentificated();
+		this.isAuth = this.authorizationService.isAuthentificated().getValue();
 	}
-
-
 }

@@ -1,125 +1,127 @@
 import { Injectable } from '@angular/core';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-
+/*import {Rx} from 'rxjs/Rx';*/
 import { Course } from '../../entities';
-
-import { Response, Request, RequestOptions, RequestMethod, Http } from '@angular/http';
+import { Response, Request, RequestOptions, RequestMethod, Http, Headers, URLSearchParams } from '@angular/http';
 import { LimitByDatePipe } from "../../pipes/limit-by-date.pipe";
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-
+import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
-	private courseListData: Course[];
+	private courseListData: any;
 	public courseList: BehaviorSubject<Course[]>;
-	public courseListView: BehaviorSubject<Course[]>;
-	private courseListLimited:Course[];
+	public courseListV: BehaviorSubject<Course[]>;
+	private courseListUrl: string = 'http://127.0.0.1:3004/courses';
+	private courseDeleteUrl: string = 'http://127.0.0.1:3004/courses/delete';
 
-	constructor(private limitByDatePipe: LimitByDatePipe, private http: Http) {
+	private listState: {};
+
+	constructor(private myLimitByDate: LimitByDatePipe, private http: Http) {
 		this.courseList = new BehaviorSubject([]);
-		this.courseListView = new BehaviorSubject([]);
-		this.courseListData = [
-			{
-				id: 0,
-				title: 'How to learn Angular 2 in few hours',
-				description: 'We all wanna get something without any effort, so forget about few hours, it will take you for ages.',
-				creationDate: new Date(2017, 3, 15),
-				duration: 167,
-				topRated: true
-			},
-			{
-				id: 1,
-				title: 'Yet another motivational video',
-				description: `See videos, read tons of articles, how to do at least anything, but advice is the one: just get your ass off the sofa and start doing.`,
-				creationDate: new Date(2017, 3, 7),
-				duration: 37,
-				topRated: false
-			},
-			{
-				id: 2,
-				title: 'The truth',
-				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 2 June',
-				creationDate: new Date(2017, 5, 2),
-				duration: 126,
-				topRated: true
-			},
-			{
-				id: 3,
-				title: 'The truth',
-				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-				creationDate: new Date(2017, 3, 3),
-				duration: 126,
-				topRated: true
-			}
-			,
-			{
-				id: 4,
-				title: 'The truth',
-				description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-				creationDate: new Date(2017, 3, 4),
-				duration: 126,
-				topRated: true
-			}
-		];
+		this.courseListV = new BehaviorSubject([]);
+		this.listState = {
+			itemsNum: 10,
+			search: '',
+			num: 0
+		};
+
+	}
+
+	public getCourseItems(num = 0, amount = 10, search = ''): any {
+
+		let start = amount*num;
+		let query = '?start='+start+'&count='+amount;
+
+		if(this.listState['search']){
+			query = query + '&query='+this.listState['search'];
+		}
+
+		// get courses
+		return this.http.get(this.courseListUrl+query)
+			// make transformations
+			.map((res: Response) => res.json())
+			.map(itemsList => {
+				let i;
+				let courseListData =[];
+				for(i = 0; i < itemsList.length; i++){
+					courseListData[i] = {
+						id: itemsList[i]['id'],
+						title: itemsList[i]['name'],
+						description: itemsList[i]['description'],
+						date: itemsList[i]['date'],
+						duration: itemsList[i]['length'],
+						topRated: itemsList[i]['isTopRated']
+					}
+				}
+				return courseListData;
+			})
+			/*.map((itemsList) => {
+				return  this.myLimitByDate.transform(itemsList);
+			})*/
+			.subscribe(r => {
+				if (num == 0){
+					this.courseListV.next(r);
+				}else{
+					let courseListUpdated = this.courseListV.getValue().concat(r);
+					this.courseListV.next(courseListUpdated);
+				}
+
+			});
 	}
 
 
-	public getCourseItems(): void {
-		this.courseListData = this.courseListData.map(item => {
-			console.log(item);
-			return {
-				id: item['id'],
-				title : item['title'],
-				description: item['description'],
-				date: item['creationDate'],
-				duration: item['duration'],
-				topRated: item['topRated']
-			}
+	public getCourseItemById(id): any {
+		return this.getCourseItems().find(course => course.id === id);
+	}
+
+	public updateCourseItemById(courseObj: Course, id) {
+		return;
+	}
+
+	public findCourses(search){
+		this.listState['search'] = search;
+		this.getCourseItems(0, this.listState['amount'], this.listState['search']);
+	}
+
+	public removeCourseItemById(id): void {
+		let headers = new Headers({
+			'Accept': 'application/json'
 		});
+		headers.append('Content-Type', 'text/plain')
+		let options = new RequestOptions({ headers });
 
-		this.courseListLimited = this.limitByDatePipe.transform(this.courseListData);
-
-		this.courseList.next(this.courseListLimited);
-
-
+		return this.http.post( this.courseDeleteUrl, {id})
+			.catch((error: any) => {
+				console.log(error._body);
+				return Observable.throw(error);
+			})
+			.map((res: Response) => res.json())
+			.subscribe((r) =>{
+				let amount = this.listState['num']*this.listState['amount'] + this.listState['amount']
+				console.log('amount', amount);
+				this.getCourseItems(0, amount, this.listState['search']);
+			});
 	}
 
-	public createCourse(course):Course | boolean {
+	public loadMoreCourses(num) {
+		this.listState['num'] = num;
+		this.getCourseItems(this.listState['num']);
+	}
+
+
+	public createCourse(course): Course | boolean {
 		if (course.title) {
-			course.id = this.getUserId();
-			this.courseList.getValue().push(course);
+			course.id = this.getCourseId();
+			this.getCourseItems().push(course);
 			return course;
 		}
 		return false;
 	}
 
-	public getUserId() {
-		let i = this.courseList.getValue().length;
+	public getCourseId() {
+		let i = this.getCourseItems().length;
 		let courseId = this.courseList[i].id + 1;
 		return courseId;
 	}
-
-	public getCourseItemById(id):any {
-		return this.courseList.getValue().find(course => course.id === id);
-	}
-
-	public updateCourseItemById(courseObj:Course, id) {
-		return;
-	}
-
-	public removeCourseItemById(id):void {
-		let listVal = this.courseList.getValue();
-		let courseArrayIndex = listVal.findIndex(course => course.id === id);
-		listVal.splice(courseArrayIndex, 1);
-		if (courseArrayIndex != -1) {
-			this.courseList.next(listVal);
-		}
-	}
-
-
-
-
-
 }

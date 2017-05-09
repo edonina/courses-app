@@ -11,25 +11,23 @@ import { AuthorizationService } from '../../services';
 })
 
 export class HeaderComponent {
-	@Input() public isAuth:boolean;
-	@Output() public logoutUserEvent:EventEmitter<number> = new EventEmitter<number>();
+	@Input() public isAuth: boolean;
+	@Output() public logoutUserEvent: EventEmitter<number> = new EventEmitter<number>();
 
-	public isAutentificatedState:boolean;
-	public user:string;
+	public isAutentificatedState: boolean;
+	public user: string;
 
-
-	constructor(private authorizationService:AuthorizationService) {
-		//this.user = authorizationService.getUserInfo();
+	constructor(private authorizationService: AuthorizationService) {
+		// this.user = authorizationService.getUserInfo();
 	}
 
-	public ngOnInit(){
-		this.authorizationService.userLogin$.subscribe((res)=>{
+	public ngOnInit() {
+		this.authorizationService.userLogin$.subscribe((res)=> {
 			this.user = res;
-		})
-
+		});
 	}
 
-	public logoutUser(login:string) {
+	public logoutUser(login: string) {
 		this.logoutUserEvent.emit();
 	}
 }

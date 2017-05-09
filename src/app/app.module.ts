@@ -26,22 +26,20 @@ import { NoContentComponent } from './pages/no-content';
 // Components
 import { HeaderModule, FooterModule, LoaderBlockModule } from './core/components';
 
-
-
 // Pages
 import { CoursesModule } from './pages/courses';
 import { EditCourseModule } from './pages/edit-course';
 import { LoginModule } from  './pages/login';
 
 // Services
-import { CoursesService, AuthorizationService, LoaderBlockService } from './core/services';
-
+import { CoursesService, AuthorizationService, LoaderBlockService, HttpService } from './core/services';
 
 // Application wide providers
 const APP_PROVIDERS = [
 	CoursesService,
 	AuthorizationService,
-	LoaderBlockService
+	LoaderBlockService,
+	HttpService
 ];
 
 /**
@@ -95,5 +93,4 @@ export class AppModule {
 		store.disposeOldHosts();
 		delete store.disposeOldHosts;
 	}
-
 }
