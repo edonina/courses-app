@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output,Input, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { validateCounterRange } from './input-date/input-date.component';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
@@ -13,7 +16,7 @@ import { Course } from '../../core/entities';
 
 export class EditCourseComponent implements OnInit, OnDestroy {
 	@Input() public editedCourse:any;
-	
+
 	private coursesServiceSubscription:Subscription;
 	private courseListDataSubscription:Subscription;
 
@@ -22,12 +25,14 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	public maxTitleLength: number = 50;
 	public maxDescriptionLength: number = 500;
+	public outerCounterValue : number = 5;
+	public form: FormGroup;
 
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
 
 
-	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
+	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private fb: FormBuilder) {
 		this.editedCourse = {
 			id: 3,
 			title: 'The truth',
@@ -44,6 +49,10 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 	/*	console.log('this.editedCourse');
 		console.log(this.editedCourse);*/
+
+		this.form = this.fb.group({
+			counter: [5, validateCounterRange]
+		});
 
 	}
 	public ngOnDestroy() {

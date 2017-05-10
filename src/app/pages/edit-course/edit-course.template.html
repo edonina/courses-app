@@ -1,6 +1,6 @@
 <div class="edit-course">
 	<div >
-		<form class="row">
+		<form class="row"  #form="ngForm" [formGroup]="form">
 			<div class="form-group col-xs-12 col-md-6">
 				<label for="title">Title:</label>
 				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}" [maxLength]="maxTitleLength">
@@ -10,14 +10,21 @@
 
 
 
-				<input-date [courseDate] = "editedCourse.date"></input-date>
+				<input-date [courseDate] = "editedCourse.date" [(ngModel)]="outerCounterValue"></input-date>
 				<input-duration [duration] = "editedCourse.duration"></input-duration>
 
 
 				<button type="submit" (click)="saveCourse()" class="btn btn-primary">Save</button>
 				<button type="submit" (click)="cancelCourse()" class="btn">Cancel</button>
 			</div>
+			<p>ngModel value: {{outerCounterValue}}</p>
+
 		</form>
+		<pre>{{ form.value | json }}</pre>
+
+		<p *ngIf="!form.valid">Counter is invalid!</p>
+		<pre>{{ form.value | json }}</pre>
+
 	</div>
 </div>
 
