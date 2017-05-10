@@ -3,10 +3,10 @@
 		<form class="row">
 			<div class="form-group col-xs-12 col-md-6">
 				<label for="title">Title:</label>
-				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}">
+				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}" [maxLength]="maxTitleLength">
 
 				<label for="description">Description:</label>
-				<textarea type="text" id="description" class="form-control">{{editedCourse.description}}</textarea>
+				<textarea type="text" id="description" class="form-control" [maxLength]="maxDescriptionLength">{{editedCourse.description}}</textarea>
 
 
 

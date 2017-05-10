@@ -25,7 +25,6 @@ export class CoursesService {
 			search: '',
 			num: 0
 		};
-
 	}
 
 	public getCourseItems(num = 0, amount = 10, search = ''): any {

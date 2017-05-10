@@ -13,16 +13,18 @@ import { Course } from '../../core/entities';
 
 export class EditCourseComponent implements OnInit, OnDestroy {
 	@Input() public editedCourse:any;
-
-
+	
 	private coursesServiceSubscription:Subscription;
 	private courseListDataSubscription:Subscription;
+
 	public courseListInitial:Course[];
 	public courseListView:Course[];
 
+	public maxTitleLength: number = 50;
+	public maxDescriptionLength: number = 500;
+
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
-
 
 
 	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService) {
@@ -34,6 +36,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 			duration: 126,
 			topRated: true
 		}
+
 
 		/*console.log('Course List constructor');
 		this.courseListData = new BehaviorSubject<any>([]);*/

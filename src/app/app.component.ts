@@ -41,8 +41,8 @@ export class AppComponent implements OnInit {
 		private cd: ChangeDetectorRef
 	) {
 
-		this.editedCourse = false;
-		//this.editedCourse = {};
+		//this.editedCourse = false;
+		this.editedCourse = {};
 		/*this.editedCourse = {
 			id: 3,
 			title: 'The truth',
