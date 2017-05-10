@@ -4,7 +4,7 @@
 import {
 	Component,
 	OnInit,
-	ngOnDestroy,
+	OnDestroy,
 	ViewEncapsulation,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 			this.isAuth = r;
 		});
 	}
-	ngOnDestroy() {
+	OnDestroy() {
 		this.authSubscription.unsubscribe();
 	}
 

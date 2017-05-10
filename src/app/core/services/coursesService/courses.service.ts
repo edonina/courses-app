@@ -84,7 +84,7 @@ export class CoursesService {
 		this.getCourseItems(0, this.listState['amount'], this.listState['search']);
 	}
 
-	public removeCourseItemById(id): void {
+	public removeCourseItemById(id): Subscription {
 		let headers = new Headers({
 			'Accept': 'application/json'
 		});
