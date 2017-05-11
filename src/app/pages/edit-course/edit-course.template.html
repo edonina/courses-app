@@ -1,6 +1,6 @@
 <div class="edit-course">
 	<div >
-		<form class="row"  #form="ngForm" [formGroup]="form">
+		<form class="row"  [formGroup]="form">
 			<div class="form-group col-xs-12 col-md-6">
 				<label for="title">Title:</label>
 				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}" [maxLength]="maxTitleLength">
@@ -10,8 +10,8 @@
 
 
 
-				<input-date [courseDate] = "editedCourse.date" [(ngModel)]="outerCounterValue"></input-date>
-				<input-duration [duration] = "editedCourse.duration"></input-duration>
+				<input-date [courseDate] = "editedCourse.date" formControlName = "date"></input-date>
+				<input-duration [duration] = "editedCourse.duration" formControlName = "duration"></input-duration>
 
 
 				<button type="submit" (click)="saveCourse()" class="btn btn-primary">Save</button>

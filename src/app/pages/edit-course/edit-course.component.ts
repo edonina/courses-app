@@ -51,7 +51,9 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		console.log(this.editedCourse);*/
 
 		this.form = this.fb.group({
-			counter: [5, validateCounterRange]
+			counter: [5, validateCounterRange],
+			date : this.editedCourse.date,
+			duration : this.editedCourse.duration
 		});
 
 	}

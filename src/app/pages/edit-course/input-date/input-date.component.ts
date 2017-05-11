@@ -36,7 +36,7 @@ export function validateCounterRange(c: FormControl) {
 		},
 		{
 			provide: NG_VALIDATORS,
-			/*useValue: validateCounterRange,*/
+			useValue: validateCounterRange,
 			multi: true
 		}
 	]
