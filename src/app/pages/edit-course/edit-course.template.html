@@ -10,8 +10,8 @@
 
 
 
-				<input-date [courseDate] = "editedCourse.date" formControlName = "date"></input-date>
-				<input-duration [duration] = "editedCourse.duration" formControlName = "duration"></input-duration>
+				<input-date   formControlName = "date"></input-date>
+				<input-duration  formControlName = "duration"></input-duration>
 
 
 				<button type="submit" (click)="saveCourse()" class="btn btn-primary">Save</button>
@@ -20,8 +20,6 @@
 			<p>ngModel value: {{outerCounterValue}}</p>
 
 		</form>
-		<pre>{{ form.value | json }}</pre>
-
 		<p *ngIf="!form.valid">Counter is invalid!</p>
 		<pre>{{ form.value | json }}</pre>
 

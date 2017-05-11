@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 
 export function validateCounterRange2(c: FormControl) {
@@ -35,7 +35,7 @@ export function validateCounterRange2(c: FormControl) {
 	]
 })
 export class InputDurationComponent implements ControlValueAccessor {
-	@Input() public duration: any;
+	@Input() public dur: any;
 	/*@Input() public course: Course;
 	@Output() public deleteCourseEvent: EventEmitter<number> = new EventEmitter<number>();
 */
@@ -47,6 +47,8 @@ export class InputDurationComponent implements ControlValueAccessor {
 		}
 	}
 
-	registerOnChange(){}
+	registerOnChange(){
+		console.log('fffff');
+	}
 	registerOnTouched(){}
 }

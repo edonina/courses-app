@@ -27,6 +27,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public maxDescriptionLength: number = 500;
 	public outerCounterValue : number = 5;
 	public form: FormGroup;
+	public dur: number;
 
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
@@ -41,6 +42,12 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 			duration: 126,
 			topRated: true
 		}
+		this.dur = 5;
+		this.form = this.fb.group({
+			/*			counter: [5, validateCounterRange],*/
+			date : this.editedCourse.date,
+			duration : this.dur
+		});
 
 
 		/*console.log('Course List constructor');
@@ -50,16 +57,17 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	/*	console.log('this.editedCourse');
 		console.log(this.editedCourse);*/
 
-		this.form = this.fb.group({
-			counter: [5, validateCounterRange],
-			date : this.editedCourse.date,
-			duration : this.editedCourse.duration
-		});
+
 
 	}
 	public ngOnDestroy() {
 	/*	this.coursesServiceSubscription.unsubscribe();
 		this.courseListDataSubscription.unsubscribe();*/
+	}
+
+	public saveCourse(){
+		console.log(this.form.value);
+		console.log(this.form);
 	}
 
 }

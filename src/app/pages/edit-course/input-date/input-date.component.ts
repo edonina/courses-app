@@ -6,7 +6,7 @@ import {
 	ChangeDetectionStrategy,
 	forwardRef
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
 
