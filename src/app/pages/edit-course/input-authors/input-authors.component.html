@@ -1,5 +1,7 @@
+<div class="authors-area">
 <div  *ngFor="let author of authorsList">
 <label for="author.id">{{author.name}}</label>
 <input id="author.id" name ="authors" class="form-control" [checked]="checkCoursesAuthors(authors, author.id )"  (change)="onChange($event)" type="checkbox"
 	   value="{{author.id}}"	>
+</div>
 </div>

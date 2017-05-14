@@ -1,2 +1,6 @@
 <label for="duration">Duration:</label>
 <input id="duration" class="form-control" value="{{duration}}" (change)="onChange($event)" >{{duration | myDuration}}
+<!--
+<div *ngIf="!nameCtrl.valid && nameCtrl.hasError('badName')"
+	 class="error">Name must start with <tt>pee</tt>.
+</div>-->

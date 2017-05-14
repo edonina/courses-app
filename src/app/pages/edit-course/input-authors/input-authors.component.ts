@@ -13,8 +13,8 @@ export function validateAuthorsInput(c: FormControl) {
 			min: 0
 		}
 	};
-	if(!isNaN(parseFloat(c.value)) && isFinite(c.value)){
-		console.log('validator is number', c.value);
+	if(c.value.length > 0){
+		console.log('validator authors: ', c.value.length);
 		return null
 	}
 

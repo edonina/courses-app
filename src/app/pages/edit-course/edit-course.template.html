@@ -12,9 +12,10 @@
 
 				<input-date   formControlName = "date"></input-date>
 				<input-duration  formControlName = "duration"></input-duration>
-				<div class="authors-area">
-					<input-authors  formControlName = "authors"></input-authors>
-				</div>
+
+				<input-authors  formControlName = "authors"></input-authors>
+
+
 
 
 				<button type="submit" (click)="saveCourse()" class="btn btn-primary"  [disabled] ='!form.valid'>Save</button>
@@ -24,6 +25,7 @@
 
 		</form>
 		<p *ngIf="!form.valid">Counter is invalid!</p>
+
 		<pre>{{ form.value | json }}</pre>
 
 	</div>

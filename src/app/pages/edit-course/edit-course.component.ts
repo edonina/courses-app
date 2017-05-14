@@ -26,6 +26,9 @@ import { Course } from '../../core/entities';
 		border: 1px solid #ccc;
 		padding: 10px;
 	}
+	:host /deep/ .ng-invalid >.authors-area{
+		border-left: solid 3px red;
+	}
 
 
 
@@ -85,28 +88,19 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 			]
 		}
-		this.dur = 5;
 
-
-
-		/*console.log('Course List constructor');
-		this.courseListData = new BehaviorSubject<any>([]);*/
 	}
 	public ngOnInit() {
-	/*	console.log('this.editedCourse');
-		console.log(this.editedCourse);*/
-
 		this.form = this.fb.group({
-			/*			counter: [5, validateCounterRange],*/
+
 			date : this.editedCourse.date,
 			duration : [this.editedCourse.duration, validateOnlyNumbers],
-			authors : [this.editedCourse.authors, validateOnlyNumbers]
+			authors : [this.editedCourse.authors, validateAuthorsInput]
 		});
 
 	}
 	public ngOnDestroy() {
-	/*	this.coursesServiceSubscription.unsubscribe();
-		this.courseListDataSubscription.unsubscribe();*/
+
 	}
 
 	public saveCourse(){
