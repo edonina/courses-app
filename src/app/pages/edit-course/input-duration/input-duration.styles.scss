@@ -1,7 +1,8 @@
 @import "../../../styles/variables/colors.scss";
 
-.ng-invalid {
+.ng-invalid:host {
 	input, textarea{
 		border: 1px solid red;
 	}
 }
+

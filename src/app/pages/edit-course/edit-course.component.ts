@@ -3,13 +3,46 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { validateCounterRange } from './input-date/input-date.component';
+import { validateOnlyNumbers } from './input-duration/input-duration.component';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
 
 @Component({
 	selector: 'edit-course',
-	styles: [require('./edit-course.styles.scss')],
+	//styles: [require('./edit-course.styles.scss')],
+	host: {
+
+		'[class.custom-input]': 'true',
+	},
+	styles: [
+		`
+
+	:host /deep/ .ng-invalid > input{
+	  border-left: solid 3px red;
+	}
+
+
+
+
+    :host.ng-pristine  /deep/ .error-msg {
+        display:none;
+    }
+
+    :host.ng-valid  /deep/ .error-msg {
+        display:none;
+    }
+
+    :host.ng-untouched  /deep/ .error-msg {
+        display:none;
+    }
+
+    :host.ng-touched.ng-invalid  /deep/ .error-msg {
+       display:inline;
+    }
+
+    .text-danger { font-weight: 500; }
+}`],
 	template: require('./edit-course.template.html'),
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -43,11 +76,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 			topRated: true
 		}
 		this.dur = 5;
-		this.form = this.fb.group({
-			/*			counter: [5, validateCounterRange],*/
-			date : this.editedCourse.date,
-			duration : this.dur
-		});
+
 
 
 		/*console.log('Course List constructor');
@@ -57,7 +86,11 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	/*	console.log('this.editedCourse');
 		console.log(this.editedCourse);*/
 
-
+		this.form = this.fb.group({
+			/*			counter: [5, validateCounterRange],*/
+			date : this.editedCourse.date,
+			duration : [this.editedCourse.duration, validateOnlyNumbers]
+		});
 
 	}
 	public ngOnDestroy() {

@@ -4,5 +4,10 @@
 	input, textarea{
 		border: 1px solid red;
 	}
+	:host{
+		input, textarea{
+			border: 1px solid red;
+		}
+	}
 
 }

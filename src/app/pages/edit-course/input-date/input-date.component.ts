@@ -53,8 +53,13 @@ export class InputDateComponent implements ControlValueAccessor {
 			this.courseDate = value;
 		}
 	}
+	propagateChange = (_: any) => {};
 
-	registerOnChange(){}
+	registerOnChange(fn) {
+		this.propagateChange = fn;
+	}
+
+
 	registerOnTouched(){}
 
 }
