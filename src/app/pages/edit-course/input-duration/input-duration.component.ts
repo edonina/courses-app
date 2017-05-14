@@ -25,40 +25,7 @@ export function validateOnlyNumbers(c: FormControl) {
 	selector: 'input-duration',
 	templateUrl: 'input-duration.component.html',
 	//styles: [require('./input-duration.styles.scss')],
-	styles: [
-		`
-    :host.ng-touched.ng-invalid ( input) {
-       border-left: 5px solid #a94442; /* red */
-    }
-
-    :host.ng-touched.ng-valid >>> input {
-        border-left: 5px solid #42A948; /* green */
-    }
-:host /deep/ .ng-invalid {
-  border-bottom: solid 3px red;
-}
-    :host.ng-valid:not([required]).ng-touched.ng-dirty >>> input {
-        border-left: 5px solid #42A948; /* green */
-    }
-
-    :host.ng-pristine >>> .error-msg {
-        display:none;
-    }
-
-    :host.ng-valid >>> .error-msg {
-        display:none;
-    }
-
-    :host.ng-untouched >>> .error-msg {
-        display:none;
-    }
-
-    :host.ng-touched.ng-invalid >>> .error-msg {
-       display:inline;
-    }
-
-    .text-danger { font-weight: 500; }
-}`],
+	styles: [],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [
 		{

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { EditCourseComponent } from './edit-course.component';
 import { InputDateComponent } from './input-date/input-date.component';
 import { InputDurationComponent } from './input-duration/input-duration.component';
+import { AuthorsInputComponent } from './input-authors/input-authors.component';
 
 
 import { SharedModule } from '../../core/shared';
@@ -15,6 +16,7 @@ import { SharedModule } from '../../core/shared';
 	declarations: [
 		InputDateComponent,
 		InputDurationComponent,
+		AuthorsInputComponent,
 		EditCourseComponent
 	],
 	imports: [

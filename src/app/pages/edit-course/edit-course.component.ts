@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { validateCounterRange } from './input-date/input-date.component';
 import { validateOnlyNumbers } from './input-duration/input-duration.component';
+import { validateAuthorsInput } from './input-authors/input-authors.component';
 
 import { CoursesService, LoaderBlockService } from '../../core/services';
 import { Course } from '../../core/entities';
@@ -20,6 +21,10 @@ import { Course } from '../../core/entities';
 
 	:host /deep/ .ng-invalid > input{
 	  border-left: solid 3px red;
+	}
+	.authors-area{
+		border: 1px solid #ccc;
+		padding: 10px;
 	}
 
 
@@ -73,7 +78,12 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 			description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
 			date: new Date(2017, 3, 3),
 			duration: 126,
-			topRated: true
+			topRated: true,
+			authors:[
+				{id:3},
+				{id:4}
+
+			]
 		}
 		this.dur = 5;
 
@@ -89,7 +99,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		this.form = this.fb.group({
 			/*			counter: [5, validateCounterRange],*/
 			date : this.editedCourse.date,
-			duration : [this.editedCourse.duration, validateOnlyNumbers]
+			duration : [this.editedCourse.duration, validateOnlyNumbers],
+			authors : [this.editedCourse.authors, validateOnlyNumbers]
 		});
 
 	}
