@@ -30,26 +30,6 @@ import { Course } from '../../core/entities';
 		border-left: solid 3px red;
 	}
 
-
-
-
-    :host.ng-pristine  /deep/ .error-msg {
-        display:none;
-    }
-
-    :host.ng-valid  /deep/ .error-msg {
-        display:none;
-    }
-
-    :host.ng-untouched  /deep/ .error-msg {
-        display:none;
-    }
-
-    :host.ng-touched.ng-invalid  /deep/ .error-msg {
-       display:inline;
-    }
-
-    .text-danger { font-weight: 500; }
 }`],
 	template: require('./edit-course.template.html'),
 	changeDetection: ChangeDetectionStrategy.OnPush
@@ -73,7 +53,6 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
 
-
 	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private fb: FormBuilder) {
 		this.editedCourse = {
 			id: 3,
@@ -88,24 +67,21 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 			]
 		}
-
 	}
+
 	public ngOnInit() {
 		this.form = this.fb.group({
-
 			date : this.editedCourse.date,
 			duration : [this.editedCourse.duration, validateOnlyNumbers],
 			authors : [this.editedCourse.authors, validateAuthorsInput]
 		});
 
 	}
-	public ngOnDestroy() {
 
-	}
+	public ngOnDestroy() {}
 
 	public saveCourse(){
 		console.log(this.form.value);
 		console.log(this.form);
 	}
-
 }

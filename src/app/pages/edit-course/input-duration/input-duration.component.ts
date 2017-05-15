@@ -40,6 +40,7 @@ export function validateOnlyNumbers(c: FormControl) {
 		}
 	]
 })
+
 export class InputDurationComponent implements ControlValueAccessor {
 	@Input() public duration: any;
 
@@ -59,8 +60,6 @@ export class InputDurationComponent implements ControlValueAccessor {
 
 	private onChange(event) {
 		this.duration = event.target.value;
-		console.log(event);
-		// update the form
 		this.propagateChange(event.target.value);
 	}
 

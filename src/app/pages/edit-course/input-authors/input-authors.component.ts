@@ -18,7 +18,7 @@ export function validateAuthorsInput(c: FormControl) {
 		return null
 	}
 
-	return err;
+	return {authorsRequired: true};
 }
 
 @Component({
@@ -93,30 +93,36 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 	}
 
 	private onChange(event) {
-		if(event.target.checked && !this.checkCoursesAuthors(this.authors,event.target.value)){
-			this.authors.push({ id: event.target.value});
-			console.log(event);
-			// update the form
+		if (
+			event.target.checked &&
+			!this.checkCoursesAuthors(this.authors, event.target.value)
+		) {
 
-		}else{
-			var index = this.authors.findIndex(function(o){
+			this.authors.push({id: event.target.value});
+			this.propagateChange(this.authors);
+
+		} else if(
+			!event.target.checked &&
+			this.checkCoursesAuthors(this.authors, event.target.value)
+		) { // may be redundant condition
+
+			let index = this.authors.findIndex(function (o) {
 				return o.id === event.target.value;
-			})
+			});
 			this.authors.splice(index, 1);
+			this.propagateChange(this.authors);
+
 		}
-		console.log(this.authors)
-		this.propagateChange(this.authors);
+		console.log(event.target.checked);
 	}
 
-	checkCoursesAuthors(authors, authorId ){
+	checkCoursesAuthors(authors, authorId) {
 
 		if (authors.filter(e => e.id == authorId).length > 0) {
-			/* vendors contains the element we're looking for */
 			return true;
 		}
 		return false;
-
 	}
 
-	registerOnTouched(){}
+	registerOnTouched() {}
 }

@@ -1,7 +1,11 @@
 <div class="authors-area">
-<div  *ngFor="let author of authorsList">
-<label for="author.id">{{author.name}}</label>
-<input id="author.id" name ="authors" class="form-control" [checked]="checkCoursesAuthors(authors, author.id )"  (change)="onChange($event)" type="checkbox"
-	   value="{{author.id}}"	>
-</div>
+	<div *ngFor="let author of authorsList">
+		<label for="{{author.id}}">{{author.name}}</label>
+		<input id="{{author.id}}" name="authors" class="form-control"
+			   [checked]="checkCoursesAuthors(authors, author.id )" (change)="onChange($event)" type="checkbox"
+			   value="{{author.id}}">
+	</div>
+	<!--	<div *ngIf="!authors.valid && authors.hasError('authorsRequired')"
+             class="error">At least one author is required.
+        </div>-->
 </div>
