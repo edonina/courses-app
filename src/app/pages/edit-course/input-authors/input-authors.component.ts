@@ -5,16 +5,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Fo
 
 
 export function validateAuthorsInput(c: FormControl) {
-
-	let err = {
-		rangeError: {
-			given: c.value,
-			max: 10,
-			min: 0
-		}
-	};
 	if(c.value.length > 0){
-		console.log('validator authors: ', c.value.length);
+		//console.log('validator authors: ', c.value.length);
 		return null
 	}
 
@@ -93,11 +85,11 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 	}
 
 	private onChange(event) {
+		console.log('event.target.checked:', event.target.checked );
 		if (
 			event.target.checked &&
 			!this.checkCoursesAuthors(this.authors, event.target.value)
 		) {
-
 			this.authors.push({id: event.target.value});
 			this.propagateChange(this.authors);
 
@@ -105,11 +97,10 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 			!event.target.checked &&
 			this.checkCoursesAuthors(this.authors, event.target.value)
 		) { // may be redundant condition
-
-			let index = this.authors.findIndex(function (o) {
-				return o.id === event.target.value;
-			});
-			this.authors.splice(index, 1);
+			let index = this.authors.findIndex(x => x.id==event.target.value);
+			if(index >= 0){
+				this.authors.splice(index, 1);
+			}
 			this.propagateChange(this.authors);
 
 		}
