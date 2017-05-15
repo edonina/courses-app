@@ -12,15 +12,15 @@ import { courseStatusClasses } from '../../../core/enums';
 
 
 export function validateCounterRange(c: FormControl) {
-	let err = {
-		rangeError: {
-			given: c.value,
-			max: 10,
-			min: 0
-		}
-	};
-
-	return (c.value > 10 || c.value < 0) ? err : null;
+	console.log('jjjj',c.value);
+	return null;
+	/*let dateStringArr = c.value.split('/')
+	let date = new Date(`${dateStringArr[1]}/${dateStringArr[0]}/${dateStringArr[2]}`);
+	if (isNaN(date.getTime())) {
+		return null;
+	} else {
+		return {wrongDateFormat: true};
+	}*/
 }
 
 @Component({

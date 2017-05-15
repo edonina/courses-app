@@ -1,2 +1,2 @@
 <label for="date">Date:</label>
-<input type="text" id="date" class="form-control" value="{{courseDate | date : 'dd/MM/yyyy'}}">
+<input type="text" id="date" class="form-control" [value]="courseDate">{{courseDate | date : 'dd/MM/yyyy'}}
