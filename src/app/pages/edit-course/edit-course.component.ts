@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output,Input, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 import { validateCounterRange } from './input-date/input-date.component';
 import { validateOnlyNumbers } from './input-duration/input-duration.component';
@@ -47,7 +47,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public maxTitleLength: number = 50;
 	public maxDescriptionLength: number = 500;
 	public outerCounterValue : number = 5;
-	public form: FormGroup;
+	public editCourceForm: FormGroup;
 	public dur: number;
 
 	private isLoading:boolean = false;
@@ -70,10 +70,11 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-		this.form = this.fb.group({
+		this.editCourceForm = this.fb.group({
 			date : this.editedCourse.date,
 			duration : [this.editedCourse.duration, validateOnlyNumbers],
-			authors : [this.editedCourse.authors, validateAuthorsInput]
+			//authors : [this.editedCourse.authors, validateAuthorsInput]
+			authors : this.fb.array(this.editedCourse.authors)
 		});
 
 	}
@@ -81,7 +82,26 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public ngOnDestroy() {}
 
 	public saveCourse(){
-		console.log(this.form.value);
-		console.log(this.form);
+		console.log(this.editCourceForm.value);
+		console.log(this.editCourceForm);
+	}
+
+	onToggleAuthor({author, $event}) {
+		console.log(author.id, $event.target.checked);
+		const isChecked = $event.target.checked;
+		const control = this.editCourceForm.get('authors') as FormArray;
+		const authorsArr = control.value;
+
+		if (isChecked) {
+			control.push(this.createAuthor(author.id));
+		} else {
+			// debugger;
+			let index = authorsArr.findIndex(_author => _author.id === author.id);
+			control.removeAt(index);
+		}
+	}
+
+	createAuthor(id){
+		return this.fb.group({id});
 	}
 }

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
 
 export function validateOnlyNumbers(c: FormControl) {
@@ -35,6 +35,7 @@ export function validateOnlyNumbers(c: FormControl) {
 
 export class InputDurationComponent implements ControlValueAccessor {
 	@Input() public duration: any;
+	@Input() parent: FormGroup;
 	@Input() public form:any;
 
 	constructor() {}

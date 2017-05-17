@@ -3,11 +3,13 @@
 		<label [for]="author.id">{{author.name}}</label>
 		<input [id]="author.id" name="authors" class="form-control"
 			   [checked]="checkCoursesAuthors(authors, author.id )"
-			   (change)="onChange($event)"
+
+				(change)="toggleAuthor.emit({author: author, $event: $event})"
 			   type="checkbox"
 			   value="{{author.id}}">
 	</div>
 	<!--	<div *ngIf="!authors.valid && authors.hasError('authorsRequired')"
              class="error">At least one author is required.
         </div>-->
+	<!-- (change)="onChange($event)"-->
 </div>

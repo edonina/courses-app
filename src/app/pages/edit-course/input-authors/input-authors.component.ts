@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule, FormGroup  } from '@angular/forms';
 
 
 export function validateAuthorsInput(c: FormControl) {
@@ -40,7 +40,10 @@ export function validateAuthorsInput(c: FormControl) {
 	]
 })
 export class AuthorsInputComponent implements ControlValueAccessor {
-	@Input() public authors: any;
+	@Input() authors: any;
+	@Input() course: any;
+	@Input() parent: FormGroup;
+	@Output() toggleAuthor = new EventEmitter<any>();
 	public authorsList: any;
 
 	constructor() {
@@ -77,7 +80,7 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 			this.authors = value;
 		}
 	}
-
+	setDisabledState(){}
 	propagateChange = (_: any) => {};
 
 	public registerOnChange(fn: any) {
@@ -116,4 +119,12 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 	}
 
 	registerOnTouched() {}
+
+	get chosenAuthors() {
+		return this.parent.get('authors').value
+	}
+
+	isChecked(author) {
+		return this.chosenAuthors.map(_author => _author.id).includes(author.id);
+	}
 }
