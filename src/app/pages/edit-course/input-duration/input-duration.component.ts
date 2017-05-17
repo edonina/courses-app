@@ -6,19 +6,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Fo
 
 export function validateOnlyNumbers(c: FormControl) {
 
-	let err = {
-		rangeError: {
-			given: c.value,
-			max: 10,
-			min: 0
-		}
-	};
 	if(!isNaN(parseFloat(c.value)) && isFinite(c.value)){
 		console.log('validator is number', c.value);
 		return null
 	}
-
-	return err;
+	return {wrongDurationType: true};
 }
 
 @Component({
@@ -43,6 +35,7 @@ export function validateOnlyNumbers(c: FormControl) {
 
 export class InputDurationComponent implements ControlValueAccessor {
 	@Input() public duration: any;
+	@Input() public form:any;
 
 	constructor() {}
 
@@ -50,6 +43,7 @@ export class InputDurationComponent implements ControlValueAccessor {
 		if (value !== undefined) {
 			this.duration = value;
 		}
+		console.log('this: ', this);
 	}
 
 	propagateChange = (_: any) => {};

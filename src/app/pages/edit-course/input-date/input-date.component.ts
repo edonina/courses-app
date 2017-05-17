@@ -12,7 +12,7 @@ import { courseStatusClasses } from '../../../core/enums';
 
 
 export function validateCounterRange(c: FormControl) {
-	console.log('jjjj',c.value);
+
 	return null;
 	/*let dateStringArr = c.value.split('/')
 	let date = new Date(`${dateStringArr[1]}/${dateStringArr[0]}/${dateStringArr[2]}`);
@@ -58,7 +58,6 @@ export class InputDateComponent implements ControlValueAccessor {
 	registerOnChange(fn) {
 		this.propagateChange = fn;
 	}
-
 
 	registerOnTouched(){}
 
