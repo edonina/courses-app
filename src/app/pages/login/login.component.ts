@@ -25,8 +25,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 	constructor(private loaderBlockService:LoaderBlockService, fb: FormBuilder) {
 		console.log('login constructor');
 		this.loginForm = fb.group({
-			'email' : [null, Validators.required],
-			'password': [null, Validators.required],
+			'email' : [null],
+			'password': [null],
+			/*'email' : [null, Validators.required],
+			'password': [null, Validators.required],*/
 		})
 	}
 

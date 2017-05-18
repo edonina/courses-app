@@ -13,12 +13,10 @@ import { Course } from '../../core/entities';
 	selector: 'edit-course',
 	//styles: [require('./edit-course.styles.scss')],
 	host: {
-
 		'[class.custom-input]': 'true',
 	},
 	styles: [
 		`
-
 	:host /deep/ .ng-invalid > input{
 	  border-left: solid 3px red;
 	}
@@ -52,30 +50,61 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
+	authors: Array<any> = [
+		{
+			id: 1,
+			surname: 'Tuhliy'
+		},
+		{
+			id: 2,
+			surname: 'Kosoy'
+		},
+		{
+			id: 3,
+			surname: 'Nyasha'
+		},
+		{
+			id: 4,
+			surname: 'Motto'
+		},
+		{
+			id: 5,
+			surname: 'Crockford'
+		}
+	];
+	course: any = {
+		title: 'The best course',
+		authors: [
+			{id: 3},
+			{id: 5}
+		]
+	};
+	editedCourse = {
+	id: 3,
+	title: 'The truth',
+	description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
+	date: new Date(2017, 3, 3),
+	duration: 126,
+	topRated: true,
+	authors:[
+		{id:3},
+		{id:4}
+	]
+}
+	editCourceForm = this.fb.group({
+	date : this.editedCourse.date,
+	duration : [this.editedCourse.duration, validateOnlyNumbers],
+	//authors : [this.editedCourse.authors, validateAuthorsInput]
+	authors : this.fb.array(this.editedCourse.authors)
+});
 
 	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private fb: FormBuilder) {
-		this.editedCourse = {
-			id: 3,
-			title: 'The truth',
-			description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-			date: new Date(2017, 3, 3),
-			duration: 126,
-			topRated: true,
-			authors:[
-				{id:3},
-				{id:4}
 
-			]
-		}
+
 	}
 
 	public ngOnInit() {
-		this.editCourceForm = this.fb.group({
-			date : this.editedCourse.date,
-			duration : [this.editedCourse.duration, validateOnlyNumbers],
-			//authors : [this.editedCourse.authors, validateAuthorsInput]
-			authors : this.fb.array(this.editedCourse.authors)
-		});
+
 
 	}
 
@@ -89,15 +118,15 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	onToggleAuthor({author, $event}) {
 		console.log(author.id, $event.target.checked);
 		const isChecked = $event.target.checked;
-		const control = this.editCourceForm.get('authors') as FormArray;
-		const authorsArr = control.value;
+		const control2 = this.editCourceForm.get('authors') as FormArray;
+		const authorsArr = control2.value;
 
 		if (isChecked) {
-			control.push(this.createAuthor(author.id));
+			control2.push(this.createAuthor(author.id));
 		} else {
 			// debugger;
 			let index = authorsArr.findIndex(_author => _author.id === author.id);
-			control.removeAt(index);
+			control2.removeAt(index);
 		}
 	}
 

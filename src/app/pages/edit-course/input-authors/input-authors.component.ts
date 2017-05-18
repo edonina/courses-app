@@ -76,16 +76,17 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 	}
 
 	writeValue(value: any) {
-		if (value !== undefined) {
+		/*if (value !== undefined) {
 			this.authors = value;
-		}
+		}*/
 	}
 	setDisabledState(){}
 	propagateChange = (_: any) => {};
 
 	public registerOnChange(fn: any) {
-		this.propagateChange = fn;
+		//this.propagateChange = fn;
 	}
+	registerOnTouched() {}
 
 	private onChange(event) {
 		console.log('event.target.checked:', event.target.checked );
@@ -118,7 +119,7 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 		return false;
 	}
 
-	registerOnTouched() {}
+
 
 	get chosenAuthors() {
 		return this.parent.get('authors').value

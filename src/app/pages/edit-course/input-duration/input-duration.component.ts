@@ -40,6 +40,8 @@ export class InputDurationComponent implements ControlValueAccessor {
 
 	constructor() {}
 
+	setDisabledState(){}
+
 	writeValue(value: any) {
 		if (value !== undefined) {
 			this.duration = value;
@@ -57,7 +59,6 @@ export class InputDurationComponent implements ControlValueAccessor {
 		this.duration = event.target.value;
 		this.propagateChange(event.target.value);
 	}
-
 
 	registerOnTouched(){}
 }
