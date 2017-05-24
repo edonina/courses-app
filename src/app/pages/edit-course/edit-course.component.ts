@@ -36,7 +36,7 @@ import { Course } from '../../core/entities';
 })
 
 export class EditCourseComponent implements OnInit, OnDestroy {
-	@Input() public editedCourse:any;
+	//@Input() public editedCourse:any;
 
 	private coursesServiceSubscription:Subscription;
 	private courseListDataSubscription:Subscription;

@@ -2,19 +2,19 @@
 <main-header [isAuth] ='isAuth' (logoutUserEvent)="logoutUser()"></main-header>
 
 <main class="container container-footer-padding">
-  <!--<router-outlet></router-outlet>-->
+  <router-outlet></router-outlet>
 
-	<div *ngIf="isAuth && !editedCourse" >
+	<!--<div *ngIf="isAuth && !editedCourse" >
 		<courses></courses>
-	</div>
+	</div>-->
 
-	<div *ngIf="isAuth && editedCourse" >
-		<edit-course [editedCourse] =''></edit-course>
-	</div>
+	<!--<div *ngIf="isAuth && editedCourse" >
+		<edit-course ></edit-course>
+	</div>-->
 
-	<div *ngIf="!isAuth" >
+	<!--<div *ngIf="!isAuth" >
 		<login (loginUserEvent)="loginUser()"></login>
-	</div>
+	</div>-->
 </main>
 
 <main-footer></main-footer>
