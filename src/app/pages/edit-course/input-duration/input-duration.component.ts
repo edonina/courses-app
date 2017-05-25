@@ -43,7 +43,7 @@ export class InputDurationComponent implements ControlValueAccessor {
 		if (value !== undefined) {
 			this.duration = value;
 		}
-		console.log('this: ', this);
+		//console.log('this: ', this);
 	}
 
 	propagateChange = (_: any) => {};

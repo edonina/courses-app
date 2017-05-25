@@ -36,7 +36,7 @@ import { Course } from '../../core/entities';
 })
 
 export class EditCourseComponent implements OnInit, OnDestroy {
-	@Input() public editedCourse:any;
+
 
 	private coursesServiceSubscription:Subscription;
 	private courseListDataSubscription:Subscription;
@@ -52,19 +52,18 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
-	editedCourse = {
-	id: 3,
-	title: 'The truth',
-	description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-	date: new Date(2017, 3, 3),
-	duration: 126,
-	topRated: true,
-	authors:[
-		{id:3},
-		{id:4}
-
-	]
-}
+	public editedCourse = {
+		id: 3,
+		title: 'The truth',
+		description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
+		date: new Date(2017, 3, 3),
+		duration: 126,
+		topRated: true,
+		authors:[
+			{id:3},
+			{id:4}
+		]
+	};
 	authors: Array<any> = [
 		{
 			id: 1,
@@ -96,25 +95,14 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	editCourceForm = this.fb.group({
 		authors: this.fb.array(this.course.authors),
-		date : this.editedCourse.date,
+		date : [this.editedCourse.date, validateCounterRange],
 		duration : [this.editedCourse.duration, validateOnlyNumbers],
 	});
 
 
 	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private fb: FormBuilder) {
-		this.editedCourse = {
-			id: 3,
-			title: 'The truth',
-			description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-			date: new Date(2017, 3, 3),
-			duration: 126,
-			topRated: true,
-			authors:[
-				{id:3},
-				{id:4}
 
-			]
-		}
+
 	}
 
 	public ngOnInit() {
