@@ -1,2 +1,3 @@
 <label for="date">Date:</label>
-<input type="text" id="date" class="form-control" [value]="courseDate">{{courseDate | date : 'dd/MM/yyyy'}}
+<input type="text" id="date" class="form-control" [value]="courseDateString" (change)="onChange($event)">{{courseDate | date : 'dd/MM/yyyy'}}
+<p if="!editCourceForm.valid"></p>

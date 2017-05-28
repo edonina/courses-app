@@ -71,7 +71,7 @@ export class CoursesService {
 
 
 	public getCourseItemById(id): any {
-		return this.getCourseItems().find(course => course.id === id);
+		return this.courseListV.find(course => course.id === id);
 	}
 
 	public updateCourseItemById(courseObj: Course, id) {

@@ -8,13 +8,15 @@
 		<courses></courses>
 	</div>-->
 
+
 	<!--<div *ngIf="isAuth && editedCourse" >
 		<edit-course ></edit-course>
-	</div>-->
+	</div>
 
-	<!--<div *ngIf="!isAuth" >
-		<login (loginUserEvent)="loginUser()"></login>
-	</div>-->
+	<div *ngIf="!isAuth" >
+		<login (loginUserEvent)="loginUser($event)"></login>
+	</div>
+-->
 </main>
 
 <main-footer></main-footer>

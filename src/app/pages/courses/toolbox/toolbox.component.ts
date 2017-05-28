@@ -18,6 +18,7 @@ import { FindPipe } from '../../../core/pipes';
 export class ToolboxComponent {
 	@Input() public courseListData: BehaviorSubject <any>;
 	@Input() public courseListInitial: Course [];
+	@Input() public isAuth: boolean
 
 	public textToFind: string;
 
