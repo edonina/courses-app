@@ -1,10 +1,23 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule, FormGroup  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, FormsModule, ReactiveFormsModule, FormGroup  } from '@angular/forms';
+
+export function createvAuthorsInputValidator(formVal) {
+	console.log('---2', formVal)
+	return function validateAuthorsInput(c: FormControl) {
+
+		if(formVal.length > 0){
+			//console.log('validator authors: ', c.value.length);
+			return null
+		}
+
+		return {authorsRequired: true};
 
 
-export function validateAuthorsInput(c: FormControl) {
+
+	}
+}export function validateAuthorsInput(c: FormControl) {
 	if(c.value.length > 0){
 		//console.log('validator authors: ', c.value.length);
 		return null
@@ -34,14 +47,16 @@ export function validateAuthorsInput(c: FormControl) {
 		},
 		{
 			provide: NG_VALIDATORS,
+			//useValue: forwardRef(() => AuthorsInputComponent),
 			useValue: validateAuthorsInput,
 			multi: true
 		}
 	]
 })
-export class AuthorsInputComponent implements ControlValueAccessor {
+export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*/ {
 	//@Input() public authors: any;
 	public authorsList: any;
+	public parseError: any;
 	@Input() authors: any;
 	@Input() course: any;
 	@Input() parent: FormGroup;
@@ -78,23 +93,56 @@ export class AuthorsInputComponent implements ControlValueAccessor {
 	}
 
 	writeValue(value: any) {
-	/*	if (value !== undefined) {
-			this.authors = value;
-		}*/
+
+
+		/*	if (value !== undefined) {
+                this.authors = value;
+            }*/
 	}
 	get chosenAuthors() {
-		return this.parent.get('authors').value
+		/*console.log('---',this.parent.get('authors'));
+		console.log('---',this.parent.controls['authors'];*/
+		return this.parent.get('authors').value;
 	}
 
 	isChecked(author) {
-		//return true;
+		//return true
 		return this.chosenAuthors.map(_author => _author.id).includes(author.id);
 	}
 
 	propagateChange = (_: any) => {};
 
 	public registerOnChange(fn: any) {
-	//	this.propagateChange = fn;
+		console.log('------3', this.parent.get('authors'));
+
+		this.propagateChange = fn;
+		//console.log(this.parent);
+	}
+
+	/*public validate(c: FormControl) {
+		console.log('------', this.parent.get('authors'));
+		if(this.parent.get('authors').length > 0){
+			//console.log('validator authors: ', c.value.length);
+			return null
+		}
+
+		return {authorsRequired: true};
+	}*/
+
+	private onChange(event) {
+		console.log('------3', this.parent.get('authors'));
+
+
+		/*if(this.parent.get('authors').length > 0) {
+			// parse it to json
+
+			this.parseError = false;
+		} else {
+			// set parse error if it fails
+			this.parseError = true;
+		}
+*/
+
 	}
 
 /*

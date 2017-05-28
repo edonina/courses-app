@@ -11,8 +11,8 @@
 
 
 
-				<input-date   formControlName = "date"></input-date>
-				<input-duration  formControlName = "duration"></input-duration>
+				<input-date   formControlName = "date" [parent]="editCourceForm"></input-date>
+				<input-duration  formControlName = "duration" [parent]="editCourceForm"></input-duration>
 
 				<!--<input-authors  formControlName = "authors"></input-authors>-->
 				<input-authors   [authors]="authors"

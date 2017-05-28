@@ -6,7 +6,7 @@ import {
 	ChangeDetectionStrategy,
 	forwardRef
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS,FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
 
@@ -18,13 +18,13 @@ export function validateCounterRange(c: FormControl) {
 	if(typeof(c.value)=="string"){
 		let dateStringArr = c.value.split('/');
 		let date = new Date(`${dateStringArr[1]}/${dateStringArr[0]}/${dateStringArr[2]}`);
-		if (isNaN(date.getTime())) {
+
+		if (!isNaN(date.getTime())) {
 			return null;
 		} else {
 			return {wrongDateFormat: true};
 		}
 	}
-
 	return null;
 }
 
@@ -46,8 +46,10 @@ export function validateCounterRange(c: FormControl) {
 		}
 	]
 })
-export class InputDateComponent implements ControlValueAccessor, PipeTransform {
+export class InputDateComponent implements ControlValueAccessor/*, PipeTransform*/ {
 	@Input() public courseDate: Date;
+	public courseDateString: string;
+	@Input() parent: FormGroup;
 	/*@Input() public course: Course;
 	@Output() public deleteCourseEvent: EventEmitter<number> = new EventEmitter<number>();
 */
@@ -57,7 +59,7 @@ export class InputDateComponent implements ControlValueAccessor, PipeTransform {
 
 		if (value !== undefined) {
 			var datePipe = new DatePipe("en-US");
-			this.courseDate = datePipe.transform(value, 'dd/MM/yyyy');
+			this.courseDateString = datePipe.transform(value, 'dd/MM/yyyy');
 		}
 	}
 	propagateChange = (_: any) => {};

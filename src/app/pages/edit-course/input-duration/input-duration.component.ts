@@ -1,15 +1,19 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef } from '@angular/core';
 import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl,FormGroup, FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 
 export function validateOnlyNumbers(c: FormControl) {
+
+
+
 
 	if(!isNaN(parseFloat(c.value)) && isFinite(c.value)){
 		console.log('validator is number', c.value);
 		return null
 	}
+
 	return {wrongDurationType: true};
 }
 
@@ -36,6 +40,7 @@ export function validateOnlyNumbers(c: FormControl) {
 export class InputDurationComponent implements ControlValueAccessor {
 	@Input() public duration: any;
 	@Input() public form:any;
+	@Input() parent: FormGroup;
 
 	constructor() {}
 

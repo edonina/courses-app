@@ -15,7 +15,7 @@
 				<input
 					type="checkbox"
 					[checked]="isChecked(author)"
-					(change)="toggleAuthor.emit({author: author, $event: $event})"
+					(change)="toggleAuthor.emit({author: author, $event: $event});onChange($event)"
 					>
 			</label>
 		</li>
@@ -25,7 +25,7 @@
     </pre>
 
 
-	<!--	<div *ngIf="!authors.valid && authors.hasError('authorsRequired')"
+	<div *ngIf="!parent.get('authors').valid && parent.get('authors').hasError('authorsRequired')"
              class="error">At least one author is required.
-        </div>-->
+        </div>
 </div>
