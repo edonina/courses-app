@@ -1,25 +1,27 @@
 <div class="edit-course">
 	<div >
-		<form class="row"  [formGroup]="editCourceForm"
-			  (ngSubmit)="onSubmit()">
+		<form class="row"  [formGroup]="editCourceForm"  >
 			<div class="form-group col-xs-12 col-md-6">
 				<label for="title">Title:</label>
-				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}" [maxLength]="maxTitleLength">
+				<input type="text" id="title" class="form-control" formControlName = "title" value="{{editedCourse.title}}" [maxLength]="maxTitleLength" [maxLength]="maxTitleLength"[minLength]="3" >
 
 				<label for="description">Description:</label>
-				<textarea type="text" id="description" class="form-control" [maxLength]="maxDescriptionLength">{{editedCourse.description}}</textarea>
+				<textarea type="text" id="description" class="form-control" formControlName = "description" [maxLength]="maxDescriptionLength" [maxLength]="50">{{editedCourse.description}}</textarea>
 
 
 
 				<input-date   formControlName = "date" [parent]="editCourceForm"></input-date>
 				<input-duration  formControlName = "duration" [parent]="editCourceForm"></input-duration>
 
-				<!--<input-authors  formControlName = "authors"></input-authors>-->
-				<input-authors   [authors]="authors"
+				<input-authors  formControlName = "authors" [authors]="authors"
+								[course]="course"
+								[parent]="editCourceForm"></input-authors>
+
+				<!--<input-authors   [authors]="authors"
 								[course]="course"
 								[parent]="editCourceForm"
 								(toggleAuthor)="onToggleAuthor($event)"
-					></input-authors>
+					></input-authors>-->
 
 
 

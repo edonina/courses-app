@@ -3,21 +3,7 @@ import { Course } from '../../../core/entities';
 import { courseStatusClasses } from '../../../core/enums';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, Validator, FormsModule, ReactiveFormsModule, FormGroup  } from '@angular/forms';
 
-export function createvAuthorsInputValidator(formVal) {
-	console.log('---2', formVal)
-	return function validateAuthorsInput(c: FormControl) {
-
-		if(formVal.length > 0){
-			//console.log('validator authors: ', c.value.length);
-			return null
-		}
-
-		return {authorsRequired: true};
-
-
-
-	}
-}export function validateAuthorsInput(c: FormControl) {
+export function validateAuthorsInput(c: FormControl) {
 	if(c.value.length > 0){
 		//console.log('validator authors: ', c.value.length);
 		return null
@@ -95,9 +81,9 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 	writeValue(value: any) {
 
 
-		/*	if (value !== undefined) {
+			if (value !== undefined) {
                 this.authors = value;
-            }*/
+            }
 	}
 	get chosenAuthors() {
 		/*console.log('---',this.parent.get('authors'));
@@ -129,11 +115,11 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 		return {authorsRequired: true};
 	}*/
 
-	private onChange(event) {
+	/*private onChange(event) {
 		console.log('------3', this.parent.get('authors'));
 
 
-		/*if(this.parent.get('authors').length > 0) {
+		if(this.parent.get('authors').length > 0) {
 			// parse it to json
 
 			this.parseError = false;
@@ -141,11 +127,11 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 			// set parse error if it fails
 			this.parseError = true;
 		}
-*/
 
-	}
 
-/*
+	}*/
+
+
 	private onChange(event) {
 		console.log('event.target.checked:', event.target.checked );
 		if (
@@ -168,9 +154,8 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 		}
 		console.log(event.target.checked);
 	}
-*/
 
-/*
+
 	checkCoursesAuthors(authors, authorId) {
 
 		if (authors.filter(e => e.id == authorId).length > 0) {
@@ -178,7 +163,6 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 		}
 		return false;
 	}
-*/
 
 	registerOnTouched() {}
 }

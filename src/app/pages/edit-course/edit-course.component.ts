@@ -94,7 +94,10 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		]};
 
 	editCourceForm = this.fb.group({
-		authors: this.fb.array(this.course.authors),
+		/*authors: this.fb.array(this.course.authors),*/
+		title : [this.editedCourse.title, validateAuthorsInput],
+		description : [this.editedCourse.description, validateAuthorsInput],
+		authors : [this.editedCourse.authors, validateAuthorsInput],
 		date : [this.editedCourse.date, validateCounterRange],
 		duration : [this.editedCourse.duration, validateOnlyNumbers],
 	});
@@ -106,22 +109,16 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-	/*	this.form = this.fb.group({
-			date : this.editedCourse.date,
-			duration : [this.editedCourse.duration, validateOnlyNumbers],
-			authors : [this.editedCourse.authors, validateAuthorsInput]
-		});*/
-
 	}
 
 	public ngOnDestroy() {}
 
 	public saveCourse(){
 		console.log(this.editCourceForm.value);
-		console.log(this.editCourceForm);
+		console.log('val:',this.editCourceForm);
 	}
 
-	onToggleAuthor({author, $event}) {
+	/*onToggleAuthor({author, $event}) {
 		console.log(author.id, $event.target.checked);
 		const isChecked = $event.target.checked;
 		const control = this.editCourceForm.get('authors') as FormArray;
@@ -138,5 +135,5 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	createAuthor(id){
 		return this.fb.group({id});
-	}
+	}*/
 }
