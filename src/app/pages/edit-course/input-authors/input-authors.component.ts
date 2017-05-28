@@ -57,6 +57,7 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 	//@Input() public authors: any;
 	public authorsList: any;
 	public parseError: any;
+	validateFn:Function;
 	@Input() authors: any;
 	@Input() course: any;
 	@Input() parent: FormGroup;
@@ -118,7 +119,13 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 		this.propagateChange = fn;
 		//console.log(this.parent);
 	}
+	ngOnInit() {
+		this.validateFn = createvAuthorsInputValidator(this.parent);
+	}
 
+	validate(c: FormControl) {
+		return this.validateFn(c);
+	}
 	/*public validate(c: FormControl) {
 		console.log('------', this.parent.get('authors'));
 		if(this.parent.get('authors').length > 0){
