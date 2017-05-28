@@ -125,6 +125,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
+		console.log('init');
 		this.sub= this.coursesService.getCourseItemById(this.id).subscribe(r=>{
 			this.editedCourse = r;
 			console.log('dddd2', r);
