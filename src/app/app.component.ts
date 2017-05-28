@@ -75,11 +75,9 @@ export class AppComponent implements OnInit {
 		this.isAuth = this.authorizationService.isAuthentificated().getValue();
 	}
 
-	loginUser(login: string) {
-		let credentials = {
-			login: 'Morales',
-			password: 'id'
-		}
+	loginUser(credentials: {}) {
+		console.log('cred', credentials);
+
 		this.authorizationService.loginUser(credentials);
 
 		setTimeout(() => {

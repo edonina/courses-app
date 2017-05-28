@@ -5,10 +5,10 @@
 	<form class="row" [formGroup]="loginForm" >
 		<div class="form-group col-xs-12 col-md-6">
 			<label for="login">Login:</label>
-			<input type="text" id="login" class="form-control" placeholder="" formControlName = "email"  required >
+			<input type="text" id="login" class="form-control" placeholder="" formControlName = "login"   >
 			<label for="password">Password:</label>
-			<input type="text" id="password" class="form-control" required formControlName = "password"  placeholder="">
-			<button type="submit" (click)="loginUser(loginForm.value)" class="btn btn-primary" >Sign in</button>
+			<input type="text" id="password" class="form-control" formControlName = "password"  placeholder="">
+			<button type="submit" (click)="loginUser(loginForm.value)" [disabled]="!loginForm.valid" class="btn btn-primary" >Sign in</button>
 		</div>
 	</form>
 </div>

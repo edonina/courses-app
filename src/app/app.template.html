@@ -13,7 +13,7 @@
 	</div>
 
 	<div *ngIf="!isAuth" >
-		<login (loginUserEvent)="loginUser()"></login>
+		<login (loginUserEvent)="loginUser($event)"></login>
 	</div>
 </main>
 

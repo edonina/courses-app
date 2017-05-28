@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	constructor(private loaderBlockService:LoaderBlockService, fb: FormBuilder) {
 		console.log('login constructor');
 		this.loginForm = fb.group({
-			'email' : [null, Validators.required],
+			'login' : [null, Validators.required],
 			'password': [null, Validators.required],
 		})
 	}
@@ -35,11 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	public loginUser(model) {
-		this.loaderBlockService.show();
-		console.log('====', model);
-		setTimeout(() => {
-			this.loginUserEvent.emit(model);
-		}, 400);
+		if (this.loginForm.valid) {
+			this.loaderBlockService.show();
+			console.log('====', model);
+			setTimeout(() => {
+				this.loginUserEvent.emit(model);
+			}, 400);
+		}
 	}
 
 	public ngOnDestroy() {

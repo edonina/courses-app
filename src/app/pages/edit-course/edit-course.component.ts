@@ -29,8 +29,12 @@ import { Course } from '../../core/entities';
 	:host /deep/ .ng-invalid >.authors-area{
 		border-left: solid 3px red;
 	}
+	input.ng-invalid, input.textarea{
+		border-left: solid 3px red;
+	}
 
-}`],
+
+`],
 	template: require('./edit-course.template.html'),
 	changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -36,7 +36,7 @@ export class AuthorizationService {
 		headers.append('Content-Type', 'text/plain')
 		let options = new RequestOptions({ headers });
 		let body = JSON.stringify(credentials);
-
+		console.log('cred', credentials);
 		return this.http.post( this.authLoginUrl, credentials)
 			.catch((error: any) => {
 				console.log(error._body);
@@ -44,6 +44,7 @@ export class AuthorizationService {
 			})
 			.map((res: Response) => res.json())
 			.subscribe((r) =>{
+				console.log('r:', r);
 				localStorage.setItem('userToken', r.token);
 				this.getUserInfo();
 			})
@@ -60,6 +61,7 @@ export class AuthorizationService {
 	}
 
 	public getUserInfo(): any {
+
 		const token = localStorage.getItem('userToken');
 
 		return this.http.post(this.authUserInfoUrl, token)
