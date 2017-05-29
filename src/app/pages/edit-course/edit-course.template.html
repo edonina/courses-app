@@ -1,23 +1,46 @@
 <div class="edit-course">
 	<div >
-		<form class="row">
+		<form class="row"  [formGroup]="editCourceForm"  >
 			<div class="form-group col-xs-12 col-md-6">
 				<label for="title">Title:</label>
-				<input type="text" id="title" class="form-control" value="{{editedCourse.title}}">
-
+				<input type="text" id="title" class="form-control" formControlName = "title" value="{{editedCourse.title}}" [maxLength]="maxTitleLength" [maxLength]="maxTitleLength"[minLength]="3" >
+				<div *ngIf="!editCourceForm.get('title').valid"
+					 class="error">At least 3 symbols are required.
+				</div>
 				<label for="description">Description:</label>
-				<textarea type="text" id="description" class="form-control">{{editedCourse.description}}</textarea>
+				<textarea type="text" id="description" class="form-control" formControlName = "description"
+						  [maxLength]="maxDescriptionLength"
+						  [maxLength]="10">{{editedCourse.description}}</textarea>
+				<div *ngIf="!editCourceForm.get('description').valid"
+					 class="error">At least 10 symbols are required.
+				</div>
+
+
+				<input-date   formControlName = "date" [parent]="editCourceForm"></input-date>
+				<input-duration  formControlName = "duration" [parent]="editCourceForm"></input-duration>
+
+				<input-authors  formControlName = "authors" [authors]="authors"
+								[course]="course"
+								[parent]="editCourceForm"></input-authors>
+
+				<!--<input-authors   [authors]="authors"
+								[course]="course"
+								[parent]="editCourceForm"
+								(toggleAuthor)="onToggleAuthor($event)"
+					></input-authors>-->
 
 
 
-				<input-date [courseDate] = "editedCourse.date"></input-date>
-				<input-duration [duration] = "editedCourse.duration"></input-duration>
-
-
-				<button type="submit" (click)="saveCourse()" class="btn btn-primary">Save</button>
+				<button type="submit" (click)="saveCourse()" [disabled]="!editCourceForm.valid" class="btn btn-primary">Save</button>
 				<button type="submit" (click)="cancelCourse()" class="btn">Cancel</button>
 			</div>
+
+
 		</form>
+		<p *ngIf="!editCourceForm.valid">Form is invalid!</p>
+
+		<!--<pre>{{ editCourceForm.value | json }}</pre>-->
+
 	</div>
 </div>
 

@@ -25,7 +25,6 @@ export class CoursesService {
 			search: '',
 			num: 0
 		};
-
 	}
 
 	public getCourseItems(num = 0, amount = 10, search = ''): any {
@@ -84,7 +83,7 @@ export class CoursesService {
 		this.getCourseItems(0, this.listState['amount'], this.listState['search']);
 	}
 
-	public removeCourseItemById(id): void {
+	public removeCourseItemById(id): Subscription {
 		let headers = new Headers({
 			'Accept': 'application/json'
 		});

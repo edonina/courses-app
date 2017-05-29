@@ -1,11 +1,8 @@
 @import "../../../styles/variables/colors.scss";
 
-.course-upcoming{
-	border: 2px solid $green;
-}
-.course-fresh{
-	border: 2px solid $blue;
-}
-.course-top-rated{
-	background-color: #f7f7f7;
+.ng-invalid {
+	input, textarea{
+		border: 1px solid red;
+	}
+
 }

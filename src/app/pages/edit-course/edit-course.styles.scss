@@ -1,10 +1,15 @@
 ﻿@import "../../styles/variables/colors.scss";
 
-.home-page {
-	padding-top: 10px;
-
-	.todo-item {
-		padding: 10px;
-		margin-top: 5px;
+.ng-invalid {
+	input, textarea{
+		border: 1px solid red;
 	}
+	:host{
+		input, textarea{
+			border: 1px solid red;
+		}
+	}
+
 }
+
+

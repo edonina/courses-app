@@ -9,11 +9,11 @@
 	</div>
 
 	<div *ngIf="isAuth && editedCourse" >
-		<edit-course [editedCourse] =''></edit-course>
+		<edit-course ></edit-course>
 	</div>
 
 	<div *ngIf="!isAuth" >
-		<login (loginUserEvent)="loginUser()"></login>
+		<login (loginUserEvent)="loginUser($event)"></login>
 	</div>
 </main>
 

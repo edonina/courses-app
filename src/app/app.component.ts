@@ -4,7 +4,7 @@
 import {
 	Component,
 	OnInit,
-	ngOnDestroy,
+	OnDestroy,
 	ViewEncapsulation,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef
@@ -41,8 +41,8 @@ export class AppComponent implements OnInit {
 		private cd: ChangeDetectorRef
 	) {
 
-		this.editedCourse = false;
-		//this.editedCourse = {};
+		//this.editedCourse = false;
+		this.editedCourse = {};
 		/*this.editedCourse = {
 			id: 3,
 			title: 'The truth',
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
 			this.isAuth = r;
 		});
 	}
-	ngOnDestroy() {
+	OnDestroy() {
 		this.authSubscription.unsubscribe();
 	}
 
@@ -75,11 +75,9 @@ export class AppComponent implements OnInit {
 		this.isAuth = this.authorizationService.isAuthentificated().getValue();
 	}
 
-	loginUser(login: string) {
-		let credentials = {
-			login: 'Morales',
-			password: 'id'
-		}
+	loginUser(credentials: {}) {
+		console.log('cred', credentials);
+
 		this.authorizationService.loginUser(credentials);
 
 		setTimeout(() => {
