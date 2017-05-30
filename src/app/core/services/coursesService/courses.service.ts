@@ -43,14 +43,17 @@ export class CoursesService {
 			.map(itemsList => {
 				let i;
 				let courseListData =[];
+				console.log('tttttttt',itemsList);
 				for(i = 0; i < itemsList.length; i++){
+
 					courseListData[i] = {
 						id: itemsList[i]['id'],
 						title: itemsList[i]['name'],
 						description: itemsList[i]['description'],
 						date: itemsList[i]['date'],
 						duration: itemsList[i]['length'],
-						topRated: itemsList[i]['isTopRated']
+						topRated: itemsList[i]['isTopRated'],
+						authors: itemsList[i]['authors']
 					}
 				}
 				return courseListData;
@@ -73,13 +76,23 @@ export class CoursesService {
 	public getCourseItemById(id): any {
 /*
 		console.log(this.courseListV);
-*/console.log('id',id);
-		console.log(this.courseListV.getValue().find(course => course['id'] === id));
-		return this.http.get(this.courseListUrl+query)
+*/		console.log('id',id);
+		console.log('id',this.courseListV.getValue());
+		console.log('aaaaaaa',this.courseListV.getValue().filter((course)=> {
+			console.log('id',id);
+			console.log('id', course.id );
+			console.log('id', course.id );
+			console.log('----' );
+			return course.id == id;
+		})[0]);
+		/*return this.http.get(this.courseListUrl+query)*/
 
 
-		return this.courseListV.getValue();
-		//return this.courseListV.getValue().find(course => course['id'] === id);
+		return this.courseListV.getValue().filter((course)=> {
+			return course.id == id;
+		})[0];
+
+
 	}
 
 	public updateCourseItemById(courseObj: Course, id) {

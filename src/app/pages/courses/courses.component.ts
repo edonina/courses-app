@@ -57,6 +57,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnDestroy() {
 		 this.courseListDataSubscription.unsubscribe();
 		 this.coursesServiceSubscription.unsubscribe();
+		 this.authSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {
