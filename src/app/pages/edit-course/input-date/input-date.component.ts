@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
 export function validateCounterRange(c: FormControl) {
 	if(typeof(c.value)=="string"){
 		let dateStringArr = c.value.split('/');
-		let date = new Date(`${dateStringArr[1]}/${dateStringArr[0]}/${dateStringArr[2]}`);
+		let date = new Date(`${dateStringArr[0]}/${dateStringArr[1]}/${dateStringArr[2]}`);
 
 		if (!isNaN(date.getTime())) {
 			return null;
@@ -49,6 +49,7 @@ export function validateCounterRange(c: FormControl) {
 export class InputDateComponent implements ControlValueAccessor/*, PipeTransform*/ {
 	@Input() public courseDate: Date;
 	public courseDateString: string;
+	public courseDatePipe: any;
 	@Input() parent: FormGroup;
 	/*@Input() public course: Course;
 	@Output() public deleteCourseEvent: EventEmitter<number> = new EventEmitter<number>();
@@ -58,8 +59,9 @@ export class InputDateComponent implements ControlValueAccessor/*, PipeTransform
 	writeValue(value: any) {
 
 		if (value !== undefined) {
-			var datePipe = new DatePipe("en-US");
-			this.courseDateString = datePipe.transform(value, 'dd/MM/yyyy');
+			this.courseDateString = value;
+			/*var datePipe = new DatePipe("en-US");
+			this.courseDateString = datePipe.transform(value, 'dd/MM/yyyy');*/
 		}
 	}
 	propagateChange = (_: any) => {};
@@ -73,6 +75,11 @@ export class InputDateComponent implements ControlValueAccessor/*, PipeTransform
 	private onChange(event) {
 		this.courseDate = event.target.value;
 		this.propagateChange(event.target.value);
+		var datePipe = new DatePipe("en-US");
+		try{this.courseDatePipe = datePipe.transform(this.courseDate, 'dd/MM/yyyy')}
+		catch (e){
+			this.courseDatePipe = 'Oops, smth wrong' ;
+		}
 	}
 
 }

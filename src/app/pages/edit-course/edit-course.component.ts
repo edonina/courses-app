@@ -64,7 +64,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		title : ['', validateAuthorsInput],
 		description : ['', validateAuthorsInput],
 		authors : [[], validateAuthorsInput],
-		date : [Date.now(), validateCounterRange],
+		date : [this.formattedDate(), validateCounterRange],
 		duration : [0, validateOnlyNumbers],
 
 	});
@@ -80,7 +80,6 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute
 	) {
 		this.id = route.snapshot.params['id'];
-		console.log('dddd', this.id);
 	}
 
 	public ngOnInit() {
@@ -91,7 +90,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 			title : [this.editedCourse['title'], validateAuthorsInput],
 			description : [this.editedCourse['description'], validateAuthorsInput],
 			authors : [this.editedCourse['authors'], validateAuthorsInput],
-			date : [this.editedCourse['date'], validateCounterRange],
+			date : [this.formattedDate(this.editedCourse['date']), validateCounterRange],
 			duration : [this.editedCourse['duration'], validateOnlyNumbers],
 		});
 
@@ -108,5 +107,17 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public cancelCourse(){
 		this.router.navigate(['/courses']);
 	}
+
+	formattedDate(d = new Date) {
+		d = new Date(d);
+	let month = String(d.getMonth() + 1);
+	let day = String(d.getDate());
+	const year = String(d.getFullYear());
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return `${month}/${day}/${year}`;
+}
 
 }
