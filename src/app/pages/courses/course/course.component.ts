@@ -10,6 +10,7 @@ import { courseStatusClasses } from '../../../core/enums';
 })
 export class CourseComponent {
 	@Input() public course: Course;
+	@Input() public isAuth: boolean
 	@Output() public deleteCourseEvent: EventEmitter<number> = new EventEmitter<number>();
 
 	constructor() {}

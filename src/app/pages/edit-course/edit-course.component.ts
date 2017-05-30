@@ -79,6 +79,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private route: ActivatedRoute
 	) {
+		console.log(route.snapshot.params);
 		this.id = route.snapshot.params['id'];
 	}
 
@@ -110,9 +111,9 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	formattedDate(d = new Date) {
 		d = new Date(d);
-	let month = String(d.getMonth() + 1);
-	let day = String(d.getDate());
-	const year = String(d.getFullYear());
+		let month = String(d.getMonth() + 1);
+		let day = String(d.getDate());
+		const year = String(d.getFullYear());
 
 	if (month.length < 2) month = '0' + month;
 	if (day.length < 2) day = '0' + day;

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthorizationService } from '../../services';
@@ -17,13 +17,17 @@ export class HeaderComponent {
 	public isAutentificatedState: boolean;
 	public user: string;
 
-	constructor(private authorizationService: AuthorizationService) {
+	constructor(
+		private authorizationService: AuthorizationService,
+		private cd: ChangeDetectorRef
+	) {
 		// this.user = authorizationService.getUserInfo();
 	}
 
 	public ngOnInit() {
 		this.authorizationService.userLogin$.subscribe((res)=> {
 			this.user = res;
+			this.cd.markForCheck();
 		});
 	}
 

@@ -11,7 +11,10 @@
 		{{course.date | date : 'dd/MM/yyyy'}}
 	</div>
 	<div class="col-sm-3">
-		<button class="btn btn-info" [routerLink]="['/courses/', course.id]">Edit course</button>
-		<button (click)="deleteCourse(course.id)" class="btn btn-warning">Delete</button>
+		<div *ngIf="isAuth">
+			<button class="btn btn-info" [routerLink]="['/courses/', course.id]">Edit course</button>
+			<button (click)="deleteCourse(course.id)" class="btn btn-warning">Delete</button>
+		</div>
+
 	</div>
 </div>

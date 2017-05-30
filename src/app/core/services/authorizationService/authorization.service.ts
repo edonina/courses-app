@@ -49,6 +49,7 @@ export class AuthorizationService {
 				console.log('r:', r);
 				localStorage.setItem('userToken', r.token);
 				this.getUserInfo();
+				this.autificated.next(true);
 				this.router.navigate(['/courses']);
 			})
 	}

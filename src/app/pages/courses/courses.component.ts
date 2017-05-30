@@ -38,8 +38,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
 		this.authSubscription = this.authorizationService.isAuthentificated().subscribe((r) => {
 			console.log('>>>>>>>', r);
-			this.cd.markForCheck();
 			this.isAuth = r;
+			this.cd.markForCheck();
 		});
 
 
