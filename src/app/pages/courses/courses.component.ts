@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output, ChangeDe
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { CoursesService, LoaderBlockService, AuthorizationService } from '../../core/services';
 import { Course } from '../../core/entities';
+import { SharedModule } from '../../core/shared';
 
 @Component({
 	selector: 'courses',

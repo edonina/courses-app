@@ -1,5 +1,5 @@
 <label for="duration">Duration:</label>
-<input id="duration" class="form-control" value="{{duration}}" (change)="onChange($event)" >{{duration | myDuration}}
+<input id="duration" class="form-control" value="{{duration}}" (change)="onChange($event)" >{{durationPipe}}
 
 <!--<div *ngIf="!form.controls['duration'].valid && form.controls['duration'].hasError('wrongDurationType')"
 	 class="error">Input only numbers.
