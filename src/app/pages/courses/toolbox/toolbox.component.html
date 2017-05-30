@@ -9,7 +9,9 @@
 				<button (click)="findCourse()" class="btn btn-primary">Find course</button>
 			</div>
 			<div class="col-xs-3 col-md-3">
+				<div *ngIf="isAuth">
 					<button class="btn btn-success" [routerLink]="['/courses/','new']">Add course</button>
+			</div>
 			</div>
 		</div>
 	</div>
