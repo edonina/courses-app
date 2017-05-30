@@ -76,7 +76,7 @@ export class InputDateComponent implements ControlValueAccessor/*, PipeTransform
 		this.courseDate = event.target.value;
 		this.propagateChange(event.target.value);
 		var datePipe = new DatePipe("en-US");
-		try{this.courseDatePipe = datePipe.transform(this.courseDate, 'dd/MM/yyyy')}
+		try{this.courseDatePipe = datePipe.transform(this.courseDate, 'MM/dd/yyyy')}
 		catch (e){
 			this.courseDatePipe = 'Oops, smth wrong' ;
 		}
