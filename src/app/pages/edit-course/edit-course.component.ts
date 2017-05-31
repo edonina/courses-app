@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output,Input, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
@@ -41,12 +42,10 @@ import { Course } from '../../core/entities';
 
 export class EditCourseComponent implements OnInit, OnDestroy {
 
+	//@Input() public editedCourse:any;
 
-	private coursesServiceSubscription:Subscription;
-	private courseListDataSubscription:Subscription;
 
-	public courseListInitial:Course[];
-	public courseListView:Course[];
+
 
 	public maxTitleLength: number = 50;
 	public maxDescriptionLength: number = 500;
@@ -56,63 +55,47 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 
 	private isLoading:boolean = false;
 	public courseListData: BehaviorSubject<any>;
-	public editedCourse = {
-		id: 3,
-		title: 'The truth',
-		description: 'The truth is that we set up too big goals. They scares us. Fear has big eyes. Try to split them into small ones. 3 April',
-		date: new Date(2017, 3, 3),
-		duration: 126,
-		topRated: true,
-		authors:[
-			{id:3},
-			{id:4}
-		]
-	};
-	authors: Array<any> = [
-		{
-			id: 1,
-			surname: 'Tuhliy'
-		},
-		{
-			id: 2,
-			surname: 'Kosoy'
-		},
-		{
-			id: 3,
-			surname: 'Nyasha'
-		},
-		{
-			id: 4,
-			surname: 'Motto'
-		},
-		{
-			id: 5,
-			surname: 'Crockford'
-		}
-	];
-	course: any = {
-		title: 'The best course',
-		authors: [
-			{id: 3},
-			{id: 5}
-		]};
+	public editedCourse = {};
+	authors: Array<any> = [];
+
 
 	editCourceForm = this.fb.group({
-		/*authors: this.fb.array(this.course.authors),*/
-		title : [this.editedCourse.title, validateAuthorsInput],
-		description : [this.editedCourse.description, validateAuthorsInput],
-		authors : [this.editedCourse.authors, validateAuthorsInput],
-		date : [this.editedCourse.date, validateCounterRange],
-		duration : [this.editedCourse.duration, validateOnlyNumbers],
+
+		title : ['', validateAuthorsInput],
+		description : ['', validateAuthorsInput],
+		authors : [[], validateAuthorsInput],
+		date : [this.formattedDate(), validateCounterRange],
+		duration : [0, validateOnlyNumbers],
+
 	});
 
+	id: number;
+	private sub: any;
 
-	constructor(private coursesService:CoursesService, private loaderBlockService:LoaderBlockService, private fb: FormBuilder) {
-
-
+	constructor(
+		private coursesService:CoursesService,
+		private loaderBlockService:LoaderBlockService,
+		private fb: FormBuilder,
+		private router: Router,
+		private route: ActivatedRoute
+	) {
+		console.log(route.snapshot.params);
+		this.id = route.snapshot.params['id'];
 	}
 
 	public ngOnInit() {
+		console.log('init');
+		this.editedCourse= this.coursesService.getCourseItemById(this.id);
+		console.log('this.editedCourse',this.editedCourse);
+		this.editCourceForm = this.fb.group({
+			/*authors: this.fb.array(this.course.authors),*/
+			id : this.editedCourse['id'],
+			title : [this.editedCourse['title'], validateAuthorsInput],
+			description : [this.editedCourse['description'], validateAuthorsInput],
+			authors : [this.editedCourse['authors'], validateAuthorsInput],
+			date : [this.formattedDate(this.editedCourse['date']), validateCounterRange],
+			duration : [this.editedCourse['duration'], validateOnlyNumbers],
+		});
 	}
 
 	public ngOnDestroy() {}
@@ -120,24 +103,24 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public saveCourse(){
 		console.log(this.editCourceForm.value);
 		console.log('val:',this.editCourceForm);
+		this.coursesService.saveCourseItem(this.editCourceForm.value);
+		this.router.navigate(['/courses']);
 	}
 
-	/*onToggleAuthor({author, $event}) {
-		console.log(author.id, $event.target.checked);
-		const isChecked = $event.target.checked;
-		const control = this.editCourceForm.get('authors') as FormArray;
-		const authorsArr = control.value;
-
-		if (isChecked) {
-			control.push(this.createAuthor(author.id));
-		} else {
-			// debugger;
-			let index = authorsArr.findIndex(_author => _author.id === author.id);
-			control.removeAt(index);
-		}
+	public cancelCourse(){
+		this.router.navigate(['/courses']);
 	}
 
-	createAuthor(id){
-		return this.fb.group({id});
-	}*/
+	formattedDate(d = new Date) {
+		d = new Date(d);
+		let month = String(d.getMonth() + 1);
+		let day = String(d.getDate());
+		const year = String(d.getFullYear());
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return `${month}/${day}/${year}`;
+}
+
 }

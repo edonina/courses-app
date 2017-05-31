@@ -51,30 +51,208 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 
 	constructor() {
 		this.authorsList = [
+
 			{
-				id: 0,
-				name: 'Author0'
+				"id": 1370,
+				"firstName": "Polly",
+				"lastName": "Sosa"
 			},
 			{
-				id: 1,
-				name: 'Author1'
+				"id": 8413,
+				"firstName": "Greta",
+				"lastName": "Richardson"
 			},
 			{
-				id: 2,
-				name: 'Author2'
+				"id": 7458,
+				"firstName": "Deana",
+				"lastName": "Bruce"
 			},
 			{
-				id: 3,
-				name: 'Author3'
+				"id": 5508,
+				"firstName": "Patsy",
+				"lastName": "Bright"
 			},
 			{
-				id: 4,
-				name: 'Author4'
+				"id": 3618,
+				"firstName": "Laura",
+				"lastName": "Kirby"
 			},
 			{
-				id: 5,
-				name: 'Author5'
+				"id": 9064,
+				"firstName": "Quinn",
+				"lastName": "Cain"
+			},
+			{
+				"id": 9926,
+				"firstName": "Burt",
+				"lastName": "Holland"
+			},
+			{
+				"id": 6440,
+				"firstName": "Andrews",
+				"lastName": "Byers"
+			},
+			{
+				"id": 8509,
+				"firstName": "Shawn",
+				"lastName": "Craig"
+			},
+			{
+				"id": 21,
+				"firstName": "Maddox",
+				"lastName": "Diaz"
+			},
+			{
+				"id": 800,
+				"firstName": "Glenda",
+				"lastName": "Juarez"
+			},
+			{
+				"id": 1772,
+				"firstName": "Hilda",
+				"lastName": "Gaines"
+			},
+			{
+				"id": 3003,
+				"firstName": "Abbott",
+				"lastName": "Mckay"
+			},
+			{
+				"id": 1167,
+				"firstName": "Garrison",
+				"lastName": "Chambers"
+			},
+			{
+				"id": 9215,
+				"firstName": "Ofelia",
+				"lastName": "Rodgers"
+			},
+			{
+				"id": 978,
+				"firstName": "Avila",
+				"lastName": "Bolton"
+			},
+			{
+				"id": 612,
+				"firstName": "Pam",
+				"lastName": "Vazquez"
+			},
+			{
+				"id": 6050,
+				"firstName": "Norman",
+				"lastName": "Love"
+			},
+			{
+				"id": 2252,
+				"firstName": "Reba",
+				"lastName": "Perez"
+			},
+			{
+				"id": 5524,
+				"firstName": "Cobb",
+				"lastName": "Hudson"
+			},
+			{
+				"id": 5341,
+				"firstName": "Nettie",
+				"lastName": "Sanford"
+			},
+			{
+				"id": 7333,
+				"firstName": "Michele",
+				"lastName": "Cunningham"
+			},
+			{
+				"id": 8318,
+				"firstName": "Rowland",
+				"lastName": "Vasquez"
+			},
+			{
+				"id": 4441,
+				"firstName": "Willa",
+				"lastName": "Cortez"
+			},
+			{
+				"id": 9562,
+				"firstName": "Dejesus",
+				"lastName": "Snow"
+			},
+			{
+				"id": 4998,
+				"firstName": "Doyle",
+				"lastName": "Webster"
+			},
+			{
+				"id": 2138,
+				"firstName": "Torres",
+				"lastName": "Farley"
+			},
+			{
+				"id": 3509,
+				"firstName": "Jessie",
+				"lastName": "Kelly"
+			},
+			{
+				"id": 7653,
+				"firstName": "Miranda",
+				"lastName": "Christian"
+			},
+			{
+				"id": 6185,
+				"firstName": "Yvette",
+				"lastName": "Foster"
+			},
+			{
+				"id": 5186,
+				"firstName": "Russell",
+				"lastName": "Butler"
+			},
+			{
+				"id": 9364,
+				"firstName": "Berger",
+				"lastName": "Powell"
+			},
+			{
+				"id": 3477,
+				"firstName": "Daugherty",
+				"lastName": "Guy"
+			},
+			{
+				"id": 2005,
+				"firstName": "Dotson",
+				"lastName": "Hernandez"
+			},
+			{
+				"id": 1416,
+				"firstName": "Ashlee",
+				"lastName": "Hines"
+			},
+			{
+				"id": 5907,
+				"firstName": "Jacobson",
+				"lastName": "Riddle"
+			},
+			{
+				"id": 8339,
+				"firstName": "Claire",
+				"lastName": "Battle"
+			},
+			{
+				"id": 2017,
+				"firstName": "Orr",
+				"lastName": "Conrad"
+			},
+			{
+				"id": 7614,
+				"firstName": "Moody",
+				"lastName": "Cash"
+			},
+			{
+				"id": 4165,
+				"firstName": "Gilda",
+				"lastName": "Huff"
 			}
+
 		];
 	}
 
@@ -105,31 +283,7 @@ export class AuthorsInputComponent implements ControlValueAccessor/*, Validator*
 		//console.log(this.parent);
 	}
 
-	/*public validate(c: FormControl) {
-		console.log('------', this.parent.get('authors'));
-		if(this.parent.get('authors').length > 0){
-			//console.log('validator authors: ', c.value.length);
-			return null
-		}
 
-		return {authorsRequired: true};
-	}*/
-
-	/*private onChange(event) {
-		console.log('------3', this.parent.get('authors'));
-
-
-		if(this.parent.get('authors').length > 0) {
-			// parse it to json
-
-			this.parseError = false;
-		} else {
-			// set parse error if it fails
-			this.parseError = true;
-		}
-
-
-	}*/
 
 
 	private onChange(event) {

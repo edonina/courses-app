@@ -18,14 +18,17 @@ import { FindPipe } from '../../../core/pipes';
 export class ToolboxComponent {
 	@Input() public courseListData: BehaviorSubject <any>;
 	@Input() public courseListInitial: Course [];
+	@Input() public isAuth: boolean
 
 	public textToFind: string;
 
 	constructor(private myFindPipe: FindPipe, private coursesService: CoursesService) {
 		this.textToFind = '';
+
 	}
 
 	public findCourse() {
+		console.log('bb: ',this.isAuth);
 		let filtRes  = this.myFindPipe.transform(this.coursesService.courseList.getValue(), this.textToFind);
 		//this.coursesService.courseListView.next(filtRes);
 		this.coursesService.findCourses(this.textToFind);

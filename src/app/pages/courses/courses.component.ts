@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Output, ChangeDetectorRef } from '@angular/core';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { CoursesService, LoaderBlockService } from '../../core/services';
+import { CoursesService, LoaderBlockService, AuthorizationService } from '../../core/services';
 import { Course } from '../../core/entities';
+import { SharedModule } from '../../core/shared';
 
 @Component({
 	selector: 'courses',
@@ -13,8 +14,10 @@ import { Course } from '../../core/entities';
 export class CoursesComponent implements OnInit, OnDestroy {
 	private coursesServiceSubscription: Subscription;
 	private courseListDataSubscription: Subscription;
+	private authSubscription: Subscription;
 	public courseListInitial: Course [];
 	public courseListView: Course [];
+	public isAuth: boolean;
 	private isLoading: boolean = false;
 	private pageNum: number = 0;
 	public courseListData: BehaviorSubject<any>;
@@ -22,6 +25,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	constructor(
 		private coursesService:CoursesService,
 		private loaderBlockService:LoaderBlockService,
+		private authorizationService:AuthorizationService,
 		private cd: ChangeDetectorRef
 	) {
 		console.log('Course List constructor');
@@ -32,6 +36,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		console.log('Home page init');
 		this.loaderBlockService.hide();
+
+		this.authSubscription = this.authorizationService.isAuthentificated().subscribe((r) => {
+			console.log('>>>>>>>', r);
+			this.isAuth = r;
+			this.cd.markForCheck();
+		});
+
 
 		this.coursesService.getCourseItems();
 		this.courseListDataSubscription = this.coursesService.courseListV.subscribe(r => {
@@ -47,6 +58,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 	public ngOnDestroy() {
 		 this.courseListDataSubscription.unsubscribe();
 		 this.coursesServiceSubscription.unsubscribe();
+		 this.authSubscription.unsubscribe();
 	}
 
 	public createCourse(id:number) {

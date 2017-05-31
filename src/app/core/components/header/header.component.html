@@ -15,7 +15,7 @@
 					<div class="" >Hi, {{user}}!</div>
 					<div class="menu-item" (click)="logoutUser()">Logout</div>
 				</div>
-				<div class="menu-item" *ngIf="!isAuth">Sign in, {{user}}</div>
+				<div class="menu-item" *ngIf="!isAuth" [routerLink]="'login'">Sign in, {{user.first}}</div>
 			</div>
 		</div>
 	</div>

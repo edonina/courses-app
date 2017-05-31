@@ -1,5 +1,5 @@
 <div class="home-page">
-	<toolbox [courseListData] ='' [courseListInitial] =''></toolbox>
+	<toolbox [courseListData] ='' [courseListInitial] ='' [isAuth]="isAuth" ></toolbox>
 	<h4>Courses list:</h4>
 	<div *ngIf="!courseListView.length">
 		<p>No data. Feel free to add new course.</p>
@@ -8,9 +8,11 @@
 		<course
 			*ngFor="let course of courseListView"
 			[course]="course"
+			[isAuth]="isAuth"
 			(deleteCourseEvent)="deleteCourseFromCoursesList($event)"
 		></course>
 	</div>
 	<button (click)="loadMoreCourses()" class="btn">Load more</button>
 	<div *ngIf="isLoading">Is loading...</div>
+	<router-outlet></router-outlet>
 </div>

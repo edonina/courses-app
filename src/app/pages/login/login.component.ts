@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoaderBlockService } from '../../core/services';
+import { LoaderBlockService, AuthorizationService } from '../../core/services';
 
 @Component({
 	selector: 'login',
@@ -22,7 +22,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 	public model: {};
 	loginForm : FormGroup;
 
-	constructor(private loaderBlockService:LoaderBlockService, fb: FormBuilder) {
+	constructor(
+		private loaderBlockService:LoaderBlockService,
+		fb: FormBuilder,
+		private authorizationService: AuthorizationService,
+	) {
 		console.log('login constructor');
 		this.loginForm = fb.group({
 			'login' : [null, Validators.required],
@@ -39,8 +43,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 			this.loaderBlockService.show();
 			console.log('====', model);
 			setTimeout(() => {
-				this.loginUserEvent.emit(model);
+				//this.loginUserEvent.emit(model);
+				this.authorizationService.loginUser(model);
 			}, 400);
+
+
+			setTimeout(() => {
+				this.loaderBlockService.hide();
+			}, 600);
+
 		}
 	}
 

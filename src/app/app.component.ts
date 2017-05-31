@@ -13,7 +13,7 @@ import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { AppState } from './app.service';
 import { AuthorizationService, LoaderBlockService } from './core/services';
 import { NgZone } from '@angular/core';
-
+import { Router } from '@angular/router';
 /*
  * App Component
  * Top Level Component
@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
 		private authorizationService: AuthorizationService,
 		private ngZone:NgZone,
 		private loaderBlockService: LoaderBlockService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		private router: Router
 	) {
 
 		//this.editedCourse = false;
@@ -89,5 +90,6 @@ export class AppComponent implements OnInit {
 	logoutUser(login: string) {
 		this.authorizationService.logoutUser();
 		this.isAuth = this.authorizationService.isAuthentificated().getValue();
+		this.router.navigate(['/courses']);
 	}
 }

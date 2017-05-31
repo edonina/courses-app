@@ -8,8 +8,11 @@
 			<div class="col-xs-3 col-md-3">
 				<button (click)="findCourse()" class="btn btn-primary">Find course</button>
 			</div>
-			<div class="col-xs-3 col-md-3">
-				<button class="btn btn-success">Add course</button>
+
+			<div *ngIf="isAuth">
+				<div class="col-xs-3 col-md-3">
+						<button class="btn btn-success" [routerLink]="['/courses/','new']">Add course</button>
+				</div>
 			</div>
 		</div>
 	</div>

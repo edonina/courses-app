@@ -2,6 +2,7 @@ import { Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subject, ReplaySubject, Subscription,BehaviorSubject } from 'rxjs';
 import { Response, Request, RequestOptions, RequestMethod, Http, Headers, URLSearchParams } from '@angular/http';
 import { HttpService } from './../httpService/http.service';
+import { Router } from '@angular/router';
 
 
 import 'rxjs/add/operator/map';
@@ -22,7 +23,7 @@ export class AuthorizationService {
 	private authUserInfoUrl: string = 'http://127.0.0.1:3004/auth/userinfo';
 
 
-	constructor(private http: HttpService) {
+	constructor(private http: HttpService, private router: Router) {
 		this.userLoginChange = new ReplaySubject();
 		this.userLogin$ = this.userLoginChange.asObservable().startWith('');
 		this.autificated = new BehaviorSubject(false);
@@ -40,6 +41,7 @@ export class AuthorizationService {
 		return this.http.post( this.authLoginUrl, credentials)
 			.catch((error: any) => {
 				console.log(error._body);
+				this.router.navigate(['/login']);
 				return Observable.throw(error);
 			})
 			.map((res: Response) => res.json())
@@ -47,6 +49,8 @@ export class AuthorizationService {
 				console.log('r:', r);
 				localStorage.setItem('userToken', r.token);
 				this.getUserInfo();
+				this.autificated.next(true);
+				this.router.navigate(['/courses']);
 			})
 	}
 
