@@ -39,6 +39,7 @@ export class InputDurationComponent implements ControlValueAccessor {
 	@Input() public form:any;
 	@Input() parent: FormGroup;
 	durationPipe:any;
+
 	constructor(private dp: DurationPipe) {}
 
 	writeValue(value: any) {
@@ -55,17 +56,9 @@ export class InputDurationComponent implements ControlValueAccessor {
 	}
 
 	private onChange(event) {
-
 		this.duration = event.target.value;
 		this.propagateChange(event.target.value);
-	/*	if (this.dp.transform(+this.duration))
-		try{
-
-			this.durationPipe = this.dp.transform(+this.duration)
-		}
-		catch (e){
-			this.durationPipe = 'Oops, smth wrong' ;
-		}*/
+		this.durationPipe = this.dp.transform(this.duration);
 	}
 
 
