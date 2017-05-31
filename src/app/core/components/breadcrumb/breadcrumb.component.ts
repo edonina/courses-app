@@ -12,7 +12,7 @@ interface IBreadcrumb {
 	selector: 'breadcrumb',
 	templateUrl: './breadcrumb.component.html',
 	styles: [require('./breadcrumb.styles.scss')],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+	// changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbComponent implements OnInit {

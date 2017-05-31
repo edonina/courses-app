@@ -56,7 +56,7 @@ const APP_PROVIDERS = [
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
-		RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules}),
+		RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
 		HeaderModule,
 		CoursesModule,
 		BreadcrumbModule,

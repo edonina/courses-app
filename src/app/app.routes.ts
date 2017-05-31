@@ -26,41 +26,43 @@ export const ROUTES: Routes = [
 					breadcrumb: "Login"
 				}
 			},
-			{
-				path: "",
-				component: CoursesComponent,
-				data: {
-					breadcrumb: "Courses"
-				}
-			},
+			// {
+			// 	path: "",
+			// 	component: CoursesComponent,
+			// 	data: {
+			// 		breadcrumb: "Courses"
+			// 	}
+			// },
 			{
 				path: "courses",
 				component: CoursesComponent,
+				children: [
+					{
+						path: ":id",
+						component: EditCourseComponent,
+						data: {
+							breadcrumb: "Details"
+						}
+					},
+					{
+						path: "new",
+						component: EditCourseComponent,
+						data: {
+							breadcrumb: "Add"
+						}
+					}
+				],
 				data: {
 					breadcrumb: "Courses"
-				}
-			},
-			{
-				path: "courses/:id",
-				component: EditCourseComponent,
-				data: {
-					breadcrumb: "Details"
-				}
-			},
-			{
-				path: "courses/new",
-				component: EditCourseComponent,
-				data: {
-					breadcrumb: "Add"
-				}
-			},
-			{
-				path: "**",
-				component: NoContentComponent,
-				data: {
-					breadcrumb: "404"
 				}
 			}
 		]
 	},
+	{
+		path: "**",
+		component: NoContentComponent,
+		data: {
+			breadcrumb: "404"
+		}
+	}
 ];
