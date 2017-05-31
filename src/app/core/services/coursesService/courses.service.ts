@@ -14,6 +14,8 @@ export class CoursesService {
 	public courseListV: BehaviorSubject<Course[]>;
 	private courseListUrl: string = 'http://127.0.0.1:3004/courses';
 	private courseDeleteUrl: string = 'http://127.0.0.1:3004/courses/delete';
+	private courseSaveUrl: string = 'http://127.0.0.1:3004/courses/save';
+	private courseAddUrl: string = 'http://127.0.0.1:3004/courses/new';
 
 	private listState: {};
 
@@ -43,9 +45,8 @@ export class CoursesService {
 			.map(itemsList => {
 				let i;
 				let courseListData =[];
-				console.log('tttttttt',itemsList);
-				for(i = 0; i < itemsList.length; i++){
 
+				for(i = 0; i < itemsList.length; i++){
 					courseListData[i] = {
 						id: itemsList[i]['id'],
 						title: itemsList[i]['name'],
@@ -143,5 +144,39 @@ export class CoursesService {
 		let i = this.getCourseItems().length;
 		let courseId = this.courseList[i].id + 1;
 		return courseId;
+	}
+
+	convertData(course){
+		let serverFormatedCourse = {
+			id: course['id'],
+			name: course['title'],
+			description: course['description'],
+			date: course['date'],
+			length: course['duration'],
+			isTopRated: course['topRated'],
+			authors: course['authors']
+		};
+		return serverFormatedCourse;
+	}
+
+	saveCourseItem(course){
+		course = this.convertData(course);
+
+		let headers = new Headers({
+			'Accept': 'application/json'
+		});
+		headers.append('Content-Type', 'text/plain')
+		let options = new RequestOptions({ headers });
+
+		return this.http.post( this.courseSaveUrl, {course: course})
+			.catch((error: any) => {
+				console.log(error._body);
+				return Observable.throw(error);
+			})
+			.map((res: Response) => res.json())
+			.subscribe((r) =>{
+				console.log('r', r);
+			});
+
 	}
 }

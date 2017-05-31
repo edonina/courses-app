@@ -12,7 +12,7 @@
 	</div>
 	<div class="col-sm-3">
 		<div *ngIf="isAuth">
-			<button class="btn btn-info" [routerLink]="['/courses/', course.id]">Edit course</button>
+			<button class="btn btn-info" [routerLink]="['/courses/', course.id]">Edit course - {{ course.id }}</button>
 			<button (click)="deleteCourse(course.id)" class="btn btn-warning">Delete</button>
 		</div>
 

@@ -86,17 +86,16 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		console.log('init');
 		this.editedCourse= this.coursesService.getCourseItemById(this.id);
+		console.log('this.editedCourse',this.editedCourse);
 		this.editCourceForm = this.fb.group({
 			/*authors: this.fb.array(this.course.authors),*/
+			id : this.editedCourse['id'],
 			title : [this.editedCourse['title'], validateAuthorsInput],
 			description : [this.editedCourse['description'], validateAuthorsInput],
 			authors : [this.editedCourse['authors'], validateAuthorsInput],
 			date : [this.formattedDate(this.editedCourse['date']), validateCounterRange],
 			duration : [this.editedCourse['duration'], validateOnlyNumbers],
 		});
-
-
-		console.log('dddd2', this.sub);
 	}
 
 	public ngOnDestroy() {}
@@ -104,7 +103,10 @@ export class EditCourseComponent implements OnInit, OnDestroy {
 	public saveCourse(){
 		console.log(this.editCourceForm.value);
 		console.log('val:',this.editCourceForm);
+		this.coursesService.saveCourseItem(this.editCourceForm.value);
+		this.router.navigate(['/courses']);
 	}
+
 	public cancelCourse(){
 		this.router.navigate(['/courses']);
 	}
