@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
 	}
 
 	loginUser(credentials: {}) {
-		this.store.dispatch({type: LOGIN});
+		this.store.dispatch({type: LOGIN, payload: credentials});
 
 		console.log('cred', credentials);
 
