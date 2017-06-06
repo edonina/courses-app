@@ -21,6 +21,7 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
+import { appReducer } from './app.reducer';
 import { NoContentComponent } from './pages/no-content';
 
 // Components
@@ -33,6 +34,7 @@ import { LoginModule } from  './pages/login';
 
 // Services
 import { CoursesService, AuthorizationService, LoaderBlockService, HttpService } from './core/services';
+import {StoreModule} from "../../node_modules/@ngrx/store/src/ng2";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -63,7 +65,8 @@ const APP_PROVIDERS = [
 		EditCourseModule,
 		FooterModule,
 		LoginModule,
-		LoaderBlockModule
+		LoaderBlockModule,
+		StoreModule.provideStore({isAuthentificated: appReducer})
 
 	],
 	providers: [ // expose our Services and Providers into Angular's dependency injection

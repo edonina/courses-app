@@ -11,9 +11,13 @@ import {
 } from '@angular/core';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { AppState } from './app.service';
+import { Store } from '@ngrx/store';
 import { AuthorizationService, LoaderBlockService } from './core/services';
 import { NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { LOGIN, LOGOUT } from  './app.reducer';
+
 /*
  * App Component
  * Top Level Component
@@ -30,7 +34,7 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-	public isAuth: boolean;
+	public isAuth: Observable<boolean>;
 	public editedCourse: any;
 	private authSubscription: Subscription;
 
@@ -39,7 +43,8 @@ export class AppComponent implements OnInit {
 		private ngZone:NgZone,
 		private loaderBlockService: LoaderBlockService,
 		private cd: ChangeDetectorRef,
-		private router: Router
+		private router: Router,
+		private store: Store<any>
 	) {
 
 		//this.editedCourse = false;
@@ -52,6 +57,7 @@ export class AppComponent implements OnInit {
 			duration: 126,
 			topRated: true
 		}*/
+		this.isAuth = store.select<boolean>('isAuthentificated');
 	}
 
 	ngOnInit() {
@@ -77,19 +83,18 @@ export class AppComponent implements OnInit {
 	}
 
 	loginUser(credentials: {}) {
+		this.store.dispatch({type: LOGIN});
+
 		console.log('cred', credentials);
 
-		this.authorizationService.loginUser(credentials);
-
-		setTimeout(() => {
-			this.loaderBlockService.hide();
-		}, 400);
 
 	}
 
 	logoutUser(login: string) {
-		this.authorizationService.logoutUser();
-		this.isAuth = this.authorizationService.isAuthentificated().getValue();
-		this.router.navigate(['/courses']);
+
+		this.store.dispatch({type: LOGIN});
+
+
+
 	}
 }
